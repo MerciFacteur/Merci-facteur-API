@@ -26,7 +26,7 @@ Pour réaliser un envoi de courrier, quelques étapes sont nécessaires au préa
 
 Création d'un utilisateur -> Création d'une adresse d'expéditeur -> Création d'une adresse de destinataire -> Génération de l'envoi
 
-Une fois qu'un utilisateur est créé, il n'est pas nécessaire de le re-créer pour les prochains envois 
+Une fois qu'un utilisateur est créé, il n'est pas nécessaire de le re-créer pour les prochains envois. Idem opur les adresses qui sont enregistrées dans un carnet d'adresses.
 
 
 ### Caractérisation d'un utilisateur
