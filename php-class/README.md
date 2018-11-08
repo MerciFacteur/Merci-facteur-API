@@ -299,7 +299,7 @@ else
 ### Lister les courriers et les infos d'un envoi en particulier
 
 ```php
-//user ID de l'utilisateur
+//ID de l'envoi
 $idEnvoi = 128;
 
 $getEnvoi = $apiMF->getEnvoi($accessToken, $idEnvoi);
@@ -309,6 +309,25 @@ if($getEnvoi['success'])
     echo '<pre>';var_dump($getEnvoi['envoi']);echo '<pre>';
     
      $getEnvoi = $getEnvoi['envoi'];
+}
+else
+{ 
+    echo '<pre>';var_dump($getEnvoi['error']);echo '<pre>';
+}
+```
+
+
+### Obtenir le suivi des courriers d'un envoi en particulier
+
+```php
+//ID de l'envoi
+$idEnvoi = 128;
+
+$getSuiviEnvoi = $apiMF->getSuiviEnvoi($accessToken, $idEnvoi);
+        
+if($getSuiviEnvoi['success'])
+{
+    echo '<pre>';var_dump($getSuiviEnvoi['envoi']);echo '<pre>';
 }
 else
 { 
