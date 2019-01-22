@@ -232,7 +232,7 @@ else
 
 
 
-### Valider l'envoi d'un courrier
+### Valider l'envoi d'un courrier composé d'une lettre
 
 ```php
 //user ID de l'utilisateur qui envoi ce courrier
@@ -244,13 +244,60 @@ $adress = array('exp'=>85,'dest'=>array(83,84,86,87));
 //https://www.mywebsite.com/file1.pdf
 
 //Les fichiers PDF à imprimer et à poster
-$files = array('https://your-website.com/url-file-1.pdf', ''https://your-website.com/url-file-2.pdf',''https://your-website.com/url-file-3.pdf');
+$infosLetter = array('https://your-website.com/url-file-1.pdf', ''https://your-website.com/url-file-2.pdf',''https://your-website.com/url-file-3.pdf');
+
+//pas de carte dans ce courrier : 
+$infosCard = null;
 
 //Le mode d'envoi du ou des courriers (lrar|suivi|normal)
 $modeEnvoi = 'normal';
 
 //On créé un nouvel utilisateur
-$sendCourrier = $apiMF->sendCourrier($accessToken, $idUser, $adress, $files, $modeEnvoi);
+$sendCourrier = $apiMF->sendCourrier($accessToken, $idUser, $adress, $infosLetter, $infosCard, $modeEnvoi);
+
+if($sendCourrier['success'])
+{
+    // Id de l'envoi (un envoi peut être composé de plusieurs courriers)
+    $envoi_id = $sendCourrier['envoi_id'];
+    
+    //array du résumé du prix facturé par Merci facteur
+    $resume_prix = $sendCourrier['price'];
+    
+    // résumé du contenu du/des courrier(s)
+    $resume_contenu = $sendCourrier['resume'];
+}
+else
+{ 
+    echo '<pre>';var_dump($sendCourrier['error']);echo '<pre>';
+}
+```
+
+
+
+### Valider l'envoi d'un courrier composé d'une carte illustrée (format carte postale, sans enveloppe)
+
+```php
+//user ID de l'utilisateur qui envoi ce courrier
+$idUser = 37;
+
+// Les adresses du courrier - expéditeur et destinataire(s)
+$adress = array('exp'=>85,'dest'=>array(83,84,86,87));
+
+//https://www.mywebsite.com/file1.pdf
+
+//Pas de lettre dans ce courrier
+$infosLetter = null;
+
+//pas de carte dans ce courrier : 
+$infosCard = array('format'=>'naked-postcard', 
+                    'imgUrl'=>'https://mysite/doc/img.jpeg', 
+                    'htmlText'=>'<div align="center">Bonjour !</div>');
+
+//Le mode d'envoi du ou des courriers (lrar|suivi|normal)
+$modeEnvoi = 'normal';
+
+//On créé un nouvel utilisateur
+$sendCourrier = $apiMF->sendCourrier($accessToken, $idUser, $adress, $infosLetter, $infosCard, $modeEnvoi);
 
 if($sendCourrier['success'])
 {
