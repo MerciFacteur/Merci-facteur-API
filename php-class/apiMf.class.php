@@ -372,17 +372,26 @@ class apiMerciFacteur {
      * @param string $accessToken : Access Token que vous avez demandé avec getAccessToken() ou que vous avez stocké en local
      * @param int $idUser : user ID de l'utilisateur qui envoi le courrier
      * @param array $adress : tableau contenant les id des adresse d'expéditeur et de destinataire(s) : ['exp'=>12,'dest'=>[23,25,94]]
-     * @param array $files : tableau du/des url fichier(s) PDF à envoyer : ['https://mysite/doc/file1.pdf', 'https://mysite/doc/file2.pdf']
+     * @param array $infosLetter : null si envoi de uniquement une carte, ou tableau du/des url fichier(s) PDF à envoyer : ['https://mysite/doc/file1.pdf', 'https://mysite/doc/file2.pdf']
+     * @param array $infosCard : null si envoi de uniquement une lettre, ou tableau contenant le format de la carte, l'url du visuel de la carte, et le html du texte de la carte : ['format'=>'postcard/naked-postcard/classic/folded/large', 'imgUrl'=>'https://mysite/doc/img.jpeg', 'htmlText'=>'<div align="center">Bonjour !</div>']
      * @param string $modeEnvoi : Mode d'envoi suivi|lrar|normal
      * @return array : ["success"=>false|true, "error"=>null|code_erreur, "envoi_id"=>null|[int], "price"=>null|['total'=>['ht'=>float, 'ttc'=>float],'detail'=>['affranchissement'=>float]], "resume"=>['nb_dest'=>int nb destinataires, 'nb_page'=>int nb pages par courrier]] Il est conseillé de sauvegarder en local l'id des envois.
      */
-    public function sendCourrier($accessToken, $idUser, $adress, $files, $modeEnvoi)
+    public function sendCourrier($accessToken, $idUser, $adress, $infosLetter, $infosCard, $modeEnvoi)
     {
         if(!is_array($adress))
         {return array('success'=>false,'error'=>'ADRESS_MUST_BE_ARRAY');}
         
-        if(!is_array($files))
-        {return array('success'=>false,'error'=>'FILES_MUST_BE_ARRAY');}
+        if(!is_array($infosLetter) && !is_null($infosLetter))
+        {return array('success'=>false,'error'=>'INFOS_LETTER_MUST_BE_NULL_OR_ARRAY');}
+        
+        if(!is_array($infosCard) && !is_null($infosCard))
+        {return array('success'=>false,'error'=>'INFOS_CARD_MUST_BE_NULL_OR_ARRAY');}
+        
+        if(is_null($infosLetter) && is_null($infosCard))
+        {
+            return array('success'=>false,'error'=>'NO_CONTENT');
+        }
         
         $headers = array(
             'ww-access-token:' . $accessToken,
@@ -393,11 +402,42 @@ class apiMerciFacteur {
             $files[$key] = utf8_encode($value);
         }
         
+        $content = array();
+        
+        if(!is_null($infosLetter))
+        {
+            $content['letter']['files'] = $infosLetter;
+        }
+        else
+        {
+            $content['letter'] = '';
+        }
+        
+        if(!is_null($infosCard))
+        {
+            if(!isset($content['card']['format']) || !isset($content['card']['visuel']['type'])  || !isset($content['card']['visuel']['value']) || !isset($content['card']['text']['type'])  || !isset($content['card']['text']['value']))
+            {
+                return array('success'=>false,'error'=>'CARD_INCORRECT_CONTENT');
+            }
+            
+            $content['card']['format'] = $infosCard['format'];
+            
+            $content['card']['visuel']['type'] = 'customimg';
+            $content['card']['visuel']['value'] = $infosCard['imgUrl'];
+            
+            $content['card']['text']['type'] = 'html';
+            $content['card']['text']['value'] = $infosCard['htmlText'];
+        }
+        else
+        {
+            $content['card'] = '';
+        }
+        
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, 'https://www.merci-facteur.com/api/1.2/prod/service/sendCourrier');
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_POST , true);
-        curl_setopt($curl, CURLOPT_POSTFIELDS  , array('idUser'=>$idUser, 'adress'=> json_encode($adress), 'files'=>json_encode($files), 'modeEnvoi'=>$modeEnvoi));
+        curl_setopt($curl, CURLOPT_POSTFIELDS  , array('idUser'=>$idUser, 'adress'=> json_encode($adress), 'content'=>json_encode($content), 'modeEnvoi'=>$modeEnvoi));
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
         $response = curl_exec($curl);
