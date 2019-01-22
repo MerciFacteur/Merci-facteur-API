@@ -241,7 +241,6 @@ $idUser = 37;
 // Les adresses du courrier - expéditeur et destinataire(s)
 $adress = array('exp'=>85,'dest'=>array(83,84,86,87));
 
-//https://www.mywebsite.com/file1.pdf
 
 //Les fichiers PDF à imprimer et à poster
 $infosLetter = array('https://your-website.com/url-file-1.pdf', ''https://your-website.com/url-file-2.pdf',''https://your-website.com/url-file-3.pdf');
@@ -282,8 +281,6 @@ $idUser = 37;
 
 // Les adresses du courrier - expéditeur et destinataire(s)
 $adress = array('exp'=>85,'dest'=>array(83,84,86,87));
-
-//https://www.mywebsite.com/file1.pdf
 
 //Pas de lettre dans ce courrier
 $infosLetter = null;
