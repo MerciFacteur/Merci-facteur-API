@@ -11,6 +11,7 @@ La version actuelle de l'API d'envoi de courrier permet de :
 - Créer et gérer des carnets d'adresses ;
 - Créer et gérer des utilisateurs ;
 - Envoyer des lettres via des fichiers PDF ;
+- Envoyer des cartes illustrées (4 formats : cartes postales, cartes classiques, cartes géantes, et cartes postales)
 - Envoyer des lettres en suivi, recommandé avec avis de réception et envoi normal ;
 - Gérer les lettres envoyées ; 
 - Suivre les lettres envoyées ; 
