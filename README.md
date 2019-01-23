@@ -53,3 +53,33 @@ Lorsque vous réalisez un envoi, vous devez choisi le mode d'envoi du/des courri
 - lrar : le courrier sera envoyé en recommandé avec avis de réception (valeur légale, l'éxpéditeur recevra l'avis de réception signé par le destinataire).
 - suivi : le courrier est envoyé avec un suivi simple (permet de connaître la date de réception, mais sans valeur légale).
 - normal : le courrier est envoyé sans aucun suivi.
+
+
+### Spécifications relatives aux envois de cartes illustrées
+
+#### 5 formats sont disponibles :
+- Carte postale sans enveloppe (naked-postcard)
+- Carte postale avec enveloppe (postcard)
+- Carte pliée (folded)
+- Carte non pliée (classic)
+- Carte géante (large)
+
+#### Dimensions (cm) des cartes après impression et coupe :
+- Carte postale sans enveloppe : 11 x 16 cm (vertical ou horizontal)
+- Carte postale avec enveloppe : 11 x 16 cm (vertical ou horizontal)
+- Carte pliée : 15 x 21 cm fermée et 30 x 21 ouverte (vertical ou horizontal)
+- Carte non pliée : 15 x 21 cm (vertical ou horizontal)
+- Carte géante : 19 x 27 cm fermée et 38 x 21 ouverte (vertical ou horizontal)
+
+#### Dimension (pixels) des fichiers acceptés :
+- Dimension recommandée : 1200 x 1690 pixels (vertical ou horizontal)
+- Dimension minimum : 800 x 1124 pixels (vertical ou horizontal)
+- Dimension maximum : 4000 x 2840 pixels (vertical ou horizontal)
+- Proportions à respecter : Petit côté = 0,71 x grand côté
+- Exemples de dimensions : 800 x 1124 pixels, 1000 x 1408 pixels, 1500 x 2112 pixels
+
+#### Types de fichiers acceptés :
+- jpeg
+- jpg
+- Poids maximum de 4 Mo
+- RVB conseillé
