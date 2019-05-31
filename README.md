@@ -136,6 +136,8 @@ Le visuel doit être envoyé soit via son URL, soit en base64.
 
 Le choix de l'enveloppe se fait automatiquement, selon le contenu du courrier. Les enveloppes sont blanches.
 
+Vous avez la possibilité de mettre un logo dans le coin en haut à gauche de l'enveloppe.
+
 4 formats sont possibles :
 - C4 (lettres de plus de 10 pages, cartes géantes)
 - C4 renforcée avec soufflet (lettres de plus de 50 pages)
