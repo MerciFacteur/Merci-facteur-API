@@ -50,14 +50,11 @@ Un envoi est un ou plusieurs courrier(s) identique(s) qui est/sont envoyé(s) à
 
 #### Exemples : 
 
-Envoi 1 ->  destinataire 1
-            destinataire 2
-            destinataire 3
+Envoi 1 ->  destinataire 1, destinataire 2, destinataire 3
 
 Envoi 2 ->  destinataire 1
 
-Envoi 3 ->  destinataire 1
-            destinataire 3
+Envoi 3 ->  destinataire 1, destinataire 3
 
 L'envoi 1 est composé de 3 courriers, l'envoi 2 est composé de 1 courrier, l'envoi 3 est composé de 2 courriers.
 
