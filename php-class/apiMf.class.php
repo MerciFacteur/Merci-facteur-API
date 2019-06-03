@@ -429,12 +429,7 @@ class apiMerciFacteur {
         }
         
         if(!is_null($infosCard))
-        {
-            if(!isset($content['card']['format']) || !isset($content['card']['visuel']['type'])  || !isset($content['card']['visuel']['value']) || !isset($content['card']['text']['type'])  || !isset($content['card']['text']['value']))
-            {
-                return array('success'=>false,'error'=>'CARD_INCORRECT_CONTENT');
-            }
-            
+        {            
             $content['card']['format'] = $infosCard['format'];
             
             if(isset($infosCard['imgBase64']) && $infosCard['imgBase64']!='' && !is_null($infosCard['imgBase64']))
