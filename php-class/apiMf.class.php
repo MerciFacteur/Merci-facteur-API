@@ -392,7 +392,7 @@ class apiMerciFacteur {
         if(!is_array($infosPhoto) && !is_null($infosPhoto))
         {return array('success'=>false,'error'=>'INFOS_PHOTO_MUST_BE_NULL_OR_ARRAY');}
         
-        if(is_null($infosLetter) && is_null($infosCard))
+        if(is_null($infosLetter) && is_null($infosCard) && is_null($infosPhoto))
         {
             return array('success'=>false,'error'=>'NO_CONTENT');
         }
