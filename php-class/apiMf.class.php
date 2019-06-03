@@ -372,12 +372,13 @@ class apiMerciFacteur {
      * @param string $accessToken : Access Token que vous avez demandé avec getAccessToken() ou que vous avez stocké en local
      * @param int $idUser : user ID de l'utilisateur qui envoi le courrier
      * @param array $adress : tableau contenant les id des adresse d'expéditeur et de destinataire(s) : ['exp'=>12,'dest'=>[23,25,94]]
-     * @param array $infosLetter : null si envoi de uniquement une carte, ou tableau du/des url fichier(s) PDF à envoyer : ['https://mysite/doc/file1.pdf', 'https://mysite/doc/file2.pdf']
-     * @param array $infosCard : null si envoi de uniquement une lettre, ou tableau contenant le format de la carte, l'url du visuel de la carte, et le html du texte de la carte : ['format'=>'postcard/naked-postcard/classic/folded/large', 'imgUrl'=>'https://mysite/doc/img.jpeg', 'htmlText'=>'<div align="center">Bonjour !</div>']
+     * @param array $infosLetter : null si pas d'envoi de lettre, ou tableau du/des url fichier(s) PDF à envoyer : ['https://mysite/doc/file1.pdf', 'https://mysite/doc/file2.pdf']
+     * @param array $infosPhoto : null si pas d'envoi de photo, ou tableau du/des url fichier(s) PDF à envoyer : ['https://mysite/doc/file1.pdf', 'https://mysite/doc/file2.pdf']
+     * @param array $infosCard : null si pas d'envoi de carte, ou tableau contenant le format de la carte, l'url du visuel de la carte, et le html du texte de la carte : ['format'=>'postcard/naked-postcard/classic/folded/large', 'imgUrl'=>'https://mysite/doc/img.jpeg', 'htmlText'=>'<div align="center">Bonjour !</div>']
      * @param string $modeEnvoi : Mode d'envoi suivi|lrar|normal
      * @return array : ["success"=>false|true, "error"=>null|code_erreur, "envoi_id"=>null|[int], "price"=>null|['total'=>['ht'=>float, 'ttc'=>float],'detail'=>['affranchissement'=>float]], "resume"=>['nb_dest'=>int nb destinataires, 'nb_page'=>int nb pages par courrier]] Il est conseillé de sauvegarder en local l'id des envois.
      */
-    public function sendCourrier($accessToken, $idUser, $adress, $infosLetter, $infosCard, $modeEnvoi)
+    public function sendCourrier($accessToken, $idUser, $adress, $infosLetter, $infosCard, $infosPhoto, $modeEnvoi)
     {
         if(!is_array($adress))
         {return array('success'=>false,'error'=>'ADRESS_MUST_BE_ARRAY');}
@@ -411,6 +412,15 @@ class apiMerciFacteur {
         else
         {
             $content['letter'] = '';
+        }
+        
+        if(!is_null($infosPhoto))
+        {
+            $content['photo']['files'] = $infosPhoto;
+        }
+        else
+        {
+            $content['photo'] = '';
         }
         
         if(!is_null($infosCard))
