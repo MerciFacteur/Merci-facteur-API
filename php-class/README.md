@@ -243,16 +243,19 @@ $adress = array('exp'=>85,'dest'=>array(83,84,86,87));
 
 
 //Les fichiers PDF à imprimer et à poster
-$infosLetter = array('https://your-website.com/url-file-1.pdf', ''https://your-website.com/url-file-2.pdf',''https://your-website.com/url-file-3.pdf');
+$infosLetter = array('files'=>array('https://your-website.com/url-file-1.pdf', ''https://your-website.com/url-file-2.pdf',''https://your-website.com/url-file-3.pdf'));
 
 //pas de carte dans ce courrier : 
 $infosCard = null;
+
+//pas de photo dans ce courrier : 
+$infosPhoto = null;
 
 //Le mode d'envoi du ou des courriers (lrar|suivi|normal)
 $modeEnvoi = 'normal';
 
 //On créé un nouvel utilisateur
-$sendCourrier = $apiMF->sendCourrier($accessToken, $idUser, $adress, $infosLetter, $infosCard, $modeEnvoi);
+$sendCourrier = $apiMF->sendCourrier($accessToken, $idUser, $adress, $infosLetter, $infosCard, $infosPhoto, $modeEnvoi);
 
 if($sendCourrier['success'])
 {
