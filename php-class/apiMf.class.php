@@ -372,9 +372,9 @@ class apiMerciFacteur {
      * @param string $accessToken : Access Token que vous avez demandé avec getAccessToken() ou que vous avez stocké en local
      * @param int $idUser : user ID de l'utilisateur qui envoi le courrier
      * @param array $adress : tableau contenant les id des adresse d'expéditeur et de destinataire(s) : ['exp'=>12,'dest'=>[23,25,94]]
-     * @param array $infosLetter : null si pas d'envoi de lettre, ou tableau du/des url fichier(s) PDF à envoyer : ['https://mysite/doc/file1.pdf', 'https://mysite/doc/file2.pdf']
-     * @param array $infosPhoto : null si pas d'envoi de photo, ou tableau du/des url fichier(s) PDF à envoyer : ['https://mysite/doc/file1.pdf', 'https://mysite/doc/file2.pdf']
-     * @param array $infosCard : null si pas d'envoi de carte, ou tableau contenant le format de la carte, l'url du visuel de la carte, et le html du texte de la carte : ['format'=>'postcard/naked-postcard/classic/folded/large', 'imgUrl'=>'https://mysite/doc/img.jpeg', 'htmlText'=>'<div align="center">Bonjour !</div>']
+     * @param array $infosLetter : null si pas d'envoi de lettre, ou tableau du/des url fichier(s) PDF à envoyer : 'files'=>['https://mysite/doc/file1.pdf', 'https://mysite/doc/file2.pdf'] ou 'base64files'=>['KHSFDKQDKQSD...', 'KHsdf45dfgdfgSFDKQDKQSD...']
+     * @param array $infosPhoto : null si pas d'envoi de photo, ou tableau du/des url fichier(s) JPEG à envoyer : 'files'=>['https://mysite/img/file1.jpeg', 'https://mysite/img/file2.jpeg'] ou 'base64files'=>['KHSFDKQDKQSD...', 'KHsdf45dfgdfgSFDKQDKQSD...']
+     * @param array $infosCard : null si pas d'envoi de carte, ou tableau contenant le format de la carte, l'url du visuel de la carte, et le html du texte de la carte : ['format'=>'postcard/naked-postcard/classic/folded/large', 'imgUrl'=>'https://mysite/doc/img.jpeg', 'imgBase64'=>'KHsdf45dfgdfgSFDKQDKQSD...', 'htmlText'=>'<div align="center">Bonjour !</div>']
      * @param string $modeEnvoi : Mode d'envoi suivi|lrar|normal
      * @return array : ["success"=>false|true, "error"=>null|code_erreur, "envoi_id"=>null|[int], "price"=>null|['total'=>['ht'=>float, 'ttc'=>float],'detail'=>['affranchissement'=>float]], "resume"=>['nb_dest'=>int nb destinataires, 'nb_page'=>int nb pages par courrier]] Il est conseillé de sauvegarder en local l'id des envois.
      */
@@ -388,6 +388,9 @@ class apiMerciFacteur {
         
         if(!is_array($infosCard) && !is_null($infosCard))
         {return array('success'=>false,'error'=>'INFOS_CARD_MUST_BE_NULL_OR_ARRAY');}
+        
+        if(!is_array($infosPhoto) && !is_null($infosPhoto))
+        {return array('success'=>false,'error'=>'INFOS_PHOTO_MUST_BE_NULL_OR_ARRAY');}
         
         if(is_null($infosLetter) && is_null($infosCard))
         {
@@ -407,7 +410,8 @@ class apiMerciFacteur {
         
         if(!is_null($infosLetter))
         {
-            $content['letter']['files'] = $infosLetter;
+            $content['letter']['files'] = $infosLetter['files'];
+            $content['letter']['base64files'] = $infosLetter['base64files'];
         }
         else
         {
@@ -416,7 +420,8 @@ class apiMerciFacteur {
         
         if(!is_null($infosPhoto))
         {
-            $content['photo']['files'] = $infosPhoto;
+            $content['photo']['files'] = $infosPhoto['files'];
+            $content['photo']['base64files'] = $infosPhoto['base64files'];
         }
         else
         {
@@ -432,8 +437,20 @@ class apiMerciFacteur {
             
             $content['card']['format'] = $infosCard['format'];
             
-            $content['card']['visuel']['type'] = 'customimg';
-            $content['card']['visuel']['value'] = $infosCard['imgUrl'];
+            if(isset($infosCard['imgBase64']) && $infosCard['imgBase64']!='' && !is_null($infosCard['imgBase64']))
+            {
+                $content['card']['visuel']['type'] = 'base64';
+                $content['card']['visuel']['value'] = $infosCard['imgBase64'];
+            }
+            elseif(isset($infosCard['imgUrl']) && $infosCard['imgUrl']!='' && !is_null($infosCard['imgUrl']))
+            {
+                $content['card']['visuel']['type'] = 'customimg';
+                $content['card']['visuel']['value'] = $infosCard['imgUrl'];
+            }
+            else
+            {
+                return array('success'=>false,'error'=>'CARD_IMG_BAD_TYPE');
+            }
             
             $content['card']['text']['type'] = 'html';
             $content['card']['text']['value'] = $infosCard['htmlText'];
