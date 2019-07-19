@@ -28,6 +28,13 @@ En savoir plus : https://www.merci-facteur.com
 
 - [Processus de base d'un envoi](#processus_base)
 - [Caractérisation d'un utilisateur](#caracterisation_utilisateur) 
+- [Caractérisation d'un envoi](#caracterisation_envoi) 
+- [Le mode d'envoi](#mode_envoi) 
+- [API envoi de lettres](#envoi_lettre) 
+- [API envoi de cartes](#envoi_cartes) 
+- [API envoi de photos](#envoi_photo) 
+- [Les enveloppes](#enveloppes) 
+- [API de publipostage](#publipostage) 
 
 <a id="processus_base"></a>
 ## Processus de base d'un envoi
@@ -51,6 +58,7 @@ Chaque utilisateur à un carnet d'adresses avec l'ensemble des adresses qui ont 
 Vous n'êtes pas obligé de créer plusieurs utilisateurs. Suivant votre fonctionnement vosu pouvez tout à fait n'avoir qu'un seul uitilisateur.
 
 
+<a id="caracterisation_envoi"></a>
 ## Caractérisation d'un envoi
 
 Un envoi est un ou plusieurs courrier(s) identique(s) qui est/sont envoyé(s) à un ou plusieurs destinataires. Un envoi peut donc être composé d'un ou plusieurs courriers. Mais le contenu et le mode d'envoi de chaque courriers d'un envoi seront identiques.
@@ -66,7 +74,8 @@ Envoi 3 ->  destinataire 1, destinataire 3
 L'envoi 1 est composé de 3 courriers, l'envoi 2 est composé de 1 courrier, l'envoi 3 est composé de 2 courriers.
 
 
-## Caractérisation du mode d'envoi
+<a id="mode_envoi"></a>
+## Le mode d'envoi
 
 Lorsque vous réalisez un envoi, vous devez choisi le mode d'envoi du/des courrier(s) : 
 
@@ -75,7 +84,8 @@ Lorsque vous réalisez un envoi, vous devez choisi le mode d'envoi du/des courri
 - normal : le courrier est envoyé sans aucun suivi (lettre verte).
 
 
-## Spécifications relatives aux envois de lettres
+<a id="envoi_lettre"></a>
+## API d'envoi de lettres
 
 Les lettres sont imprimées sur papier premium blanc de 80Gr/m², certifié pour la lutte contre la déforestation.
 
@@ -84,7 +94,8 @@ Vous pouvez envoyer jusqu'à 10 fichiers pour une même lettre (des PDF via leur
 Seul le format PDF est accepté. Et le poids maximum par fichier est de 4 Mo. Le fichier peut-être en couleur ou en noir et blanc.
 
 
-## Spécifications relatives aux envois de cartes illustrées
+<a id="envoi_cartes"></a>
+## API d'envoi de cartes illustrées
 
 Les cartes sont imprimées sur papier épais haute qualité de 350Gr/m², certifié pour la lutte contre la déforestation.
 
@@ -117,7 +128,8 @@ Le visuel doit être envoyé soit via son URL, soit en base64.
 - RVB conseillé
 
 
-## Spécifications relatives aux envois de photos
+<a id="envoi_photo"></a>
+## API d'envoi de photos
 
 Les photos sont imprimées sur du papier brillant supergloss de 250Gr/m², au format 10,5 x 14,85 cm.
 
@@ -136,6 +148,7 @@ Le visuel doit être envoyé soit via son URL, soit en base64.
 - RVB conseillé
 
 
+<a id="enveloppes"></a>
 ## Spécifications relatives aux enveloppes
 
 Le choix de l'enveloppe se fait automatiquement, selon le contenu du courrier. Les enveloppes sont blanches.
@@ -149,7 +162,8 @@ Vous avez la possibilité de mettre un logo dans le coin en haut à gauche de l'
 - C6 (cartes postales, moins de 11 photos)
 
 
-## Spécifications relatives au publipostage
+<a id="publipostage"></a>
+## API de publipostage
 
 L'API de Merci facteur vous permet également d'integrer dans vos applicatifs du publipostage.
 
