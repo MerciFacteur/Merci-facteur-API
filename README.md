@@ -25,9 +25,12 @@ En savoir plus : https://www.merci-facteur.com
 
 
 ##Sommaire : 
-[Processus de base d'un envoi](#processus_base) 
 
-## Processus de base d'un envoi<a id="processus_base"></a>
+[Processus de base d'un envoi](#processus_base) 
+[Caractérisation d'un utilisateur](#caracterisation_utilisateur) 
+
+<a id="processus_base"></a>
+## Processus de base d'un envoi
 
 Pour réaliser un envoi de courrier, quelques étapes sont nécessaires au préalable : 
 
@@ -36,6 +39,7 @@ Création d'un utilisateur (facultatif) -> Création/sélection d'une adresse d'
 Une fois qu'un utilisateur est créé, il n'est pas nécessaire de le re-créer pour les prochains envois. Idem pour les adresses qui sont enregistrées dans un carnet d'adresses.
 
 
+<a id="caracterisation_utilisateur"></a>
 ## Caractérisation d'un utilisateur
 
 Un utilisateur se caractérise par un email, un nom et un prénom. Ces éléments vous permettrons d'identifier les utilisateurs (savoir qui est quel utiliasteur. Nous vous conseillons d'enregistrer en local le user ID de chaque utilisateur.
