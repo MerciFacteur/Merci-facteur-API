@@ -140,3 +140,26 @@ Vous avez la possibilité de mettre un logo dans le coin en haut à gauche de l'
 - C4 renforcée avec soufflet (lettres de plus de 50 pages)
 - C5 (cartes classiques ou pliées, lettres de moins de 11 pages, plus de 10 photos)
 - C6 (cartes postales, moins de 11 photos)
+
+
+### Spécifications relatives au publipostage
+
+L'API de Merci facteur vous permet également d'integrer dans vos applicatifs du publipostage.
+
+
+#### Envoi de la source :
+
+Toutes les variables présentes dans le template doivent être présentes (même avec une valeur vide) dans la source de données, et cela pour tous les destinataires. Dans le cas contraire une erreur vous sera retournée, spécifiant l'information manquante.
+
+Dans la source de données, 4 informations sont obligatoires : 
+- "nom" ou "societe"
+- "cp"
+- "ville"
+- "pays"
+
+Le pays devant être avec une orthographe conforme (cf. /getCountry).
+
+Vous pouvez envoyer la source de donnée sous 3 formats différents : 
+- fichier CSV ou TXT distant via une url (type="file" et value="url du fichier")
+- base64 d'un fichier CSV ou TXT (type="base64" et value="fichier en base64")
+- json de données, avec pour chaque adresse la variable en clé (type="json" et value=[{"civilite":"","societe":"","nom":"","prenom":"","adresse1":"","adresse2":"","adresse3":"","cp":"","ville":"","pays":""},{"civilite":"","societe":"","nom":"","prenom":"","adresse1":"","adresse2":"","adresse3":"","cp":"","ville":"","pays":""},etc.])
