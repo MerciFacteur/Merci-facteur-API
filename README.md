@@ -16,6 +16,7 @@ La version actuelle de l'API d'envoi de courrier permet de :
 - Envoyer des lettres en suivi, recommandé avec avis de réception et envoi normal ;
 - Gérer les courriers envoyés ; 
 - Suivre les courriers envoyés ; 
+- générer et envoyer des publipostages ;
 
 Les courriers envoyées via l'API d'envoi de courriers sont imprimées et postées le jour même, comme n'importe quel courrier envoyé via Merci facteur. Ils sont facturés au même prix qu'un courrier envoyé depuis l'interface Merci facteur PRO.
 
@@ -99,19 +100,30 @@ Seul le format PDF est accepté. Et le poids maximum par fichier est de 4 Mo. Le
 
 Les cartes sont imprimées sur papier épais haute qualité de 350Gr/m², certifié pour la lutte contre la déforestation.
 
-### 5 formats sont disponibles :
+### 6 formats sont disponibles :
 - Carte postale sans enveloppe (naked-postcard)
 - Carte postale avec enveloppe (postcard)
 - Carte pliée (folded)
 - Carte non pliée (classic)
-- Carte géante (large)
+- Carte géante pliée (large)
+- Carte géante A4 (large-a4)
+
+### 3 papiers différents disponibles : 
+- Papier classique
+- Papier nacré
+- Papier création
+
+### 2 types de découpes : 
+- Coins carrés
+- Coins arrondis
 
 ### Dimensions (cm) des cartes après impression et coupe :
 - Carte postale sans enveloppe : 11 x 16 cm (vertical ou horizontal)
 - Carte postale avec enveloppe : 11 x 16 cm (vertical ou horizontal)
 - Carte pliée : 15 x 21 cm fermée et 30 x 21 ouverte (vertical ou horizontal)
 - Carte non pliée : 15 x 21 cm (vertical ou horizontal)
-- Carte géante : 19 x 27 cm fermée et 38 x 21 ouverte (vertical ou horizontal)
+- Carte géante pliée : 19 x 27 cm fermée et 38 x 21 ouverte (vertical ou horizontal)
+- Carte géante A4 : 21 x 29,7 cm (vertical ou horizontal)
 
 ### Dimension (pixels) des fichiers acceptés :
 - Dimension recommandée : 1200 x 1690 pixels (vertical ou horizontal)
