@@ -2,7 +2,7 @@
 ## merci-facteur-api
 ## API de Merci facteur
 
-Version : 1.2.0
+Version : 1.2.7
 
 L'API d'envoi de courrier proposé par Merci facteur vous permet d'intégrer à votre applicatif l'envoi de courriers par La Poste via API. 
 
@@ -156,7 +156,24 @@ Entre chaque phase, vous avez la possibilité de contrôler les données pour vo
 
 ### Envoi du template (/templatePublipostage) :
 
+Vous devez dans un premier temps envoyer le template (format docx obligatoirement), qui est la lettre contenant les variables qui pourront être remplacées.
 
+Les variables doivent être de la forme ${ma_variable} . Elles ne peuvent contenir que les caractères a-z, A-Z, 0-9 et _.
+
+Certaines variables, celles qui composent l'adresse postale, sont standardisées : 
+${civilite}
+${nom}
+${prenom} 
+${adresse1} 
+${adresse2} 
+${adresse3}
+${cp}
+${ville}
+${pays}
+
+Exemple de fichier conforme : https://www.merci-facteur.com/pro/exemples/fichier%20exemple.docx
+
+Vous avez la possibilité d'envoyer le template via une URL distante, ou en base64.
 
 
 ### Envoi de la source (/sourcePublipostage) :
