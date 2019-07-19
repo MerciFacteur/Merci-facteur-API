@@ -24,7 +24,10 @@ Documentation : https://www.merci-facteur.com/api/1.2/doc.php
 En savoir plus : https://www.merci-facteur.com
 
 
-## Processus de base d'un envoi
+##Sommaire : 
+[Processus de base d'un envoi](#processus_base) 
+
+## Processus de base d'un envoi<a id="processus_base"></a>
 
 Pour réaliser un envoi de courrier, quelques étapes sont nécessaires au préalable : 
 
