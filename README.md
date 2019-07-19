@@ -24,10 +24,10 @@ Documentation : https://www.merci-facteur.com/api/1.2/doc.php
 En savoir plus : https://www.merci-facteur.com
 
 
-##Sommaire : 
+## Sommaire : 
 
-[Processus de base d'un envoi](#processus_base) 
-[Caractérisation d'un utilisateur](#caracterisation_utilisateur) 
+- [Processus de base d'un envoi](#processus_base)
+- [Caractérisation d'un utilisateur](#caracterisation_utilisateur) 
 
 <a id="processus_base"></a>
 ## Processus de base d'un envoi
