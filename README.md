@@ -208,6 +208,8 @@ Exemple de fichier conforme : https://www.merci-facteur.com/pro/exemples/fichier
 
 Vous avez la possibilité d'envoyer le template via une URL distante, ou en base64.
 
+En sortie, vous disposerez d'un json "templateValidation" contenant les informations à contrôler par vos soins (nombre de pages détectées, variables détectées, etc), ainsi qu'une clé de validation. Ce json devra ensuite être envoyé en même temps que la source.
+
 
 ### Envoi de la source (/sourcePublipostage) :
 
@@ -221,7 +223,18 @@ Dans la source de données, 4 informations sont obligatoires :
 
 Le pays devant être avec une orthographe conforme (cf. /getCountry).
 
-Vous pouvez envoyer la source de donnée sous 3 formats différents : 
+Vous pouvez envoyer la source de données sous 3 formats différents : 
 - fichier CSV ou TXT distant via une url (type="file" et value="url du fichier")
 - base64 d'un fichier CSV ou TXT (type="base64" et value="fichier en base64")
 - json de données, avec pour chaque adresse la variable en clé (type="json" et value=[{"civilite":"","societe":"","nom":"","prenom":"","adresse1":"","adresse2":"","adresse3":"","cp":"","ville":"","pays":""},{"civilite":"","societe":"","nom":"","prenom":"","adresse1":"","adresse2":"","adresse3":"","cp":"","ville":"","pays":""},etc.])
+
+En plus de la source de données, vous devrez envoyer à cette phase le json "templateValidation" qui vous a été précédemment retourné, sans aucune modification.
+
+
+### Envoi de la source (/sendPublipostage) :
+
+La 3ème et dernière phase permet de valider le publipostage. Une fois cette phase executée, Merci facteur a le feu vert pour fusionner les données, générer les lettres, et pocéder à l'envoi de vos courriers.
+
+Cette phase étant sensible, en plus de la validation par l'API vous avez aussi la possiblité, si vous le souhaitez, d'effectuer cette phase manuellement. Ce qui vous permettra de vérifier visuellement un échantillon de lettres une fois fusionnées.
+
+Pour cela, connectez-vous à votre interface Merci facteur Pro, puis allez dans "Envoyer un publipostage". Vous trouverez alors les publipostages en attente de validation.
