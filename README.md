@@ -180,9 +180,9 @@ Vous avez la possibilité de mettre un logo dans le coin en haut à gauche de l'
 L'API de Merci facteur vous permet également d'integrer dans vos applicatifs du publipostage.
 
 La création de publipostage via l'API de publipostage se fait en 3 phases successives : 
-1- Envoi du template (fichier docx)
-2- Envoi de la source de données (fichier csv ou txt, ou json)
-3- Validation du publipostage
+- Envoi du template (fichier docx)
+- Envoi de la source de données (fichier csv ou txt, ou json)
+- Validation du publipostage
 
 Entre chaque phase, vous avez la possibilité de contrôler les données pour vous assurer que les courriers générés par ce publipostage sont bien conformes. La 3ème phase, qui génère le publipostage, peut-être déclenchée via l'API mais aussi via l'interface Merci facteur Pro si vous souhaitez effectuer un contrôle manuel.
 
