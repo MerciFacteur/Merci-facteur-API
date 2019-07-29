@@ -18,7 +18,7 @@ La version actuelle de l'API d'envoi de courrier permet de :
 - Suivre les courriers envoyés ; 
 - générer et envoyer des publipostages ;
 
-Les courriers envoyées via l'API d'envoi de courriers sont imprimées et postées le jour même, comme n'importe quel courrier envoyé via Merci facteur. Ils sont facturés au même prix qu'un courrier envoyé depuis l'interface Merci facteur PRO.
+Les courriers envoyés via l'API d'envoi de courriers sont imprimées et postées le jour même, comme n'importe quel courrier envoyé via Merci facteur. Ils sont facturés au même prix qu'un courrier envoyé depuis l'interface Merci facteur PRO.
 
 Documentation : https://www.merci-facteur.com/api/1.2/doc.php
 
@@ -38,7 +38,7 @@ En savoir plus : https://www.merci-facteur.com
 - [API de publipostage](#publipostage) 
 
 <a id="processus_base"></a>
-## Processus de base d'un envoi
+## Processus de base d'un envoi (hors publipostage)
 
 Pour réaliser un envoi de courrier, quelques étapes sont nécessaires au préalable : 
 
@@ -50,19 +50,19 @@ Une fois qu'un utilisateur est créé, il n'est pas nécessaire de le re-créer 
 <a id="caracterisation_utilisateur"></a>
 ## Caractérisation d'un utilisateur
 
-Un utilisateur se caractérise par un email, un nom et un prénom. Ces éléments vous permettrons d'identifier les utilisateurs (savoir qui est quel utiliasteur. Nous vous conseillons d'enregistrer en local le user ID de chaque utilisateur.
+Un utilisateur se caractérise par un email, un nom et un prénom. Ces éléments vous permettrons d'identifier les utilisateurs (savoir qui est quel utilisateur. Nous vous conseillons d'enregistrer en local le user ID de chaque utilisateur.
 
 Généralement il s'agira d'un client pour vous. 
 
-Chaque utilisateur à un carnet d'adresses avec l'ensemble des adresses qui ont été créées pour ses envoi (les adresses sont réutilisables pour les envois suivants), ainsi qu'un historique de ses envois.
+Chaque utilisateur à un carnet d'adresses avec l'ensemble des adresses qui ont été créées pour ses envois (les adresses sont réutilisables pour les envois suivants), ainsi qu'un historique de ses envois.
 
-Vous n'êtes pas obligé de créer plusieurs utilisateurs. Suivant votre fonctionnement vosu pouvez tout à fait n'avoir qu'un seul uitilisateur.
+Vous n'êtes pas obligé de créer plusieurs utilisateurs. Suivant votre fonctionnement vous pouvez tout à fait n'avoir qu'un seul utilisateur.
 
 
 <a id="caracterisation_envoi"></a>
 ## Caractérisation d'un envoi
 
-Un envoi est un ou plusieurs courrier(s) identique(s) qui est/sont envoyé(s) à un ou plusieurs destinataires. Un envoi peut donc être composé d'un ou plusieurs courriers. Mais le contenu et le mode d'envoi de chaque courriers d'un envoi seront identiques.
+Un envoi est un ou plusieurs courrier(s) identique(s) qui est/sont envoyé(s) à un ou plusieurs destinataires. Un envoi peut donc être composé d'un ou plusieurs courriers. Mais le contenu et le mode d'envoi de chaque courrier d'un envoi seront identiques.
 
 ### Exemples : 
 
@@ -72,13 +72,15 @@ Envoi 2 ->  destinataire 1
 
 Envoi 3 ->  destinataire 1, destinataire 3
 
-L'envoi 1 est composé de 3 courriers, l'envoi 2 est composé de 1 courrier, l'envoi 3 est composé de 2 courriers.
+Envoi 4 -> publipostage de 350 destinataires
+
+L'envoi 1 est composé de 3 courriers, l'envoi 2 est composé de 1 courrier, l'envoi 3 est composé de 2 courriers, l'envoi 4 est composé de 350 courriers.
 
 
 <a id="mode_envoi"></a>
 ## Le mode d'envoi
 
-Lorsque vous réalisez un envoi, vous devez choisi le mode d'envoi du/des courrier(s) : 
+Lorsque vous réalisez un envoi, vous devez choisir le mode d'envoi du/des courrier(s) : 
 
 - lrar : le courrier sera envoyé en recommandé avec avis de réception (valeur légale, l'éxpéditeur recevra l'avis de réception signé par le destinataire).
 - suivi : le courrier est envoyé avec un suivi simple (permet de connaître la date de réception, mais sans valeur légale).
@@ -177,7 +179,7 @@ Vous avez la possibilité de mettre un logo dans le coin en haut à gauche de l'
 <a id="publipostage"></a>
 ## API de publipostage
 
-L'API de Merci facteur vous permet également d'integrer dans vos applicatifs du publipostage.
+L'API de Merci facteur vous permet également d'intégrer dans vos applicatifs du publipostage.
 
 La création de publipostage via l'API de publipostage se fait en 3 phases successives : 
 - Envoi du template (fichier docx)
@@ -237,8 +239,8 @@ Attention, les variables sont sensibles à la casse.
 
 ### Envoi de la source (/sendPublipostage) :
 
-La 3ème et dernière phase permet de valider le publipostage. Une fois cette phase executée, Merci facteur a le feu vert pour fusionner les données, générer les lettres, et pocéder à l'envoi de vos courriers.
+La 3ème et dernière phase permet de valider le publipostage. Une fois cette phase exécutée, Merci facteur a le feu vert pour fusionner les données, générer les lettres, et procéder à l'envoi de vos courriers.
 
-Cette phase étant sensible, en plus de la validation par l'API vous avez aussi la possiblité, si vous le souhaitez, d'effectuer cette phase manuellement. Ce qui vous permettra de vérifier visuellement un échantillon de lettres une fois fusionnées.
+Cette phase étant sensible, en plus de la validation par l'API vous avez aussi la possibilité, si vous le souhaitez, d'effectuer cette phase manuellement. Ce qui vous permettra de vérifier visuellement un échantillon de lettres une fois fusionnées.
 
 Pour cela, connectez-vous à votre interface Merci facteur Pro, puis allez dans "Envoyer un publipostage". Vous trouverez alors les publipostages en attente de validation.
