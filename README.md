@@ -210,6 +210,8 @@ Vous avez la possibilité d'envoyer le template via une URL distante, ou en base
 
 En sortie, vous disposerez d'un json "templateValidation" contenant les informations à contrôler par vos soins (nombre de pages détectées, variables détectées, etc), ainsi qu'une clé de validation. Ce json devra ensuite être envoyé en même temps que la source.
 
+Attention, les variables sont sensibles à la casse.
+
 
 ### Envoi de la source (/sourcePublipostage) :
 
@@ -229,6 +231,8 @@ Vous pouvez envoyer la source de données sous 3 formats différents :
 - json de données, avec pour chaque adresse la variable en clé (type="json" et value=[{"civilite":"","societe":"","nom":"","prenom":"","adresse1":"","adresse2":"","adresse3":"","cp":"","ville":"","pays":""},{"civilite":"","societe":"","nom":"","prenom":"","adresse1":"","adresse2":"","adresse3":"","cp":"","ville":"","pays":""},etc.])
 
 En plus de la source de données, vous devrez envoyer à cette phase le json "templateValidation" qui vous a été précédemment retourné, sans aucune modification.
+
+Attention, les variables sont sensibles à la casse.
 
 
 ### Envoi de la source (/sendPublipostage) :
