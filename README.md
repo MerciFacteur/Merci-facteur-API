@@ -230,7 +230,9 @@ Le pays devant être avec une orthographe conforme (cf. /getCountry).
 Vous pouvez envoyer la source de données sous 3 formats différents : 
 - fichier CSV ou TXT distant via une url (type="file" et value="url du fichier")
 - base64 d'un fichier CSV ou TXT (type="base64" et value="fichier en base64")
-- json de données, avec pour chaque adresse la variable en clé (type="json" et value=[{"civilite":"","societe":"","nom":"","prenom":"","adresse1":"","adresse2":"","adresse3":"","cp":"","ville":"","pays":""},{"civilite":"","societe":"","nom":"","prenom":"","adresse1":"","adresse2":"","adresse3":"","cp":"","ville":"","pays":""},etc.])
+- json de données, avec pour chaque adresse la variable en clé (type="json" et value=[{"civilite":"","societe":"","nom":"","prenom":"","adresse1":"","adresse2":"","adresse3":"","cp":"","ville":"","pays":""},{"civilite":"","societe":"","nom":"","prenom":"","adresse1":"","adresse2":"","adresse3":"","cp":"","ville":"","pays":""},{etc.}])
+
+Dans le cas de l'envoi d'un fichier CSV ou TXT, les données doivent être séparées par des points-viurgules (;) et des sauts de lignes. La première ligne (titres de colonnes) doit correspondre aux variables, sans le $ et les {}.
 
 En plus de la source de données, vous devrez envoyer à cette phase le json "templateValidation" qui vous a été précédemment retourné, sans aucune modification.
 
