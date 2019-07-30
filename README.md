@@ -17,6 +17,7 @@ La version actuelle de l'API d'envoi de courrier permet de :
 - Gérer les courriers envoyés ; 
 - Suivre les courriers envoyés ; 
 - générer et envoyer des publipostages ;
+- Ouvrir un ticket SAV au sujet d'un courrier envoyé ;
 
 Les courriers envoyés via l'API d'envoi de courriers sont imprimées et postées le jour même, comme n'importe quel courrier envoyé via Merci facteur. Ils sont facturés au même prix qu'un courrier envoyé depuis l'interface Merci facteur PRO.
 
