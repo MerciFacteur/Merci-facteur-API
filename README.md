@@ -10,7 +10,7 @@ La version actuelle de l'API d'envoi de courrier permet de :
 - Créer et gérer des utilisateurs ;
 - Créer et gérer des carnets d'adresses ;
 - Créer et gérer des utilisateurs ;
-- Envoyer des lettres via des fichiers PDF ;
+- Envoyer des lettres via des fichiers PDF (impression recto ou recto-verso) ;
 - Envoyer des cartes illustrées (4 formats : cartes postales, cartes classiques, cartes géantes, et cartes postales) ;
 - Envoyer des photos (format 10x15 cm, imprimées sur papier brillant) ;
 - Envoyer des lettres en suivi, recommandé avec avis de réception et envoi normal ;
@@ -32,6 +32,7 @@ En savoir plus : https://www.merci-facteur.com
 - [Caractérisation d'un utilisateur](#caracterisation_utilisateur) 
 - [Caractérisation d'un envoi](#caracterisation_envoi) 
 - [Le mode d'envoi](#mode_envoi) 
+- [Ajouter des références internes sur les courriers](#ref_interne) 
 - [API envoi de lettres](#envoi_lettre) 
 - [API envoi de cartes](#envoi_cartes) 
 - [API envoi de photos](#envoi_photo) 
@@ -88,6 +89,32 @@ Lorsque vous réalisez un envoi, vous devez choisir le mode d'envoi du/des courr
 - normal : le courrier est envoyé sans aucun suivi (lettre verte).
 
 
+<a id="ref_interne"></a>
+## Ajouter des références internes sur les courriers
+
+Pour des besoins d'organisation interne, vous pouvez ajouter des références internes sur vos courriers. Si il s'agit d'un envoi en recommandé avec avis de réception, la référence interne sera imprimée sur l'accusé de réception qui vous est retourné.
+
+Cette référence interne se retrouvera également dans les exports CSV de vos courriers.
+
+Pour ajouter une référence interne, envoyez un tableau plutôt qu'un "integer" au niveau du tableau des destinataires. La première clé sera l'ID du destinataire, et la seconde clé votre référence interne : [_,IDdestinataire,_ _,"reference interne",_]
+
+Exemple de bloc adresse avec des références internes (dans cet exemple, les deux derniers destinataires n'ont pas de référence interne) : 
+
+"adress": {
+    "exp": 145840,
+    "dest": [
+      [195652,"RELANCE 29854"],
+      [185444,"RELANCE 29855"],
+      [185444,"RELANCE 29856"],
+      198562,
+      185476
+    ]
+  }
+
+La référence courrier ne peut être composée que de chiffres, lettres, espaces, et caractères -_ , et doit faire maximum 30 caractères.
+
+
+
 <a id="envoi_lettre"></a>
 ## API d'envoi de lettres
 
@@ -96,6 +123,8 @@ Les lettres sont imprimées sur papier premium blanc de 80Gr/m², certifié pour
 Vous pouvez envoyer jusqu'à 10 fichiers pour une même lettre (des PDF via leur URL et/ou des PDF en base64).
 
 Seul le format PDF est accepté. Et le poids maximum par fichier est de 4 Mo. Le fichier peut-être en couleur ou en noir et blanc.
+
+Vous pouvez demander à ce que votre lettre soit imprimée en recto, ou en recto-verso (afin de diminuer le poid, et donc le montant de l'affranchissement).
 
 
 <a id="envoi_cartes"></a>
