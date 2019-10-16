@@ -96,7 +96,7 @@ Pour des besoins d'organisation interne, vous pouvez ajouter des références in
 
 Cette référence interne se retrouvera également dans les exports CSV de vos courriers.
 
-Pour ajouter une référence interne, envoyez un tableau plutôt qu'un "integer" au niveau du tableau des destinataires. La première clé sera l'ID du destinataire, et la seconde clé votre référence interne : [_,IDdestinataire,_ _,"reference interne",_]
+Pour ajouter une référence interne, envoyez un tableau plutôt qu'un "integer" au niveau du tableau des destinataires. La première clé sera l'ID du destinataire, et la seconde clé votre référence interne : [IDdestinataire,"reference interne"]
 
 Exemple de bloc adresse avec des références internes (dans cet exemple, les deux derniers destinataires n'ont pas de référence interne) : 
 
