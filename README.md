@@ -191,6 +191,9 @@ Le visuel doit être envoyé soit via son URL, soit en base64.
 - Poids maximum de 4 Mo
 - RVB conseillé
 
+### Autres limitations :
+- Maximum 50 photos par courrier.
+
 
 <a id="enveloppes"></a>
 ## Spécifications relatives aux enveloppes
