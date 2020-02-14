@@ -38,6 +38,7 @@ En savoir plus : https://www.merci-facteur.com
 - [API envoi de photos](#envoi_photo) 
 - [Les enveloppes](#enveloppes) 
 - [API de publipostage](#publipostage) 
+- [Webhooks](#webhooks) 
 
 <a id="processus_base"></a>
 ## Processus de base d'un envoi (hors publipostage)
@@ -281,3 +282,340 @@ La 3ème et dernière phase permet de valider le publipostage. Une fois cette ph
 Cette phase étant sensible, en plus de la validation par l'API vous avez aussi la possibilité, si vous le souhaitez, d'effectuer cette phase manuellement. Ce qui vous permettra de vérifier visuellement un échantillon de lettres une fois fusionnées.
 
 Pour cela, connectez-vous à votre interface Merci facteur Pro, puis allez dans "Envoyer un publipostage". Vous trouverez alors les publipostages en attente de validation.
+
+
+<a id="webhooks"></a>
+## Les webhooks
+
+Vous avez la possibilité de paramétrer sur votre compte une url de notification (endpoint) sur laquelle l'API de Merci facteur enverra des webhooks) lors de divers événements.
+
+Pour paramétrer votre url de endpoint, rendez-vous dans l'onglet "API" de votre interface Merci facteur Pro.
+
+Un webhook peut contenir des notifications de plusieurs courriers différents pour lesquels il s'agit du même événement (vous ne pouvez pas avoir plusieurs événements différents dans un même webhook).
+
+Votre url de endpoint devra retourner en entête un code 200 en cas de succès. La réponse ne doit pas dépasser les 500 caractères (nous vous conseillons de n'envoyer une réponse que dans le cadre du debug).
+
+Vous recevrez sur votre endpoint en post les informations suivantes :
+- $_POST['event'] : json contenant les informations sur l'événement (type d'événement, et id user)
+- $_POST['detail'] : tableau de json contenant les informations du (ou des) courrier(s) (adresse de destinataire, références de courrier/tracking, statut, etc.).
+
+Vous pouvez, via l'interface Merci facteur Pro, visualiser l'historique de tous les webhooks envoyés sur votre endpoint url.
+
+
+### Les événements disponibles :
+
+Voici les événements pour lesquels vous pouvez recevoir des webhooks : 
+
+<table>
+    <tr>
+        <th>Nom événement</th>
+        <th>Description</th>
+        <th>Informations envoyées</th>
+    </tr>
+    <tr>
+        <td>new</td>
+        <td>Nouveau(x) courrier(s) créé(s)</td>
+        <td>&bull; event.name_event<br>
+            &bull; event.id_user<br>
+        &bull; detail[].civilite<br>
+        &bull; detail[].nom<br>
+        &bull; detail[].prenom<br>
+        &bull; detail[].societe<br>
+        &bull; detail[].adresse1<br>
+        &bull; detail[].adresse2<br>
+        &bull; detail[].adresse3<br>
+        &bull; detail[].cp<br>
+        &bull; detail[].ville<br>
+        &bull; detail[].pays<br>
+        &bull; detail[].ref_courrier<br>
+        &bull; detail[].mode_envoi<br>
+        &bull; detail[].id_envoi<br>
+        &bull; detail[].statut_courrier<br>
+        &bull; detail[].statut_description</td>
+    </tr>
+    <tr>
+        <td>printed</td>
+        <td>Courrier(s) imprimé(s)</td>
+        <td>&bull; event.name_event<br>
+            &bull; event.id_user<br>
+        &bull; detail[].civilite<br>
+        &bull; detail[].nom<br>
+        &bull; detail[].prenom<br>
+        &bull; detail[].societe<br>
+        &bull; detail[].adresse1<br>
+        &bull; detail[].adresse2<br>
+        &bull; detail[].adresse3<br>
+        &bull; detail[].cp<br>
+        &bull; detail[].ville<br>
+        &bull; detail[].pays<br>
+        &bull; detail[].ref_courrier<br>
+        &bull; detail[].mode_envoi<br>
+        &bull; detail[].id_envoi<br>
+        &bull; detail[].statut_courrier<br>
+        &bull; detail[].statut_description<br>
+        &bull; detail[].tracking_number</td>
+    </tr>
+    <tr>
+        <td>new-state</td>
+        <td>Nouveau(x) statut(s) de(s) courrier(s)</td>
+        <td>&bull; event.name_event<br>
+            &bull; event.id_user<br>
+        &bull; detail[].civilite<br>
+        &bull; detail[].nom<br>
+        &bull; detail[].prenom<br>
+        &bull; detail[].societe<br>
+        &bull; detail[].adresse1<br>
+        &bull; detail[].adresse2<br>
+        &bull; detail[].adresse3<br>
+        &bull; detail[].cp<br>
+        &bull; detail[].ville<br>
+        &bull; detail[].pays<br>
+        &bull; detail[].ref_courrier<br>
+        &bull; detail[].mode_envoi<br>
+        &bull; detail[].id_envoi<br>
+        &bull; detail[].statut_courrier<br>
+        &bull; detail[].statut_description<br>
+        &bull; detail[].tracking_number</td>
+    </tr>
+    <tr>
+        <td>delivered</td>
+        <td>Courrier(s) arrivé(s) chez le(s) destinataire(s)</td>
+        <td>&bull; event.name_event<br>
+            &bull; event.id_user<br>
+        &bull; detail[].civilite<br>
+        &bull; detail[].nom<br>
+        &bull; detail[].prenom<br>
+        &bull; detail[].societe<br>
+        &bull; detail[].adresse1<br>
+        &bull; detail[].adresse2<br>
+        &bull; detail[].adresse3<br>
+        &bull; detail[].cp<br>
+        &bull; detail[].ville<br>
+        &bull; detail[].pays<br>
+        &bull; detail[].ref_courrier<br>
+        &bull; detail[].mode_envoi<br>
+        &bull; detail[].id_envoi<br>
+        &bull; detail[].statut_courrier<br>
+        &bull; detail[].statut_description<br>
+        &bull; detail[].tracking_number</td>
+    </tr>
+    <tr>
+        <td>error</td>
+        <td>Erreur(s) de distribution(s) de(s) courrier(s)</td>
+        <td>&bull; event.name_event<br>
+            &bull; event.id_user<br>
+        &bull; detail[].civilite<br>
+        &bull; detail[].nom<br>
+        &bull; detail[].prenom<br>
+        &bull; detail[].societe<br>
+        &bull; detail[].adresse1<br>
+        &bull; detail[].adresse2<br>
+        &bull; detail[].adresse3<br>
+        &bull; detail[].cp<br>
+        &bull; detail[].ville<br>
+        &bull; detail[].pays<br>
+        &bull; detail[].ref_courrier<br>
+        &bull; detail[].mode_envoi<br>
+        &bull; detail[].id_envoi<br>
+        &bull; detail[].statut_courrier<br>
+        &bull; detail[].statut_description<br>
+        &bull; detail[].tracking_number</td>
+    </tr>
+    
+</table>
+
+### Exemples d'événements :
+
+Vous pouvez, via votre interface Merci facteur Pro, tester votre url de endpoint sur les différents événement.
+
+Voici des exemples pour chaque événement :
+
+#### Evénement new (Nouveau(x) courrier(s) créé(s))
+
+```json
+{
+    "event": {
+        "name_event": "new",
+        "id_user": "17460"
+    },
+    "detail": [{
+        "civilite": "M.",
+        "nom": "Dupont",
+        "prenom": "Michel",
+        "societe": "Green Flower Corp",
+        "adresse1": "3 rue des fleurs",
+        "adresse2": "",
+        "adresse3": "",
+        "cp": "75015",
+        "ville": "Paris",
+        "pays": "FRANCE",
+        "ref_courrier": "123456-789123456",
+        "mode_envoi": "lrar",
+        "id_envoi": "123",
+        "statut_courrier": "wait",
+        "statut_description": "14\/02\/2020 : Courrier en attente d'impression"
+    }, {
+        "civilite": "",
+        "nom": "",
+        "prenom": "",
+        "societe": "Blue Water Inc",
+        "adresse1": "9 allee de la poiscaille",
+        "adresse2": "",
+        "adresse3": "",
+        "cp": "13012",
+        "ville": "Marseille",
+        "pays": "FRANCE",
+        "ref_courrier": "987456-456123789",
+        "mode_envoi": "normal",
+        "id_envoi": "987",
+        "statut_courrier": "wait",
+        "statut_description": "14\/02\/2020 : Courrier en attente d'impression"
+    }]
+}
+```
+
+#### Evénement printed (Courrier(s) imprimé(s))
+
+```json
+{
+    "event": {
+        "name_event": "printed",
+        "id_user": "17460"
+    },
+    "detail": [{
+        "civilite": "M.",
+        "nom": "Dupont",
+        "prenom": "Michel",
+        "societe": "Green Flower Corp",
+        "adresse1": "3 rue des fleurs",
+        "adresse2": "",
+        "adresse3": "",
+        "cp": "75015",
+        "ville": "Paris",
+        "pays": "FRANCE",
+        "ref_courrier": "123456-789123456",
+        "mode_envoi": "lrar",
+        "tracking_number": "2C123456789",
+        "id_envoi": "123",
+        "statut_courrier": "imprime",
+        "statut_description": "14\/02\/2020 : Courrier imprim\u00e9 par Merci facteur"
+    }, {
+        "civilite": "",
+        "nom": "",
+        "prenom": "",
+        "societe": "Blue Water Inc",
+        "adresse1": "9 allee de la poiscaille",
+        "adresse2": "",
+        "adresse3": "",
+        "cp": "13012",
+        "ville": "Marseille",
+        "pays": "FRANCE",
+        "ref_courrier": "987456-456123789",
+        "mode_envoi": "normal",
+        "tracking_number": null,
+        "id_envoi": "987",
+        "statut_courrier": "imprime",
+        "statut_description": "14\/02\/2020 : Courrier imprim\u00e9 par Merci facteur"
+    }]
+}
+```
+
+#### Evénement new-state (Nouveau(x) statut(s) de(s) courrier(s))
+
+```json
+{
+    "event": {
+        "name_event": "new-state",
+        "id_user": "17460"
+    },
+    "detail": [{
+        "civilite": "M.",
+        "nom": "Dupont",
+        "prenom": "Michel",
+        "societe": "Green Flower Corp",
+        "adresse1": "3 rue des fleurs",
+        "adresse2": "",
+        "adresse3": "",
+        "cp": "75015",
+        "ville": "Paris",
+        "pays": "FRANCE",
+        "ref_courrier": "123456-789123456",
+        "mode_envoi": "lrar",
+        "tracking_number": "2C123456789",
+        "id_envoi": "123",
+        "statut_courrier": "PRIS_EN_CHARGE",
+        "statut_description": "14\/02\/2020 : Courrier pris en charge par La Poste"
+    }]
+}
+```
+
+#### Evénement delivered (Courrier(s) arrivé(s) chez le(s) destinataire(s))
+
+```json
+{
+    "event": {
+        "name_event": "delivered",
+        "id_user": "17460"
+    },
+    "detail": [{
+        "civilite": "M.",
+        "nom": "Dupont",
+        "prenom": "Michel",
+        "societe": "Green Flower Corp",
+        "adresse1": "3 rue des fleurs",
+        "adresse2": "",
+        "adresse3": "",
+        "cp": "75015",
+        "ville": "Paris",
+        "pays": "FRANCE",
+        "ref_courrier": "123456-789123456",
+        "mode_envoi": "lrar",
+        "tracking_number": "2C123456789",
+        "id_envoi": "123",
+        "statut_courrier": "DISTRIBUE",
+        "statut_description": "14\/02\/2020 : Courrier distribu\u00e9 au destinataire"
+    }]
+}
+```
+
+#### Evénement error (Erreur(s) de distribution(s) de(s) courrier(s))
+
+```json
+{
+    "event": {
+        "name_event": "error",
+        "id_user": "17460"
+    },
+    "detail": [{
+        "civilite": "M.",
+        "nom": "Dupont",
+        "prenom": "Michel",
+        "societe": "Green Flower Corp",
+        "adresse1": "3 rue des fleurs",
+        "adresse2": "",
+        "adresse3": "",
+        "cp": "75015",
+        "ville": "Paris",
+        "pays": "FRANCE",
+        "ref_courrier": "123456-789123456",
+        "mode_envoi": "lrar",
+        "tracking_number": "2C123456789",
+        "id_envoi": "123",
+        "statut_courrier": "RETOUR_DESTINATAIRE",
+        "statut_description": "14\/02\/2020 : Courrier retourn\u00e9 \u00e0 l'exp\u00e9diteur (adresse incompl\u00e8te)"
+    }]
+}
+```
+<!-- 
+#### Les différents statuts de courrier
+
+<table><tr><td>wait</td><td>Courrier en attente d'impression</td></tr>
+<tr><td>imprime</td><td>Courrier imprimé par Merci facteur</td></tr>
+<tr><td></td><td></td></tr>
+<tr><td></td><td></td></tr>
+<tr><td></td><td></td></tr>
+<tr><td></td><td></td></tr>
+<tr><td></td><td></td></tr>
+<tr><td></td><td></td></tr>
+<tr><td></td><td></td></tr>
+<tr><td></td><td></td></tr></table> -->
