@@ -543,7 +543,7 @@ Voici des exemples pour chaque événement :
         "mode_envoi": "lrar",
         "tracking_number": "2C123456789",
         "id_envoi": "123",
-        "statut_courrier": "PRIS_EN_CHARGE",
+        "statut_courrier": "pris_en_charge",
         "statut_description": "14\/02\/2020 : Courrier pris en charge par La Poste"
     }]
 }
@@ -572,7 +572,7 @@ Voici des exemples pour chaque événement :
         "mode_envoi": "lrar",
         "tracking_number": "2C123456789",
         "id_envoi": "123",
-        "statut_courrier": "DISTRIBUE",
+        "statut_courrier": "distribue",
         "statut_description": "14\/02\/2020 : Courrier distribu\u00e9 au destinataire"
     }]
 }
@@ -601,21 +601,36 @@ Voici des exemples pour chaque événement :
         "mode_envoi": "lrar",
         "tracking_number": "2C123456789",
         "id_envoi": "123",
-        "statut_courrier": "RETOUR_DESTINATAIRE",
+        "statut_courrier": "retour_expediteur",
         "statut_description": "14\/02\/2020 : Courrier retourn\u00e9 \u00e0 l'exp\u00e9diteur (adresse incompl\u00e8te)"
     }]
 }
 ```
-<!-- 
+ 
 #### Les différents statuts de courrier
 
-<table><tr><td>wait</td><td>Courrier en attente d'impression</td></tr>
-<tr><td>imprime</td><td>Courrier imprimé par Merci facteur</td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr></table> -->
+Voici les différents statuts qu'un courrier va pouvoir prendre, dans l'ordre chronologique.
+
+Vous retrouverez le code en question dans detail[].statut_courrier. Vous disposerez aussi d'une explication plus précise du statut dans detail[].statut_description.
+
+<table>
+<tr><th>code statut</th><th>Explication</th></tr>
+<tr><td>wait</td><td>Courrier en attente d'impression</td></tr>
+<tr><td>imprime</td><td>Courrier imprimé par Merci facteur (et sera posté dans quelques instants)</td></tr>
+<tr><td>pris_en_charge</td><td>Courrier pris en charge par La Poste</td></tr>
+<tr><td>prix_en_charge_pays_destinataire</td><td>Courrier pris en charge par le service postal du pays destinataire (envois internationaux)</td></tr>
+<tr><td>traitement</td><td>En cours de traitement chez La Poste</td></tr>
+<tr><td>traitement_pays_destination</td><td>En cours de traitement par le service postal du pays destinataire (envois internationaux)</td></tr>
+<tr><td>transit_pays_intermediaire</td><td>En cours de traitement par le service postal d'un pays de transit (envois internationaux)</td></tr>
+<tr><td>attente_presentation</td><td>Courrier en attente de distribution</td></tr>
+<tr><td>entree_douane</td><td>Courrier entre en douane (envois internationaux)</td></tr>
+<tr><td>sortie_douane</td><td>Courrier sort de douane (envois internationaux)</td></tr>
+<tr><td>retenu_douane</td><td>Courrier retenu en douane (envois internationaux)</td></tr>
+<tr><td>probleme_en_cours</td><td>La Poste rencontre un problème avec le courrier</td></tr>
+<tr><td>probleme_resolu</td><td>La Poste a résolu un problème rencontré avec le courrier</td></tr>
+<tr><td>distribution_en_cours</td><td>Courrier en cours de distribution</td></tr>
+<tr><td>non_distribuable</td><td>Courrier non distribuable</td></tr>
+<tr><td>attente_au_guichet</td><td>L'expéditeur doit aller chercher le courrier au bureau de poste spécifié sur son avis de passage</td></tr>
+<tr><td>retour_expediteur</td><td>Le courrier a été retourné à l'expéditeur</td></tr>
+<tr><td>distribue</td><td>Le courrier a été distribué au destinataire (fin d'acheminement)</td></tr>
+<tr><td>distribue_expediteur</td><td>Le courrier a été distribué à l'expéditeur en retour (fin d'acheminement)</td></tr></table> 
