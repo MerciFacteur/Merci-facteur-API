@@ -85,7 +85,8 @@ L'envoi 1 est composé de 3 courriers, l'envoi 2 est composé de 1 courrier, l'e
 
 Lorsque vous réalisez un envoi, vous devez choisir le mode d'envoi du/des courrier(s) : 
 
-- lrar : le courrier sera envoyé en recommandé avec avis de réception (valeur légale, l'éxpéditeur recevra l'avis de réception signé par le destinataire).
+- lrar : le courrier sera envoyé en recommandé avec avis de réception (valeur légale, l'expéditeur recevra l'avis de réception signé par le destinataire).
+- lrare : le courrier sera envoyé en recommandé avec avis de réception (valeur légale). L'avis de réception reviendra chez Merci facteur, nous le numériserons, et vous le mettrons à disposition en version numérique.
 - suivi : le courrier est envoyé avec un suivi simple (permet de connaître la date de réception, mais sans valeur légale).
 - normal : le courrier est envoyé sans aucun suivi (lettre verte).
 
