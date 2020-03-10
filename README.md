@@ -422,6 +422,28 @@ Voici les événements pour lesquels vous pouvez recevoir des webhooks :
         &bull; detail[].statut_description<br>
         &bull; detail[].tracking_number</td>
     </tr>
+    <tr>
+        <td>pnd</td>
+        <td>Pli(s) non distribuable(s)</td>
+        <td>&bull; event.name_event<br>
+            &bull; event.id_user<br>
+        &bull; detail[].civilite<br>
+        &bull; detail[].nom<br>
+        &bull; detail[].prenom<br>
+        &bull; detail[].societe<br>
+        &bull; detail[].adresse1<br>
+        &bull; detail[].adresse2<br>
+        &bull; detail[].adresse3<br>
+        &bull; detail[].cp<br>
+        &bull; detail[].ville<br>
+        &bull; detail[].pays<br>
+        &bull; detail[].ref_courrier<br>
+        &bull; detail[].mode_envoi<br>
+        &bull; detail[].id_envoi<br>
+        &bull; detail[].statut_courrier<br>
+        &bull; detail[].statut_description<br>
+        &bull; detail[].tracking_number</td>
+    </tr>
     
 </table>
 
@@ -607,6 +629,35 @@ Voici des exemples pour chaque événement :
     }]
 }
 ```
+
+#### Evénement pnd (pli(s) non distribuable(s))
+
+```json
+{
+    "event": {
+        "name_event": "pnd",
+        "id_user": "17460"
+    },
+    "detail": [{
+        "civilite": "M.",
+        "nom": "Dupont",
+        "prenom": "Michel",
+        "societe": "Green Flower Corp",
+        "adresse1": "3 rue des fleurs",
+        "adresse2": "",
+        "adresse3": "",
+        "cp": "75015",
+        "ville": "Paris",
+        "pays": "FRANCE",
+        "ref_courrier": "123456-789123456",
+        "mode_envoi": "lrar",
+        "tracking_number": "2C123456789",
+        "id_envoi": "123",
+        "statut_courrier": "distribue_expediteur",
+        "statut_description": "14\/02\/2020 : Distribu\u00e9 \u00e0 l'exp\u00e9diteur"
+    }]
+}
+```
  
 #### Les différents statuts de courrier
 
@@ -634,4 +685,4 @@ Vous retrouverez le code en question dans detail[].statut_courrier. Vous dispose
 <tr><td>attente_au_guichet</td><td>L'expéditeur doit aller chercher le courrier au bureau de poste spécifié sur son avis de passage</td></tr>
 <tr><td>retour_expediteur</td><td>Le courrier a été retourné à l'expéditeur</td></tr>
 <tr><td>distribue</td><td>Le courrier a été distribué au destinataire (fin d'acheminement)</td></tr>
-<tr><td>distribue_expediteur</td><td>Le courrier a été distribué à l'expéditeur en retour (fin d'acheminement)</td></tr></table> 
+<tr><td>distribue_expediteur</td><td>Le courrier a été distribué à l'expéditeur en retour (fin d'acheminement) = PND</td></tr></table> 
