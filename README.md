@@ -31,6 +31,7 @@ En savoir plus : https://www.merci-facteur.com
 - [Processus de base d'un envoi](#processus_base)
 - [Caractérisation d'un utilisateur](#caracterisation_utilisateur) 
 - [Caractérisation d'un envoi](#caracterisation_envoi) 
+- [Les adresses de destinataires et d'expéditeur](#infos_adresses) 
 - [Le mode d'envoi](#mode_envoi) 
 - [Ajouter des références internes sur les courriers](#ref_interne) 
 - [API envoi de lettres](#envoi_lettre) 
@@ -78,6 +79,44 @@ Envoi 3 ->  destinataire 1, destinataire 3
 Envoi 4 -> publipostage de 350 destinataires
 
 L'envoi 1 est composé de 3 courriers, l'envoi 2 est composé de 1 courrier, l'envoi 3 est composé de 2 courriers, l'envoi 4 est composé de 350 courriers.
+
+
+<a id="infos_adresses"></a>
+## Les adresses de destinataires et d'expéditeur
+
+Un envoi est composé d'un expéditeur et d'un ou plusieurs destinataire(s). Les adresses étant créées au préalable avec /setNewAdress.
+
+Dans une adresse les informations obligatoires sont : 
+- nom ou société
+- code postal
+- ville
+- pays
+
+Les informations possibles mais facultatives sont :
+- logo (pour l'expéditeur)
+- prénom
+- civilité
+- adresse ligne 1
+- adresse ligne 2
+- adresse ligne 3
+
+Le pays doit être avec une orthographe conforme. La liste des pays disponibles est disponible avec /getCountry.
+
+### Limites du nombre de caractères :
+<table>
+<tr><th>Information</th><th>Nb. caractère max.</th></tr>
+<tr><td>Civilité</td><td>12</td></tr>
+<tr><td>Société</td><td>90</td></tr>
+<tr><td>Nom</td><td>70</td></tr>
+<tr><td>Prénom</td><td>70</td></tr>
+<tr><td>Adresse ligne 1</td><td>90</td></tr>
+<tr><td>Adresse ligne 2</td><td>90</td></tr>
+<tr><td>Adresse ligne 3</td><td>90</td></tr>
+<tr><td>Code postal</td><td>12</td></tr>
+<tr><td>Ville</td><td>70</td></tr>
+<tr><td>Pays</td><td>70</td></tr>
+</table>
+
 
 
 <a id="mode_envoi"></a>
