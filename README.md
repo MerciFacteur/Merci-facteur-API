@@ -34,6 +34,7 @@ En savoir plus : https://www.merci-facteur.com
 - [Les adresses de destinataires et d'expéditeur](#infos_adresses) 
 - [Le mode d'envoi](#mode_envoi) 
 - [Ajouter des références internes sur les courriers](#ref_interne) 
+- [Envoyer une lettre recto-verso](#rectoverso) 
 - [API envoi de lettres](#envoi_lettre) 
 - [API envoi de cartes](#envoi_cartes) 
 - [API envoi de photos](#envoi_photo) 
@@ -156,6 +157,22 @@ La référence courrier ne peut être composée que de chiffres, lettres, espace
 
 
 
+<a id="rectoverso"></a>
+## Envoyer une lettre recto-verso
+
+Via l'API, vous pouvez choisir que votre lettre soit imprimée et recto, ou en recto verso. Pour cela, 3 variantes existent : 
+- recto : votre lettre sera imprimée uniquement en recto.
+- rectoverso : votre lettre sera imprimée en recto-verso, tous les fichiers à la suite.
+- distinctrectoverso : votre lettre sera imprimée en recto-verso, mais en gardant distinct chaque fichier de la lettre (une page blanche sera ajoutée entre les fichiers si le fichier précédent à un nombre de pages impair).
+
+Exemple avec "distinctrectoverso" : 
+Vous envoyez une lettre composée d'un fichier de 3 pages, suivi d'un autre fichier de 2 pages, en recto-verso.
+Pour éviter que la première page du second fichier ne soit imprimée au verso de la 3ème page du premier fichier, nous insérons une page blanche entre les deux fichiers.
+
+En imprimant recto-verso, vous réduisez le poid de votre lettre, et faites donc potentiellement une économie sur l'affranchissement.
+
+
+
 <a id="envoi_lettre"></a>
 ## API d'envoi de lettres
 
@@ -166,6 +183,8 @@ Vous pouvez envoyer jusqu'à 10 fichiers pour une même lettre (des PDF via leur
 Seul le format PDF est accepté. Et le poids maximum par fichier est de 4 Mo. Le fichier peut-être en couleur ou en noir et blanc.
 
 Vous pouvez demander à ce que votre lettre soit imprimée en recto, ou en recto-verso (afin de diminuer le poid, et donc le montant de l'affranchissement).
+
+Vous pouvez envoyer une lettre imprimée en recto, ou en recto-verso. Une option est également disponible pour imprimer en recto-verso tout en gardant des fichiers distincts.
 
 
 <a id="envoi_cartes"></a>
@@ -483,6 +502,27 @@ Voici les événements pour lesquels vous pouvez recevoir des webhooks :
         &bull; detail[].statut_description<br>
         &bull; detail[].tracking_number</td>
     </tr>
+    <tr>
+        <td>are</td>
+        <td>Avis de réception électronique disponible</td>
+        <td>&bull; event.name_event<br>
+            &bull; event.id_user<br>
+        &bull; detail[].civilite<br>
+        &bull; detail[].nom<br>
+        &bull; detail[].prenom<br>
+        &bull; detail[].societe<br>
+        &bull; detail[].adresse1<br>
+        &bull; detail[].adresse2<br>
+        &bull; detail[].adresse3<br>
+        &bull; detail[].cp<br>
+        &bull; detail[].ville<br>
+        &bull; detail[].pays<br>
+        &bull; detail[].ref_courrier<br>
+        &bull; detail[].mode_envoi<br>
+        &bull; detail[].id_envoi<br>
+        &bull; detail[].are_base64_jpeg<br>
+        &bull; detail[].tracking_number</td>
+    </tr>
     
 </table>
 
@@ -694,6 +734,34 @@ Voici des exemples pour chaque événement :
         "id_envoi": "123",
         "statut_courrier": "distribue_expediteur",
         "statut_description": "14\/02\/2020 : Distribu\u00e9 \u00e0 l'exp\u00e9diteur"
+    }]
+}
+```
+
+#### Evénement are (Avis de réception éléctronique disponible)
+
+```json
+{
+    "event": {
+        "name_event": "are",
+        "id_user": "17460"
+    },
+    "detail": [{
+        "civilite": "M.",
+        "nom": "Dupont",
+        "prenom": "Michel",
+        "societe": "Green Flower Corp",
+        "adresse1": "3 rue des fleurs",
+        "adresse2": "",
+        "adresse3": "",
+        "cp": "75015",
+        "ville": "Paris",
+        "pays": "FRANCE",
+        "ref_courrier": "123456-789123456",
+        "mode_envoi": "lrare",
+        "tracking_number": "2C123456789",
+        "id_envoi": "123",
+        "are_base64_jpeg": "JVBERi0xLjQj4+ [...] g0Kc3RhcUlRU9GDQo="
     }]
 }
 ```
