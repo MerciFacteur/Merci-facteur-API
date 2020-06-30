@@ -520,8 +520,10 @@ Voici les événements pour lesquels vous pouvez recevoir des webhooks :
         &bull; detail[].ref_courrier<br>
         &bull; detail[].mode_envoi<br>
         &bull; detail[].id_envoi<br>
-        &bull; detail[].are_base64_jpeg<br>
-        &bull; detail[].tracking_number</td>
+        &bull; detail[].statut_courrier<br>
+        &bull; detail[].statut_description<br>
+        &bull; detail[].tracking_number<br>
+        &bull; detail[].are_base64_jpeg</td>
     </tr>
     
 </table>
@@ -761,7 +763,9 @@ Voici des exemples pour chaque événement :
         "mode_envoi": "lrare",
         "tracking_number": "2C123456789",
         "id_envoi": "123",
-        "are_base64_jpeg": "JVBERi0xLjQj4+ [...] g0Kc3RhcUlRU9GDQo="
+        "are_base64_jpeg": "JVBERi0xLjQj4+ [...] g0Kc3RhcUlRU9GDQo=",
+        "statut_courrier": "retour_are",
+        "statut_description": "14\/02\/2020 : Retour de l'accus\u00e9 de r\u00e9ception sign\u00e9"
     }]
 }
 ```
@@ -792,4 +796,5 @@ Vous retrouverez le code en question dans detail[].statut_courrier. Vous dispose
 <tr><td>attente_au_guichet</td><td>L'expéditeur doit aller chercher le courrier au bureau de poste spécifié sur son avis de passage</td></tr>
 <tr><td>retour_expediteur</td><td>Le courrier a été retourné à l'expéditeur</td></tr>
 <tr><td>distribue</td><td>Le courrier a été distribué au destinataire (fin d'acheminement)</td></tr>
-<tr><td>distribue_expediteur</td><td>Le courrier a été distribué à l'expéditeur en retour (fin d'acheminement) = PND</td></tr></table> 
+<tr><td>distribue_expediteur</td><td>Le courrier a été distribué à l'expéditeur en retour (fin d'acheminement) = PND</td></tr>
+<tr><td>retour_are</td><td>Si vous avez l'envoi en LRARE, l'accusé de réception numérisé est disponible.</td></tr></table> 
