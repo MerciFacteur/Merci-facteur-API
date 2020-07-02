@@ -797,4 +797,5 @@ Vous retrouverez le code en question dans detail[].statut_courrier. Vous dispose
 <tr><td>retour_expediteur</td><td>Le courrier a été retourné à l'expéditeur</td></tr>
 <tr><td>distribue</td><td>Le courrier a été distribué au destinataire (fin d'acheminement)</td></tr>
 <tr><td>distribue_expediteur</td><td>Le courrier a été distribué à l'expéditeur en retour (fin d'acheminement) = PND</td></tr>
+<tr><td>archivage_pnd</td><td>Si vous avez envoyé un recommandé en LRARE, les PND reviennent chez Merci facteur, et sont archivés pendant 3 ans à compté de cet évènement.</td></tr>
 <tr><td>retour_are</td><td>Si vous avez l'envoi en LRARE, l'accusé de réception numérisé est disponible.</td></tr></table> 
