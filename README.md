@@ -777,25 +777,25 @@ Voici les différents statuts qu'un courrier va pouvoir prendre, dans l'ordre ch
 Vous retrouverez le code en question dans detail[].statut_courrier. Vous disposerez aussi d'une explication plus précise du statut dans detail[].statut_description.
 
 <table>
-<tr><th>code statut</th><th>Explication</th></tr>
-<tr><td>wait</td><td>Courrier en attente d'impression</td></tr>
-<tr><td>imprime</td><td>Courrier imprimé par Merci facteur (et sera posté dans quelques instants)</td></tr>
-<tr><td>pris_en_charge</td><td>Courrier pris en charge par La Poste</td></tr>
-<tr><td>prix_en_charge_pays_destinataire</td><td>Courrier pris en charge par le service postal du pays destinataire (envois internationaux)</td></tr>
-<tr><td>traitement</td><td>En cours de traitement chez La Poste</td></tr>
-<tr><td>traitement_pays_destination</td><td>En cours de traitement par le service postal du pays destinataire (envois internationaux)</td></tr>
-<tr><td>transit_pays_intermediaire</td><td>En cours de traitement par le service postal d'un pays de transit (envois internationaux)</td></tr>
-<tr><td>attente_presentation</td><td>Courrier en attente de distribution</td></tr>
-<tr><td>entree_douane</td><td>Courrier entre en douane (envois internationaux)</td></tr>
-<tr><td>sortie_douane</td><td>Courrier sort de douane (envois internationaux)</td></tr>
-<tr><td>retenu_douane</td><td>Courrier retenu en douane (envois internationaux)</td></tr>
-<tr><td>probleme_en_cours</td><td>La Poste rencontre un problème avec le courrier</td></tr>
-<tr><td>probleme_resolu</td><td>La Poste a résolu un problème rencontré avec le courrier</td></tr>
-<tr><td>distribution_en_cours</td><td>Courrier en cours de distribution</td></tr>
-<tr><td>non_distribuable</td><td>Courrier non distribuable</td></tr>
-<tr><td>attente_au_guichet</td><td>L'expéditeur doit aller chercher le courrier au bureau de poste spécifié sur son avis de passage</td></tr>
-<tr><td>retour_expediteur</td><td>Le courrier a été retourné à l'expéditeur</td></tr>
-<tr><td>distribue</td><td>Le courrier a été distribué au destinataire (fin d'acheminement)</td></tr>
-<tr><td>distribue_expediteur</td><td>Le courrier a été distribué à l'expéditeur en retour (fin d'acheminement) = PND</td></tr>
-<tr><td>archivage_pnd</td><td>Si vous avez envoyé un recommandé en LRARE, les PND reviennent chez Merci facteur, et sont archivés pendant 3 ans à compté de cet évènement.</td></tr>
-<tr><td>retour_are</td><td>Si vous avez l'envoi en LRARE, l'accusé de réception numérisé est disponible.</td></tr></table> 
+<tr><th>événement</th><th>code statut</th><th>Explication</th></tr>
+<tr><td>new</td><td>wait</td><td>Courrier en attente d'impression</td></tr>
+<tr><td>printed</td><td>imprime</td><td>Courrier imprimé par Merci facteur (et sera posté dans quelques instants)</td></tr>
+<tr><td>new-state</td><td>pris_en_charge</td><td>Courrier pris en charge par La Poste</td></tr>
+<tr><td>new-state</td><td>prix_en_charge_pays_destinataire</td><td>Courrier pris en charge par le service postal du pays destinataire (envois internationaux)</td></tr>
+<tr><td>new-state</td><td>traitement</td><td>En cours de traitement chez La Poste</td></tr>
+<tr><td>new-state</td><td>traitement_pays_destination</td><td>En cours de traitement par le service postal du pays destinataire (envois internationaux)</td></tr>
+<tr><td>new-state</td><td>transit_pays_intermediaire</td><td>En cours de traitement par le service postal d'un pays de transit (envois internationaux)</td></tr>
+<tr><td>new-state</td><td>attente_presentation</td><td>Courrier en attente de distribution</td></tr>
+<tr><td>new-state</td><td>entree_douane</td><td>Courrier entre en douane (envois internationaux)</td></tr>
+<tr><td>new-state</td><td>sortie_douane</td><td>Courrier sort de douane (envois internationaux)</td></tr>
+<tr><td>new-state</td><td>retenu_douane</td><td>Courrier retenu en douane (envois internationaux)</td></tr>
+<tr><td>error</td><td>probleme_en_cours</td><td>La Poste rencontre un problème avec le courrier</td></tr>
+<tr><td>new-state</td><td>probleme_resolu</td><td>La Poste a résolu un problème rencontré avec le courrier</td></tr>
+<tr><td>new-state</td><td>distribution_en_cours</td><td>Courrier en cours de distribution</td></tr>
+<tr><td>error</td><td>non_distribuable</td><td>Courrier non distribuable</td></tr>
+<tr><td>new-state</td><td>attente_au_guichet</td><td>L'expéditeur doit aller chercher le courrier au bureau de poste spécifié sur son avis de passage</td></tr>
+<tr><td>error</td><td>retour_expediteur</td><td>Le courrier a été retourné à l'expéditeur</td></tr>
+<tr><td>delivered</td><td>new</td><td>distribue</td><td>Le courrier a été distribué au destinataire (fin d'acheminement)</td></tr>
+<tr><td>pnd</td><td>distribue_expediteur</td><td>Le courrier a été distribué à l'expéditeur en retour (fin d'acheminement) = PND</td></tr>
+<tr><td>pnd</td><td>archivage_pnd</td><td>Si vous avez envoyé un recommandé en LRARE, les PND reviennent chez Merci facteur, et sont archivés pendant 3 ans à compté de cet évènement.</td></tr>
+<tr><td>are</td><td>retour_are</td><td>Si vous avez l'envoi en LRARE, l'accusé de réception numérisé est disponible.</td></tr></table> 
