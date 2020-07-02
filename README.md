@@ -795,7 +795,7 @@ Vous retrouverez le code en question dans detail[].statut_courrier. Vous dispose
 <tr><td>error</td><td>non_distribuable</td><td>Courrier non distribuable</td></tr>
 <tr><td>new-state</td><td>attente_au_guichet</td><td>L'expéditeur doit aller chercher le courrier au bureau de poste spécifié sur son avis de passage</td></tr>
 <tr><td>error</td><td>retour_expediteur</td><td>Le courrier a été retourné à l'expéditeur</td></tr>
-<tr><td>delivered</td><td>new</td><td>distribue</td><td>Le courrier a été distribué au destinataire (fin d'acheminement)</td></tr>
+<tr><td>delivered</td><td>distribue</td><td>Le courrier a été distribué au destinataire (fin d'acheminement)</td></tr>
 <tr><td>pnd</td><td>distribue_expediteur</td><td>Le courrier a été distribué à l'expéditeur en retour (fin d'acheminement) = PND</td></tr>
 <tr><td>pnd</td><td>archivage_pnd</td><td>Si vous avez envoyé un recommandé en LRARE, les PND reviennent chez Merci facteur, et sont archivés pendant 3 ans à compté de cet évènement.</td></tr>
 <tr><td>are</td><td>retour_are</td><td>Si vous avez l'envoi en LRARE, l'accusé de réception numérisé est disponible.</td></tr></table> 
