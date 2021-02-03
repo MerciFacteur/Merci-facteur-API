@@ -125,10 +125,15 @@ Le pays doit être avec une orthographe conforme. La liste des pays disponibles 
 
 Lorsque vous réalisez un envoi, vous devez choisir le mode d'envoi du/des courrier(s) : 
 
+Courriers papier : 
 - lrar : le courrier sera envoyé en recommandé avec avis de réception (valeur légale, l'expéditeur recevra l'avis de réception signé par le destinataire).
 - lrare : le courrier sera envoyé en recommandé avec avis de réception (valeur légale). L'avis de réception reviendra chez Merci facteur, nous le numériserons, et vous le mettrons à disposition en version numérique.
 - suivi : le courrier est envoyé avec un suivi simple (permet de connaître la date de réception, mais sans valeur légale).
 - normal : le courrier est envoyé sans aucun suivi (lettre verte).
+
+Courriers eléctroniques : 
+- ere_otp_mail : le courrier électronique sera envoyé en Envoi Recommandé Electronique de niveau simple qui répond aux exigences de l'article 43 du règlement (UE) eIDAS n°910/2014 du 23 juillet 2014 et de l'article 48 du décret n°2020-834 du 2 juillet 2020 - Code de vérification envoyé par email
+- ere_otp_sms : le courrier électronique sera envoyé en Envoi Recommandé Electronique de niveau simple qui répond aux exigences de l'article 43 du règlement (UE) eIDAS n°910/2014 du 23 juillet 2014 et de l'article 48 du décret n°2020-834 du 2 juillet 2020 - Code de vérification envoyé par SMS
 
 
 <a id="ref_interne"></a>
@@ -394,7 +399,29 @@ Voici les événements pour lesquels vous pouvez recevoir des webhooks :
     </tr>
     <tr>
         <td>printed</td>
-        <td>Courrier(s) imprimé(s)</td>
+        <td>Courrier(s) papier imprimé(s)</td>
+        <td>&bull; event.name_event<br>
+            &bull; event.id_user<br>
+        &bull; detail[].civilite<br>
+        &bull; detail[].nom<br>
+        &bull; detail[].prenom<br>
+        &bull; detail[].societe<br>
+        &bull; detail[].adresse1<br>
+        &bull; detail[].adresse2<br>
+        &bull; detail[].adresse3<br>
+        &bull; detail[].cp<br>
+        &bull; detail[].ville<br>
+        &bull; detail[].pays<br>
+        &bull; detail[].ref_courrier<br>
+        &bull; detail[].mode_envoi<br>
+        &bull; detail[].id_envoi<br>
+        &bull; detail[].statut_courrier<br>
+        &bull; detail[].statut_description<br>
+        &bull; detail[].tracking_number</td>
+    </tr>
+    <tr>
+        <td>sended</td>
+        <td>Courrier(s) Electronique(s) envoyé(s)</td>
         <td>&bull; event.name_event<br>
             &bull; event.id_user<br>
         &bull; detail[].civilite<br>
@@ -574,11 +601,28 @@ Voici des exemples pour chaque événement :
         "id_envoi": "987",
         "statut_courrier": "wait",
         "statut_description": "14\/02\/2020 : Courrier en attente d'impression"
+    }, {
+        "civilite": "",
+        "nom": "",
+        "prenom": "",
+        "societe": "Exemple Corp Inc",
+        "adresse1": "12 rue montagnarde",
+        "adresse2": "",
+        "adresse3": "",
+        "cp": "75010",
+        "ville": "Paris",
+        "pays": "FRANCE",
+        "email": "monmail@gmail.com",
+        "ref_courrier": "112233-4455669955",
+        "mode_envoi": "ere_otp_mail",
+        "id_envoi": "1095",
+        "statut_courrier": "wait",
+        "statut_description": "14\/02\/2020 : Courrier Electronique en attente d'envoi"
     }]
 }
 ```
 
-#### Evénement printed (Courrier(s) imprimé(s))
+#### Evénement printed (Courrier(s) papier imprimé(s))
 
 ```json
 {
@@ -620,6 +664,55 @@ Voici des exemples pour chaque événement :
         "id_envoi": "987",
         "statut_courrier": "imprime",
         "statut_description": "14\/02\/2020 : Courrier imprim\u00e9 par Merci facteur"
+    }]
+}
+```
+
+#### Evénement sended (Courrier(s) Electronique(s) envoyé(s))
+
+```json
+{
+    "event": {
+        "name_event": "sended",
+        "id_user": "17460"
+    },
+    "detail": [{
+        "civilite": "M.",
+        "nom": "Dupont",
+        "prenom": "Michel",
+        "societe": "Green Flower Corp",
+        "adresse1": "3 rue des fleurs",
+        "adresse2": "",
+        "adresse3": "",
+        "cp": "75015",
+        "ville": "Paris",
+        "pays": "FRANCE",
+        "email": "monmail@gmail.com",
+        "ref_courrier": "123456-789123456",
+        "mode_envoi": "ere_otp_mail",
+        "tracking_number": "485TGDSU5",
+        "id_envoi": "123",
+        "statut_courrier": "envoye",
+        "statut_description": "14\/02\/2020 : Courrier \u00e9lectronique envoy\u00e9 par Merci facteur"
+    }, {
+        "civilite": "",
+        "nom": "",
+        "prenom": "",
+        "societe": "Blue Water Inc",
+        "adresse1": "9 allee de la poiscaille",
+        "adresse2": "",
+        "adresse3": "",
+        "cp": "13012",
+        "ville": "Marseille",
+        "pays": "FRANCE",
+        "ref_courrier": "987456-456123789",
+        "mode_envoi": "ere_otp_sms",
+        "email": "monmail2@gmail.com",
+        "telephone": "+33628495176",
+        "tracking_number": "4D49YHU",
+        "id_envoi": "987",
+        "statut_courrier": "envoye",
+        "statut_description": "14\/02\/2020 : Courrier \u00e9lectronique envoy\u00e9 par Merci facteur"
     }]
 }
 ```
@@ -779,7 +872,8 @@ Vous retrouverez le code en question dans detail[].statut_courrier. Vous dispose
 <table>
 <tr><th>événement</th><th>code statut</th><th>Explication</th></tr>
 <tr><td>new</td><td>wait</td><td>Courrier en attente d'impression</td></tr>
-<tr><td>printed</td><td>imprime</td><td>Courrier imprimé par Merci facteur (et sera posté dans quelques instants)</td></tr>
+<tr><td>printed</td><td>imprime</td><td>Courrier papier : Courrier imprimé par Merci facteur (et sera posté dans quelques instants)</td></tr>
+<tr><td>sended</td><td>envoye</td><td>Courrier Electronique : Courrier Recommandé Electronique envoyé par Merci facteur à son destinataire</td></tr>
 <tr><td>new-state</td><td>pris_en_charge</td><td>Courrier pris en charge par La Poste</td></tr>
 <tr><td>new-state</td><td>prix_en_charge_pays_destinataire</td><td>Courrier pris en charge par le service postal du pays destinataire (envois internationaux)</td></tr>
 <tr><td>new-state</td><td>traitement</td><td>En cours de traitement chez La Poste</td></tr>
