@@ -132,8 +132,8 @@ Courriers papier :
 - normal : le courrier est envoyé sans aucun suivi (lettre verte).
 
 Courriers eléctroniques : 
-- ere_otp_mail : le courrier électronique sera envoyé en Envoi Recommandé Electronique de niveau simple qui répond aux exigences de l'article 43 du règlement (UE) eIDAS n°910/2014 du 23 juillet 2014 et de l'article 48 du décret n°2020-834 du 2 juillet 2020 - Code de vérification envoyé par email
-- ere_otp_sms : le courrier électronique sera envoyé en Envoi Recommandé Electronique de niveau simple qui répond aux exigences de l'article 43 du règlement (UE) eIDAS n°910/2014 du 23 juillet 2014 et de l'article 48 du décret n°2020-834 du 2 juillet 2020 - Code de vérification envoyé par SMS
+- ere_otp_mail : le courrier électronique sera envoyé en Envoi Recommandé Electronique de niveau simple qui répond aux exigences de l'article 43 du règlement (UE) eIDAS n°910/2014 du 23 juillet 2014 et de l'article 48 du décret n°2020-834 du 2 juillet 2020 - Code de vérification envoyé au destinataire par email
+- ere_otp_sms : le courrier électronique sera envoyé en Envoi Recommandé Electronique de niveau simple qui répond aux exigences de l'article 43 du règlement (UE) eIDAS n°910/2014 du 23 juillet 2014 et de l'article 48 du décret n°2020-834 du 2 juillet 2020 - Code de vérification envoyé au destinataire par SMS
 
 
 <a id="ref_interne"></a>
