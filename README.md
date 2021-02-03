@@ -863,7 +863,7 @@ Voici des exemples pour chaque événement :
 }
 ```
  
-#### Les différents statuts de courrier
+#### Les différents statuts de courrier (courriers papier)
 
 Voici les différents statuts qu'un courrier va pouvoir prendre, dans l'ordre chronologique.
 
@@ -873,7 +873,6 @@ Vous retrouverez le code en question dans detail[].statut_courrier. Vous dispose
 <tr><th>événement</th><th>code statut</th><th>Explication</th></tr>
 <tr><td>new</td><td>wait</td><td>Courrier en attente d'impression</td></tr>
 <tr><td>printed</td><td>imprime</td><td>Courrier papier uniquement : Courrier imprimé par Merci facteur (et sera posté dans quelques instants)</td></tr>
-<tr><td>sended</td><td>envoye</td><td>Courrier Electronique uniquement : Courrier Recommandé Electronique envoyé par Merci facteur à son destinataire</td></tr>
 <tr><td>new-state</td><td>pris_en_charge</td><td>Courrier pris en charge par La Poste</td></tr>
 <tr><td>new-state</td><td>prix_en_charge_pays_destinataire</td><td>Courrier pris en charge par le service postal du pays destinataire (envois internationaux)</td></tr>
 <tr><td>new-state</td><td>traitement</td><td>En cours de traitement chez La Poste</td></tr>
@@ -889,11 +888,24 @@ Vous retrouverez le code en question dans detail[].statut_courrier. Vous dispose
 <tr><td>error</td><td>probleme_en_cours</td><td>La Poste rencontre un problème avec le courrier</td></tr>
 <tr><td>error</td><td>non_distribuable</td><td>Courrier non distribuable</td></tr>
 <tr><td>error</td><td>retour_expediteur</td><td>Le courrier a été retourné à l'expéditeur</td></tr>
-<tr><td>error</td><td>accept_notification_error</td><td>Erreur de notification du destinataire : email erroné ou boite email pleine (fin d'acheminement)</td></tr>
 <tr><td>delivered</td><td>distribue</td><td>Courrier papier uniquement : Le courrier a été distribué au destinataire (fin d'acheminement)</td></tr>
-<tr><td>delivered</td><td>accepted</td><td>Courrier Electronique uniquement : Le destinataire a accepté la lettre et signé l'accusé de réception.</td></tr>
-<tr><td>delivered</td><td>accepted_downloaded</td><td>Courrier Electronique uniquement : Le destinataire a accepté la lettre, signé l'accusé de réception et télechargé le document.</td></tr>
 <tr><td>pnd</td><td>distribue_expediteur</td><td>Le courrier a été distribué à l'expéditeur en retour (fin d'acheminement) = PND</td></tr>
 <tr><td>pnd</td><td>archivage_pnd</td><td>Si vous avez envoyé un recommandé en LRARE, les PND reviennent chez Merci facteur, et sont archivés pendant 3 ans à compté de cet évènement.</td></tr>
-<tr><td>pnd</td><td>refused</td><td>Courrier Electronique uniquement : Le destinataire a refusé le recommandé électronique.</td></tr>
 <tr><td>are</td><td>retour_are</td><td>Si vous avez l'envoi en LRARE, l'accusé de réception numérisé est disponible.</td></tr></table> 
+
+
+#### Les différents statuts de courrier (courriers électroniques)
+
+Voici les différents statuts qu'un courrier va pouvoir prendre, dans l'ordre chronologique.
+
+Vous retrouverez le code en question dans detail[].statut_courrier. Vous disposerez aussi d'une explication plus précise du statut dans detail[].statut_description.
+
+<table>
+<tr><th>événement</th><th>code statut</th><th>Explication</th></tr>
+<tr><td>new</td><td>wait</td><td>Courrier en attente d'impression</td></tr>
+<tr><td>sended</td><td>envoye</td><td>Courrier Electronique uniquement : Courrier Recommandé Electronique envoyé par Merci facteur à son destinataire</td></tr>
+<tr><td>new-state</td><td>pris_en_charge</td><td>Courrier pris en charge par La Poste</td></tr>
+<tr><td>error</td><td>accept_notification_error</td><td>Erreur de notification du destinataire : email erroné ou boite email pleine (fin d'acheminement)</td></tr>
+<tr><td>delivered</td><td>accepted</td><td>Courrier Electronique uniquement : Le destinataire a accepté la lettre et signé l'accusé de réception.</td></tr>
+<tr><td>delivered</td><td>accepted_downloaded</td><td>Courrier Electronique uniquement : Le destinataire a accepté la lettre, signé l'accusé de réception et télechargé le document.</td></tr>
+<tr><td>pnd</td><td>refused</td><td>Courrier Electronique uniquement : Le destinataire a refusé le recommandé électronique.</td></tr></table> 
