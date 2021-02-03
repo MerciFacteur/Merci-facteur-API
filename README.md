@@ -434,6 +434,8 @@ Voici les événements pour lesquels vous pouvez recevoir des webhooks :
         &bull; detail[].cp<br>
         &bull; detail[].ville<br>
         &bull; detail[].pays<br>
+        &bull; detail[].email<br>
+        &bull; detail[].telephone<br>
         &bull; detail[].ref_courrier<br>
         &bull; detail[].mode_envoi<br>
         &bull; detail[].id_envoi<br>
