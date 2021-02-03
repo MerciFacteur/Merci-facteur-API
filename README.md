@@ -867,7 +867,7 @@ Voici des exemples pour chaque événement :
  
 #### Les différents statuts de courrier (courriers papier)
 
-Voici les différents statuts qu'un courrier va pouvoir prendre, dans l'ordre chronologique.
+Voici les différents statuts qu'un courrier "papier" va pouvoir prendre, dans l'ordre chronologique.
 
 Vous retrouverez le code en question dans detail[].statut_courrier. Vous disposerez aussi d'une explication plus précise du statut dans detail[].statut_description.
 
@@ -898,16 +898,18 @@ Vous retrouverez le code en question dans detail[].statut_courrier. Vous dispose
 
 #### Les différents statuts de courrier (courriers électroniques)
 
-Voici les différents statuts qu'un courrier va pouvoir prendre, dans l'ordre chronologique.
+Voici les différents statuts qu'un courrier électronique va pouvoir prendre, dans l'ordre chronologique.
 
 Vous retrouverez le code en question dans detail[].statut_courrier. Vous disposerez aussi d'une explication plus précise du statut dans detail[].statut_description.
 
 <table>
 <tr><th>événement</th><th>code statut</th><th>Explication</th></tr>
-<tr><td>new</td><td>wait</td><td>Courrier en attente d'impression</td></tr>
-<tr><td>sended</td><td>envoye</td><td>Courrier Electronique uniquement : Courrier Recommandé Electronique envoyé par Merci facteur à son destinataire</td></tr>
-<tr><td>new-state</td><td>pris_en_charge</td><td>Courrier pris en charge par La Poste</td></tr>
+<tr><td>new</td><td>wait</td><td>Courrier recommandé électronique en attente d'envoi</td></tr>
+<tr><td>sended</td><td>envoye</td><td>Courrier Recommandé Electronique envoyé par Merci facteur à son destinataire</td></tr>
+<tr><td>new-state</td><td>accept_wait</td><td>Courrier électronique en attente d'acceptation dans la boite de réception du destinataire.</td></tr>
+<tr><td>error</td><td>accept_lock</td><td>Courrier recommandé électronique bloqué pendant 3 heures suite à 6 tentatives infructueuses d'identification OTP.</td></tr>
 <tr><td>error</td><td>accept_notification_error</td><td>Erreur de notification du destinataire : email erroné ou boite email pleine (fin d'acheminement)</td></tr>
 <tr><td>delivered</td><td>accepted</td><td>Courrier Electronique uniquement : Le destinataire a accepté la lettre et signé l'accusé de réception.</td></tr>
 <tr><td>delivered</td><td>accepted_downloaded</td><td>Courrier Electronique uniquement : Le destinataire a accepté la lettre, signé l'accusé de réception et télechargé le document.</td></tr>
-<tr><td>pnd</td><td>refused</td><td>Courrier Electronique uniquement : Le destinataire a refusé le recommandé électronique.</td></tr></table> 
+<tr><td>pnd</td><td>expired</td><td>Le courrier électronique est expiré car son destinataire ne l'a pas accepté dans le délai imparti.</td></tr>
+<tr><td>pnd</td><td>refused</td><td>Le destinataire a refusé le recommandé électronique.</td></tr></table> 
