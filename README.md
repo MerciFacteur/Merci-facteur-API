@@ -93,6 +93,11 @@ Dans une adresse les informations obligatoires sont :
 - ville
 - pays
 
+Si vous envoyez un recommandé électronique, les informations suivantes sont également obligatoires :
+- "phone" (dans le cas d'un recommandé électronique OTP SMS)
+- "email" (dans le cas d'un recommandé électronique OTP EMAIL)
+- "consent" (doit être =1 pour signifier que vous avez le consentement du destinataire - obligatoire pour les destinataire non professionnels)
+
 Les informations possibles mais facultatives sont :
 - logo (pour l'expéditeur)
 - prénom
