@@ -196,6 +196,10 @@ Vous pouvez demander à ce que votre lettre soit imprimée en recto, ou en recto
 
 Vous pouvez envoyer une lettre imprimée en recto, ou en recto-verso. Une option est également disponible pour imprimer en recto-verso tout en gardant des fichiers distincts.
 
+Vous pouvez indiquer un nom de fichier (clé content.letter.final_filename) dans /sendCourrier.
+Ce nom de fichier sera affiché dans votre interface Merci facteur Pro, et sera visible dans l'email envoyé au destinataire dans le cas d'un recommandé électronique. Ce nom de fichier est fictif et uniquement utile à des fins de lisibilité.
+
+
 
 <a id="envoi_cartes"></a>
 ## API d'envoi de cartes illustrées
