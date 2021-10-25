@@ -194,7 +194,8 @@ A la création des destinataires (/setNewAdress), veillez à bien remplir l'emai
 Ce second paramètre sert à signifier que vous avez le consentement du destinataire (consentement non nécessaire dans le cas de destinataires professionnels).
 
 Lors de l'execution du /sendCourrier pour envoyer le recommandé électronique, vous pouvez spécifier un nom de fichier qui sera visible par le destinataire, dans l'email qui lui sera envoyé. Pour cela, remplissez la clé "content.letter.final_filename".
-Vous pouvez également ajouter une désignation au courrier, également visible par le destinataire dans l'email envoyé en remplissant la clé "designation".
+
+Vous pouvez également ajouter une désignation au courrier, également visible par le destinataire dans l'email qui lui sera envoyé, en remplissant la clé "designation".
 
 Une fois le recommandé électronique envoyé à votre destinataire, nous nous chargerons d'envoyer des emails de rappel si nous constatons que celui-ci n'a pas accepté et ouvert son recommandé électronique.
 
