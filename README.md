@@ -35,6 +35,7 @@ En savoir plus : https://www.merci-facteur.com
 - [Le mode d'envoi](#mode_envoi) 
 - [Ajouter des références internes sur les courriers](#ref_interne) 
 - [Envoyer une lettre recto-verso](#rectoverso) 
+- [API envoi de recommandé électronique](#envoi_ere) 
 - [API envoi de lettres](#envoi_lettre) 
 - [API envoi de cartes](#envoi_cartes) 
 - [API envoi de photos](#envoi_photo) 
@@ -181,6 +182,21 @@ Pour éviter que la première page du second fichier ne soit imprimée au verso 
 
 En imprimant recto-verso, vous réduisez le poid de votre lettre, et faites donc potentiellement une économie sur l'affranchissement.
 
+
+<a id="envoi_ere"></a>
+## API d'envoi de recommandés électroniques
+
+Avec l'API de Merci facteur, vous pouvez également envoyer des recommandés électroniques qui répond aux exigences de l'article 43 du règlement (UE) eIDAS n°910/2014 du 23 juillet 2014 et de l'article 48 du décret n°2020-834 du 2 juillet 2020.
+
+Comme pour tous les autres courriers, l'envoi se fait via /sendCourrier en sépcifiant le mode d'envoi "ERE_OTP_MAIL" ou "ERE_OTP_SMS".
+
+A la création des destinataires (/setNewAdress), veillez à bien remplir l'email, et à mettre consent = 1
+Ce second paramètre sert à signifier que vous avez le consentement du destinataire (consentement non nécessaire dans le cas de destinataires professionnels).
+
+Lors de l'execution du /sendCourrier pour envoyer le recommandé électronique, vous pouvez spécifier un nom de fichier qui sera visible par le destinataire, dans l'email qui lui sera envoyé. Pour cela, remplissez la clé "content.letter.final_filename".
+Vous pouvez également ajouter une désignation au courrier, également visible par le destinataire dans l'email envoyé en remplissant la clé "designation".
+
+Une fois le recommandé électronique envoyé à votre destinataire, nous nous chargerons d'envoyer des emails de rappel si nous constatons que celui-ci n'a pas accepté et ouvert son recommandé électronique.
 
 
 <a id="envoi_lettre"></a>
