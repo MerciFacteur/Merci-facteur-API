@@ -56,6 +56,8 @@ Une fois qu'un utilisateur est créé, il n'est pas nécessaire de le re-créer 
 <a id="caracterisation_utilisateur"></a>
 ## Caractérisation d'un utilisateur
 
+Dans la plupart des cas d'usages, il est recommandé d'envoyer tous vos courriers et de créer toutes vos adresses dans le même utilisateur (par exemple l'utilisateur admin créé par défaut dans votre compte Merci Facteur Pro).
+
 Un utilisateur se caractérise par un email, un nom et un prénom. Ces éléments vous permettrons d'identifier les utilisateurs (savoir qui est quel utilisateur. Nous vous conseillons d'enregistrer en local le user ID de chaque utilisateur.
 
 Généralement il s'agira d'un client pour vous. 
@@ -63,6 +65,8 @@ Généralement il s'agira d'un client pour vous.
 Chaque utilisateur à un carnet d'adresses avec l'ensemble des adresses qui ont été créées pour ses envois (les adresses sont réutilisables pour les envois suivants), ainsi qu'un historique de ses envois.
 
 Vous n'êtes pas obligé de créer plusieurs utilisateurs. Suivant votre fonctionnement vous pouvez tout à fait n'avoir qu'un seul utilisateur.
+
+Exemple de cas où la création de plusieurs utilisateurs est utile : Cas d'un syndic qui pourra créer un utilisateur par copropriété, de manière à séparer les envois de chaque copropriété pour des raisons comptables et de gestion.
 
 
 <a id="caracterisation_envoi"></a>
