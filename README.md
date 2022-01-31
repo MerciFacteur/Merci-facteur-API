@@ -123,20 +123,20 @@ Le pays doit être avec une orthographe conforme. La liste des pays disponibles 
 
 Lorsque vous envoyez un courrier via /sendCourrier, vous pouvez intégrer les adresses d'expéditeur et de destinataire de 3 manières différentes.
 
-####Expéditeur : depuis une adresse préalablement créée avec /setNewAdress
+**Expéditeur : depuis une adresse préalablement créée avec /setNewAdress**
 
 Si vous gérer un carnet d'adresses, intégrez dans adress.exp uniquement l'id de l'adresse.
 Exemple : 
 ```json
-adress.exp = 123456
+{"exp" : 123456}
 ```
 
-####Expéditeur : sans avoir créé auparavant l'adresse avec /setNewAdress
+**Expéditeur : sans avoir créé auparavant l'adresse avec /setNewAdress**
 
 Si vous ne gérez pas de carnet d'adresses, envoyez dans adress.exp un objet contenant les informations de l'adresse (attention, dans ce cas vous ne pourrez pas intégrer de logo pour l'expéditeur).
 Exemple : 
 ```json
-adress.exp = {
+{"exp" : {
     "logo": "",
     "civilite": "Mme",
     "nom": "Dupont",
@@ -150,32 +150,33 @@ adress.exp = {
     "pays": "france",
     "phone": "",
     "email": ""
-  }
+  }}
 ```
 
-####Destinataire : depuis une adresse préalablement créée avec /setNewAdress
+**Destinataire : depuis une adresse préalablement créée avec /setNewAdress**
 
 Si vous gérer un carnet d'adresses, intégrez dans adress.dest un tableau contenant les ID des adresses de destinataire.
 Exemple : 
 ```json
-adress.dest = [1595,456,951,2368]
+{"dest" : [1595,456,951,2368]}
+```
 
-####Destinataire : depuis une adresse préalablement créée avec /setNewAdress, et avec une référence
+**Destinataire : depuis une adresse préalablement créée avec /setNewAdress, et avec une référence**
 
 Vous pouvez lier à chaque courrier une référence.
 Si vous gérer un carnet d'adresses, intégrez dans adress.dest un tableau contenant un/des tableaux avec l'ID et la référence.
 Exemple : 
 ```json
-adress.dest = [[1231,"ref-client-1"],[4567,"ref-client-2"]]
+{"dest" : [[1231,"ref-client-1"],[4567,"ref-client-2"]]}
 ```
 
-####Destinataire : sans avoir créé auparavant l'adresse avec /setNewAdress
+**Destinataire : sans avoir créé auparavant l'adresse avec /setNewAdress**
 
 Si vous ne gérez pas de carnet d'adresses, envoyez dans adress.dest un tableau d'objets contenant directement les informations des adresses (si vous souhaitez lier au courrier une référence, utilisez la clé "reference".
 
 Exemple : 
 ```json
-adress.dest = [{
+{"dest" : [{
     "civilite": "Monsieur",
     "nom": "Martin",
     "prenom": "Joël",
@@ -206,16 +207,16 @@ adress.dest = [{
     "email": "",
     "consent": 0,
     "reference":"ref-client-2"
-  }]
+  }]}
 ```
 
-####Destinataire : Combinaison d'adresse issues du carnet d'adresses et d'adresses non enregistrées
+**Destinataire : Combinaison d'adresse issues du carnet d'adresses et d'adresses non enregistrées**
 
 Bien entendu, pour un même courrier vous pouvez combiner les 3 variantes décrites ci-dessus.
 
 Exemple : 
 ```json
-adress.dest = [{
+{"dest" : [{
     "civilite": "Monsieur",
     "nom": "Martin",
     "prenom": "Joël",
@@ -232,7 +233,7 @@ adress.dest = [{
     "reference":""
   },
   123456,
-  [789456,"ref-client-2"]]
+  [789456,"ref-client-2"]]}
 ```
 
 ### Limites du nombre de caractères :
