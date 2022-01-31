@@ -126,12 +126,17 @@ Lorsque vous envoyez un courrier via /sendCourrier, vous pouvez intégrer les ad
 ####Expéditeur : depuis une adresse préalablement créée avec /setNewAdress
 
 Si vous gérer un carnet d'adresses, intégrez dans adress.exp uniquement l'id de l'adresse.
-Exemple : adress.exp = 123456
+Exemple : 
+```json
+adress.exp = 123456
+```
 
 ####Expéditeur : sans avoir créé auparavant l'adresse avec /setNewAdress
 
 Si vous ne gérez pas de carnet d'adresses, envoyez dans adress.exp un objet contenant les informations de l'adresse (attention, dans ce cas vous ne pourrez pas intégrer de logo pour l'expéditeur).
-Exemple : adress.exp = {
+Exemple : 
+```json
+adress.exp = {
     "logo": "",
     "civilite": "Mme",
     "nom": "Dupont",
@@ -146,23 +151,31 @@ Exemple : adress.exp = {
     "phone": "",
     "email": ""
   }
+```
 
 ####Destinataire : depuis une adresse préalablement créée avec /setNewAdress
 
 Si vous gérer un carnet d'adresses, intégrez dans adress.dest un tableau contenant les ID des adresses de destinataire.
-Exemple : adress.dest = [1595,456,951,2368]
+Exemple : 
+```json
+adress.dest = [1595,456,951,2368]
 
 ####Destinataire : depuis une adresse préalablement créée avec /setNewAdress, et avec une référence
 
 Vous pouvez lier à chaque courrier une référence.
 Si vous gérer un carnet d'adresses, intégrez dans adress.dest un tableau contenant un/des tableaux avec l'ID et la référence.
-Exemple : adress.dest = [[1231,"ref-client-1"],[4567,"ref-client-2"]]
+Exemple : 
+```json
+adress.dest = [[1231,"ref-client-1"],[4567,"ref-client-2"]]
+```
 
 ####Destinataire : sans avoir créé auparavant l'adresse avec /setNewAdress
 
 Si vous ne gérez pas de carnet d'adresses, envoyez dans adress.dest un tableau d'objets contenant directement les informations des adresses (si vous souhaitez lier au courrier une référence, utilisez la clé "reference".
 
-Exemple : adress.dest = [{
+Exemple : 
+```json
+adress.dest = [{
     "civilite": "Monsieur",
     "nom": "Martin",
     "prenom": "Joël",
@@ -194,12 +207,15 @@ Exemple : adress.dest = [{
     "consent": 0,
     "reference":"ref-client-2"
   }]
+```
 
 ####Destinataire : Combinaison d'adresse issues du carnet d'adresses et d'adresses non enregistrées
 
 Bien entendu, pour un même courrier vous pouvez combiner les 3 variantes décrites ci-dessus.
 
-Exemple : adress.dest = [{
+Exemple : 
+```json
+adress.dest = [{
     "civilite": "Monsieur",
     "nom": "Martin",
     "prenom": "Joël",
@@ -217,7 +233,7 @@ Exemple : adress.dest = [{
   },
   123456,
   [789456,"ref-client-2"]]
-
+```
 
 ### Limites du nombre de caractères :
 <table>
