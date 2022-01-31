@@ -8,16 +8,19 @@ L'API d'envoi de courrier proposé par Merci facteur vous permet d'intégrer à 
 
 La version actuelle de l'API d'envoi de courrier permet de :
 - Créer et gérer des utilisateurs ;
-- Créer et gérer des carnets d'adresses ;
+- Gérer les adresses de destinataire et d'expéditeur ;
+- Créer un carnet d'adresses réutilisables ;
 - Créer et gérer des utilisateurs ;
 - Envoyer des lettres via des fichiers PDF (impression recto ou recto-verso) ;
 - Envoyer des cartes illustrées (4 formats : cartes postales, cartes classiques, cartes géantes, et cartes postales) ;
 - Envoyer des photos (format 10x15 cm, imprimées sur papier brillant) ;
 - Envoyer des lettres en suivi, recommandé avec avis de réception et envoi normal ;
+- Envoyer des recommandés électroniques ;
 - Gérer les courriers envoyés ; 
 - Suivre les courriers envoyés ; 
 - générer et envoyer des publipostages ;
 - Ouvrir un ticket SAV au sujet d'un courrier envoyé ;
+- Envoyer des documents agrafés ou reliés ;
 
 Les courriers envoyés via l'API d'envoi de courriers sont imprimées et postées le jour même, comme n'importe quel courrier envoyé via Merci facteur. Ils sont facturés au même prix qu'un courrier envoyé depuis l'interface Merci facteur PRO.
 
@@ -90,7 +93,10 @@ L'envoi 1 est composé de 3 courriers, l'envoi 2 est composé de 1 courrier, l'e
 <a id="infos_adresses"></a>
 ## Les adresses de destinataires et d'expéditeur
 
-Un envoi est composé d'un expéditeur et d'un ou plusieurs destinataire(s). Les adresses étant créées au préalable avec /setNewAdress.
+Un envoi est composé d'un expéditeur et d'un ou plusieurs destinataire(s). 
+
+Vous pouvez soit intérer les adresses dans un carnet d'adresses (adresses étant créées au préalable avec /setNewAdress), afin de réutiliser ces adresses ensuite. 
+Ou vous pouvez envoyer des courriers sans créer auparavant les adresses si vous ne souhaitez pas gérer un carnet d'adresses.
 
 Dans une adresse les informations obligatoires sont : 
 - nom ou société
@@ -112,6 +118,106 @@ Les informations possibles mais facultatives sont :
 - adresse ligne 3
 
 Le pays doit être avec une orthographe conforme. La liste des pays disponibles est disponible avec /getCountry.
+
+### Format des adresses lors de l'envoi d'un courrier :
+
+Lorsque vous envoyez un courrier via /sendCourrier, vous pouvez intégrer les adresses d'expéditeur et de destinataire de 3 manières différentes.
+
+####Expéditeur : depuis une adresse préalablement créée avec /setNewAdress
+
+Si vous gérer un carnet d'adresses, intégrez dans adress.exp uniquement l'id de l'adresse.
+Exemple : adress.exp = 123456
+
+####Expéditeur : sans avoir créé auparavant l'adresse avec /setNewAdress
+
+Si vous ne gérez pas de carnet d'adresses, envoyez dans adress.exp un objet contenant les informations de l'adresse (attention, dans ce cas vous ne pourrez pas intégrer de logo pour l'expéditeur).
+Exemple : adress.exp = {
+    "logo": "",
+    "civilite": "Mme",
+    "nom": "Dupont",
+    "prenom": "Sophie",
+    "societe": "Dupont Corp.",
+    "adresse1": "9 allée de la rose",
+    "adresse2": "",
+    "adresse3": "",
+    "cp": "78000",
+    "ville": "Versailles",
+    "pays": "france",
+    "phone": "",
+    "email": ""
+  }
+
+####Destinataire : depuis une adresse préalablement créée avec /setNewAdress
+
+Si vous gérer un carnet d'adresses, intégrez dans adress.dest un tableau contenant les ID des adresses de destinataire.
+Exemple : adress.dest = [1595,456,951,2368]
+
+####Destinataire : depuis une adresse préalablement créée avec /setNewAdress, et avec une référence
+
+Vous pouvez lier à chaque courrier une référence.
+Si vous gérer un carnet d'adresses, intégrez dans adress.dest un tableau contenant un/des tableaux avec l'ID et la référence.
+Exemple : adress.dest = [[1231,"ref-client-1"],[4567,"ref-client-2"]]
+
+####Destinataire : sans avoir créé auparavant l'adresse avec /setNewAdress
+
+Si vous ne gérez pas de carnet d'adresses, envoyez dans adress.dest un tableau d'objets contenant directement les informations des adresses (si vous souhaitez lier au courrier une référence, utilisez la clé "reference".
+
+Exemple : adress.dest = [{
+    "civilite": "Monsieur",
+    "nom": "Martin",
+    "prenom": "Joël",
+    "societe": "",
+    "adresse1": "33 allée de la paquerette",
+    "adresse2": "Entrée B",
+    "adresse3": "",
+    "cp": "75015",
+    "ville": "Paris",
+    "pays": "france",
+    "phone": "",
+    "email": "",
+    "consent": 0,
+    "reference":"ref-client-1"
+  },
+  {
+    "civilite": "Mme",
+    "nom": "Alonzo",
+    "prenom": "Charlène",
+    "societe": "",
+    "adresse1": "41 rue des hérissons",
+    "adresse2": "",
+    "adresse3": "",
+    "cp": "13015",
+    "ville": "Marseille",
+    "pays": "france",
+    "phone": "",
+    "email": "",
+    "consent": 0,
+    "reference":"ref-client-2"
+  }]
+
+####Destinataire : Combinaison d'adresse issues du carnet d'adresses et d'adresses non enregistrées
+
+Bien entendu, pour un même courrier vous pouvez combiner les 3 variantes décrites ci-dessus.
+
+Exemple : adress.dest = [{
+    "civilite": "Monsieur",
+    "nom": "Martin",
+    "prenom": "Joël",
+    "societe": "",
+    "adresse1": "33 allée de la paquerette",
+    "adresse2": "Entrée B",
+    "adresse3": "",
+    "cp": "75015",
+    "ville": "Paris",
+    "pays": "france",
+    "phone": "",
+    "email": "",
+    "consent": 0,
+    "reference":""
+  },
+  123456,
+  [789456,"ref-client-2"]]
+
 
 ### Limites du nombre de caractères :
 <table>
@@ -153,7 +259,8 @@ Pour des besoins d'organisation interne, vous pouvez ajouter des références in
 
 Cette référence interne se retrouvera également dans les exports CSV de vos courriers.
 
-Pour ajouter une référence interne, envoyez un tableau plutôt qu'un "integer" au niveau du tableau des destinataires. La première clé sera l'ID du destinataire, et la seconde clé votre référence interne : [IDdestinataire,"reference interne"]
+Pour ajouter une référence interne, envoyez un tableau plutôt qu'un "integer" au niveau du tableau des destinataires. La première clé sera l'ID du destinataire, et la seconde clé votre référence interne : [IDdestinataire,"reference interne"].
+Si vous n'utilisez pas de carnet d'adresses, utilisez la clé "reference" dans l'objet contenant les informations de l'adresse (plus d'informations en [cliquant ici](#infos_adresses) ).
 
 Exemple de bloc adresse avec des références internes (dans cet exemple, les deux derniers destinataires n'ont pas de référence interne) : 
 
