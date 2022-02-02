@@ -137,7 +137,6 @@ Si vous ne gérez pas de carnet d'adresses, envoyez dans adress.exp un objet con
 Exemple : 
 ```json
 {"exp" : {
-    "logo": "",
     "civilite": "Mme",
     "nom": "Dupont",
     "prenom": "Sophie",
@@ -148,7 +147,6 @@ Exemple :
     "cp": "78000",
     "ville": "Versailles",
     "pays": "france",
-    "phone": "",
     "email": ""
   }}
 ```
