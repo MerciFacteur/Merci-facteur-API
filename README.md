@@ -34,6 +34,7 @@ En savoir plus : https://www.merci-facteur.com
 - [Processus de base d'un envoi](#processus_base)
 - [Caractérisation d'un utilisateur](#caracterisation_utilisateur) 
 - [Caractérisation d'un envoi](#caracterisation_envoi) 
+- [Date d'envoi des courriers](#date_envoi) 
 - [Les adresses de destinataires et d'expéditeur](#infos_adresses) 
 - [Le mode d'envoi](#mode_envoi) 
 - [Ajouter des références internes sur les courriers](#ref_interne) 
@@ -89,6 +90,14 @@ Envoi 4 -> publipostage de 350 destinataires
 
 L'envoi 1 est composé de 3 courriers, l'envoi 2 est composé de 1 courrier, l'envoi 3 est composé de 2 courriers, l'envoi 4 est composé de 350 courriers.
 
+<a id="date_envoi"></a>
+## Date d'envoi des courriers
+
+Nous imprimerons et nous posterons vos courriers validés via l'API si vous les validez avant 17h00 du lundi au vendredi.
+
+Les courriers validés le samedi, le dimanche, ou les jours fériés, seront imprimés et postés le jour ouvrable suivant.
+
+Vous pouvez également programmer un envoi de courrier pour une date précise ultérieure. Pour cela, indiquez-la dans dans la clé "dateEnvoi", lorsque vous executez un /sendCourrier. Cette date doit être de la forme AAAA-MM-JJ et doit être une date non passée.
 
 <a id="infos_adresses"></a>
 ## Les adresses de destinataires et d'expéditeur
