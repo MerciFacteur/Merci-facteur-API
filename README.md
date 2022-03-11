@@ -542,6 +542,7 @@ Voici les événements pour lesquels vous pouvez recevoir des webhooks :
         <td>Nouveau(x) courrier(s) créé(s)</td>
         <td>&bull; event.name_event<br>
             &bull; event.id_user<br>
+            &bull; event.date_event<br>
         &bull; detail[].civilite<br>
         &bull; detail[].nom<br>
         &bull; detail[].prenom<br>
@@ -563,6 +564,7 @@ Voici les événements pour lesquels vous pouvez recevoir des webhooks :
         <td>Courrier(s) papier imprimé(s)</td>
         <td>&bull; event.name_event<br>
             &bull; event.id_user<br>
+            &bull; event.date_event<br>
         &bull; detail[].civilite<br>
         &bull; detail[].nom<br>
         &bull; detail[].prenom<br>
@@ -585,6 +587,7 @@ Voici les événements pour lesquels vous pouvez recevoir des webhooks :
         <td>Courrier(s) Electronique(s) envoyé(s)</td>
         <td>&bull; event.name_event<br>
             &bull; event.id_user<br>
+            &bull; event.date_event<br>
         &bull; detail[].civilite<br>
         &bull; detail[].nom<br>
         &bull; detail[].prenom<br>
@@ -609,6 +612,7 @@ Voici les événements pour lesquels vous pouvez recevoir des webhooks :
         <td>Nouveau(x) statut(s) de(s) courrier(s)</td>
         <td>&bull; event.name_event<br>
             &bull; event.id_user<br>
+            &bull; event.date_event<br>
         &bull; detail[].civilite<br>
         &bull; detail[].nom<br>
         &bull; detail[].prenom<br>
@@ -631,6 +635,7 @@ Voici les événements pour lesquels vous pouvez recevoir des webhooks :
         <td>Courrier(s) arrivé(s) chez le(s) destinataire(s)</td>
         <td>&bull; event.name_event<br>
             &bull; event.id_user<br>
+            &bull; event.date_event<br>
         &bull; detail[].civilite<br>
         &bull; detail[].nom<br>
         &bull; detail[].prenom<br>
@@ -653,6 +658,7 @@ Voici les événements pour lesquels vous pouvez recevoir des webhooks :
         <td>Erreur(s) de distribution(s) de(s) courrier(s)</td>
         <td>&bull; event.name_event<br>
             &bull; event.id_user<br>
+            &bull; event.date_event<br>
         &bull; detail[].civilite<br>
         &bull; detail[].nom<br>
         &bull; detail[].prenom<br>
@@ -675,6 +681,7 @@ Voici les événements pour lesquels vous pouvez recevoir des webhooks :
         <td>Pli(s) non distribuable(s)</td>
         <td>&bull; event.name_event<br>
             &bull; event.id_user<br>
+            &bull; event.date_event<br>
         &bull; detail[].civilite<br>
         &bull; detail[].nom<br>
         &bull; detail[].prenom<br>
@@ -697,6 +704,7 @@ Voici les événements pour lesquels vous pouvez recevoir des webhooks :
         <td>Avis de réception électronique disponible</td>
         <td>&bull; event.name_event<br>
             &bull; event.id_user<br>
+            &bull; event.date_event<br>
         &bull; detail[].civilite<br>
         &bull; detail[].nom<br>
         &bull; detail[].prenom<br>
@@ -730,7 +738,8 @@ Voici des exemples pour chaque événement :
 {
     "event": {
         "name_event": "new",
-        "id_user": "17460"
+        "id_user": "17460",
+        "date_event": "1581674000"
     },
     "detail": [{
         "civilite": "M.",
@@ -791,7 +800,8 @@ Voici des exemples pour chaque événement :
 {
     "event": {
         "name_event": "printed",
-        "id_user": "17460"
+        "id_user": "17460",
+        "date_event": "1581674000"
     },
     "detail": [{
         "civilite": "M.",
@@ -837,7 +847,8 @@ Voici des exemples pour chaque événement :
 {
     "event": {
         "name_event": "sended",
-        "id_user": "17460"
+        "id_user": "17460",
+        "date_event": "1581674000"
     },
     "detail": [{
         "civilite": "M.",
@@ -886,7 +897,8 @@ Voici des exemples pour chaque événement :
 {
     "event": {
         "name_event": "new-state",
-        "id_user": "17460"
+        "id_user": "17460",
+        "date_event": "1581674000"
     },
     "detail": [{
         "civilite": "M.",
@@ -915,7 +927,8 @@ Voici des exemples pour chaque événement :
 {
     "event": {
         "name_event": "delivered",
-        "id_user": "17460"
+        "id_user": "17460",
+        "date_event": "1581674000"
     },
     "detail": [{
         "civilite": "M.",
@@ -944,7 +957,8 @@ Voici des exemples pour chaque événement :
 {
     "event": {
         "name_event": "error",
-        "id_user": "17460"
+        "id_user": "17460",
+        "date_event": "1581674000"
     },
     "detail": [{
         "civilite": "M.",
@@ -973,7 +987,8 @@ Voici des exemples pour chaque événement :
 {
     "event": {
         "name_event": "pnd",
-        "id_user": "17460"
+        "id_user": "17460",
+        "date_event": "1581674000"
     },
     "detail": [{
         "civilite": "M.",
@@ -1002,7 +1017,8 @@ Voici des exemples pour chaque événement :
 {
     "event": {
         "name_event": "are",
-        "id_user": "17460"
+        "id_user": "17460",
+        "date_event": "1581674000"
     },
     "detail": [{
         "civilite": "M.",
@@ -1074,3 +1090,11 @@ Vous retrouverez le code en question dans detail[].statut_courrier. Vous dispose
 <tr><td>delivered</td><td>accepted_downloaded</td><td>Courrier Electronique uniquement : Le destinataire a accepté la lettre, signé l'accusé de réception et télechargé le document.</td></tr>
 <tr><td>pnd</td><td>expired</td><td>Le courrier électronique est expiré car son destinataire ne l'a pas accepté dans le délai imparti.</td></tr>
 <tr><td>pnd</td><td>refused</td><td>Le destinataire a refusé le recommandé électronique.</td></tr></table> 
+
+
+#### Relance des webhooks en cas d'echec
+
+Si votre endpoint ne retourne pas un statut 200, deux tentatives supplémentaires seront faites.:
+- Une seconde tentative 60 minutes après la première tentative.
+- Une troisième tentative 24h après la seconde tentative.
+
