@@ -291,20 +291,26 @@ Important : Lorsqu'un courrier est anonymisé, il en reste une trace dans votre 
 
 Pour cela, lors de l'envoi du courrier (/sendCourrier ou /sendPublipostage), envoyez la donnée suivante :
 ```json
-{anonymize:{"delay":15,"target":["content","exp","dest"]}}
+{"anonymize":{"delay":15,"target":["content","exp","dest"]}}
 ```
 
 Où :
+
 "delay":15 s'ignifie "anonymiser 15 jours après l'impression du courrier" (minimum 1 et maximum 40).
+
 "target":["content","exp","dest"] s'ignifie "anonymiser le contenu, l'expéditeur et le destinataire".
 
 Ainsi :
+
 ```json
 {"delay":10,"target":["content","dest"]}
-``` s'ignifira par exemple "Anonymiser le contenu et le destinataire 10 jours après l'impression".
+```
+s'ignifira par exemple "Anonymiser le contenu et le destinataire 10 jours après l'impression".
+
 ```json
 {"delay":1,"target":["dest"]}
-``` s'ignifira par exemple "Anonymiser le destinataire 1 jour après l'impression".
+```
+s'ignifira par exemple "Anonymiser le destinataire 1 jour après l'impression".
 
 
 <a id="ref_interne"></a>
