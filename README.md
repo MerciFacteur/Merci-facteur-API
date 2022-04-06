@@ -300,9 +300,11 @@ Où :
 
 Ainsi :
 ```json
-{"delay":10,"target":["content","dest"]}``` s'ignifira par exemple "Anonymiser le contenu et le destinataire 10 jours après l'impression".
+{"delay":10,"target":["content","dest"]}
+``` s'ignifira par exemple "Anonymiser le contenu et le destinataire 10 jours après l'impression".
 ```json
-{"delay":1,"target":["dest"]}``` s'ignifira par exemple "Anonymiser le destinataire 1 jour après l'impression".
+{"delay":1,"target":["dest"]}
+``` s'ignifira par exemple "Anonymiser le destinataire 1 jour après l'impression".
 
 
 <a id="ref_interne"></a>
