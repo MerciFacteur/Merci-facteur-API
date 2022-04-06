@@ -21,6 +21,7 @@ La version actuelle de l'API d'envoi de courrier permet de :
 - générer et envoyer des publipostages ;
 - Ouvrir un ticket SAV au sujet d'un courrier envoyé ;
 - Envoyer des documents agrafés ou reliés ;
+- Anonymiser un courrier après son envoi ;
 
 Les courriers envoyés via l'API d'envoi de courriers sont imprimées et postées le jour même, comme n'importe quel courrier envoyé via Merci facteur. Ils sont facturés au même prix qu'un courrier envoyé depuis l'interface Merci facteur PRO.
 
@@ -37,6 +38,7 @@ En savoir plus : https://www.merci-facteur.com
 - [Date d'envoi des courriers](#date_envoi) 
 - [Les adresses de destinataires et d'expéditeur](#infos_adresses) 
 - [Le mode d'envoi](#mode_envoi) 
+- [Anonymisation de courrier](#anonymisation) 
 - [Ajouter des références internes sur les courriers](#ref_interne) 
 - [Envoyer une lettre recto-verso](#rectoverso) 
 - [API envoi de recommandé électronique](#envoi_ere) 
@@ -274,6 +276,29 @@ Courriers papier :
 Courriers eléctroniques : 
 - ere_otp_mail : le courrier électronique sera envoyé en Envoi Recommandé Electronique de niveau simple qui répond aux exigences de l'article 43 du règlement (UE) eIDAS n°910/2014 du 23 juillet 2014 et de l'article 48 du décret n°2020-834 du 2 juillet 2020 - Code de vérification envoyé au destinataire par email
 - ere_otp_sms : le courrier électronique sera envoyé en Envoi Recommandé Electronique de niveau simple qui répond aux exigences de l'article 43 du règlement (UE) eIDAS n°910/2014 du 23 juillet 2014 et de l'article 48 du décret n°2020-834 du 2 juillet 2020 - Code de vérification envoyé au destinataire par SMS
+
+<a id="anonymisation"></a>
+## Anonymisation de courrier
+
+Si vous le souhaitez, vous pouvez demander à ce que les courriers soient "anonymisés" après leur envoi. Cela aura pour conséquence de supprimer les données et fichiers de nos serveurs.
+
+Ainsi, vous pourrez :
+- Supprimer l'adresse d'expéditeur d'un courrier
+- Supprimer l'adresse de destinataire d'un courrier
+- Supprimer le contenu d'un courrier
+
+Important : Lorsqu'un courrier est anonymisé, il en reste une trace dans votre interface (date d'envoi, suivi, etc.) mais toutes les données personnelles auront été supprimées.
+
+Pour cela, lors de l'envoi du courrier (/sendCourrier ou /sendPublipostage), envoyez la donnée suivante :
+anonymize:{"delay":15,"target":["content","exp","dest"]}
+
+Où :
+"delay":15 s'ignifie "anonymiser 15 jours après l'impression du courrier" (minimum 1 et maximum 40).
+"target":["content","exp","dest"] s'ignifie "anonymiser le contenu, l'expéditeur et le destinataire".
+
+Ainsi :
+{"delay":10,"target":["content","dest"]} s'ignifira par exemple "Anonymiser le contenu et le destinataire 10 jours après l'impression".
+{"delay":1,"target":["dest"]} s'ignifira par exemple "Anonymiser le destinataire 1 jour après l'impression".
 
 
 <a id="ref_interne"></a>
