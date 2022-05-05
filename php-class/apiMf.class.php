@@ -402,10 +402,6 @@ class apiMerciFacteur {
             'ww-service-id:' . $this->serviceId
         );
         
-        foreach ($files as $key => $value) {
-            $files[$key] = utf8_encode($value);
-        }
-        
         $content = array();
         
         if(!is_null($infosLetter))
