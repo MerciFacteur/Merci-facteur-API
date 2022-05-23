@@ -141,7 +141,7 @@ Exemple :
 ```json
 {"exp" : 123456}
 ```
-
+<a id="infos_adresses_expediteur_sans_setNewAdress"></a>
 **Expéditeur : sans avoir créé auparavant l'adresse avec /setNewAdress**
 
 Si vous ne gérez pas de carnet d'adresses, envoyez dans adress.exp un objet contenant les informations de l'adresse (attention, dans ce cas vous ne pourrez pas intégrer de logo pour l'expéditeur).
@@ -537,9 +537,11 @@ En plus de la source de données, vous devrez envoyer à cette phase le json "te
 Attention, les variables sont sensibles à la casse.
 
 
-### Envoi de la source (/sendPublipostage) :
+### Validation de l'envoi du publipostage (/sendPublipostage) :
 
 La 3ème et dernière phase permet de valider le publipostage. Une fois cette phase exécutée, Merci facteur a le feu vert pour fusionner les données, générer les lettres, et procéder à l'envoi de vos courriers.
+
+Envoyez ici soit l'id de votre adresse d'expéditeur (dans "idExp"), soit un json contenant directement les information de l'adresse d'expéditeur souhaitée (dans "jsonExp"). (plus d'informations en [cliquant ici](#infos_adresses_expediteur_sans_setNewAdress) )
 
 Cette phase étant sensible, en plus de la validation par l'API vous avez aussi la possibilité, si vous le souhaitez, d'effectuer cette phase manuellement. Ce qui vous permettra de vérifier visuellement un échantillon de lettres une fois fusionnées.
 
