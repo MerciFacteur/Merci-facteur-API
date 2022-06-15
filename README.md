@@ -762,6 +762,30 @@ Voici les événements pour lesquels vous pouvez recevoir des webhooks :
         &bull; detail[].tracking_number<br>
         &bull; detail[].are_base64_jpeg</td>
     </tr>
+    <tr>
+        <td>pdd</td>
+        <td>Preuve de dépôt disponible</td>
+        <td>&bull; event.name_event<br>
+            &bull; event.id_user<br>
+            &bull; event.date_event<br>
+        &bull; detail[].civilite<br>
+        &bull; detail[].nom<br>
+        &bull; detail[].prenom<br>
+        &bull; detail[].societe<br>
+        &bull; detail[].adresse1<br>
+        &bull; detail[].adresse2<br>
+        &bull; detail[].adresse3<br>
+        &bull; detail[].cp<br>
+        &bull; detail[].ville<br>
+        &bull; detail[].pays<br>
+        &bull; detail[].ref_courrier<br>
+        &bull; detail[].mode_envoi<br>
+        &bull; detail[].id_envoi<br>
+        &bull; detail[].statut_courrier<br>
+        &bull; detail[].statut_description<br>
+        &bull; detail[].tracking_number<br>
+        &bull; detail[].pdd_base64_pdf</td>
+    </tr>
     
 </table>
 
