@@ -1080,6 +1080,37 @@ Voici des exemples pour chaque événement :
     }]
 }
 ```
+
+#### Evénement pdd (Preuve de dépôt disponible)
+
+```json
+{
+    "event": {
+        "name_event": "pdd",
+        "id_user": "17460",
+        "date_event": "1581674000"
+    },
+    "detail": [{
+        "civilite": "M.",
+        "nom": "Dupont",
+        "prenom": "Michel",
+        "societe": "Green Flower Corp",
+        "adresse1": "3 rue des fleurs",
+        "adresse2": "",
+        "adresse3": "",
+        "cp": "75015",
+        "ville": "Paris",
+        "pays": "FRANCE",
+        "ref_courrier": "123456-789123456",
+        "mode_envoi": "lrar",
+        "tracking_number": "2C123456789",
+        "id_envoi": "123",
+        "pdd_base64_pdf": "JVBERi0xLjQj4+ [...] g0Kc3RhcUlRU9GDQo=",
+        "statut_courrier": "scan_pdd",
+        "statut_description": "14\/02\/2020 : Num\u00e9risation de la preuve de d\u00e9pot"
+    }]
+}
+```
  
 #### Les différents statuts de courrier (courriers papier)
 
@@ -1109,7 +1140,8 @@ Vous retrouverez le code en question dans detail[].statut_courrier. Vous dispose
 <tr><td>delivered</td><td>distribue</td><td>Courrier papier uniquement : Le courrier a été distribué au destinataire (fin d'acheminement)</td></tr>
 <tr><td>pnd</td><td>distribue_expediteur</td><td>Le courrier a été distribué à l'expéditeur en retour (fin d'acheminement) = PND</td></tr>
 <tr><td>pnd</td><td>archivage_pnd</td><td>Si vous avez envoyé un recommandé en LRARE, les PND reviennent chez Merci facteur, et sont archivés pendant 3 ans à compté de cet évènement.</td></tr>
-<tr><td>are</td><td>retour_are</td><td>Si vous avez l'envoi en LRARE, l'accusé de réception numérisé est disponible.</td></tr></table> 
+<tr><td>are</td><td>retour_are</td><td>Si vous avez l'envoi en LRARE, l'accusé de réception numérisé est disponible.</td></tr>
+<tr><td>pdd</td><td>scan_pdd</td><td>Pour les courriers suivis et recommandés, la preuve de dépôt format PDF est disponible.</td></tr></table> 
 
 
 #### Les différents statuts de courrier (courriers électroniques)
