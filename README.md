@@ -121,7 +121,7 @@ Si vous envoyez un recommandé électronique, les informations suivantes sont é
 - "consent" (doit être =1 pour signifier que vous avez le consentement du destinataire - obligatoire pour les destinataire non professionnels)
 
 Les informations possibles mais facultatives sont :
-- logo (pour l'expéditeur)
+- logo (pour l'expéditeur, imprimé en haut à gauche de l'enveloppe, l'image doit au maximum avoir une dimension de L400px * H250px)
 - prénom
 - civilité
 - adresse ligne 1
