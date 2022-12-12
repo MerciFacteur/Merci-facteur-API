@@ -29,3 +29,8 @@ function hashSecretKey(secretKey, serviceId) {
     };
 }
  ```
+ 
+ ### Exemple de hashage de la secret key (winDEV) :
+```windev
+Minuscule ( BufferVersHexa( HashChaîne( HA_HMAC_SHA_256  , Service_ID_Public + Date_Heure_Unix , Secret_Key  ) , SansRegroupement) )
+ ```
