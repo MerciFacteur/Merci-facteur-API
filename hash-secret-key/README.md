@@ -17,3 +17,15 @@ function hashSecretKey($secretKey, $serviceId){
         return array('timestamp'=>$ts, 'hash'=>$hashed);
     }
  ```
+ 
+ ### Exemple de hashage de la secret key (PHP) :
+```nodeJS
+function hashSecretKey(secretKey, serviceId) {
+    const timestamp = Math.floor(Date.now() / 1000);
+    const hash = crypto.createHmac('sha256', secretKey).update(serviceId + timestamp).digest('hex');
+    return {
+        timestamp,
+        hash
+    };
+}
+ ```
