@@ -8,6 +8,16 @@ Pour demander l'access token, vous devez envoyer votre secret key hashée (et no
 
 Vous disposez, dans votre interface Merci facteur PRO d'un bouton pour générer un hashage de votre secret key à des fins de tests.
 
+
+## Explication textuelle de la fonction de hashage à utiliser :
+
+Vous devez générer une valeur de clé de hachage en utilisant la méthode HMAC et l'algorithme sha256.
+La donnée à hasher est la concaténation de votre Service ID, et du timestamp courant.
+La clé de hashage sera votre Secret Key.
+La valeur en sortie sera une chaîne de caractères hexadécimaux en minuscule.
+
+## Exemples : 
+
 ### Exemple de hashage de la secret key (PHP) :
 ```php
 function hashSecretKey($secretKey, $serviceId){
