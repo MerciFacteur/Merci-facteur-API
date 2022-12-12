@@ -19,7 +19,7 @@ function hashSecretKey($secretKey, $serviceId){
  ```
  
  ### Exemple de hashage de la secret key (PHP) :
-```nodeJS
+```javascript
 function hashSecretKey(secretKey, serviceId) {
     const timestamp = Math.floor(Date.now() / 1000);
     const hash = crypto.createHmac('sha256', secretKey).update(serviceId + timestamp).digest('hex');
