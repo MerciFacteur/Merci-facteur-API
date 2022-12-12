@@ -18,7 +18,7 @@ function hashSecretKey($secretKey, $serviceId){
     }
  ```
  
- ### Exemple de hashage de la secret key (PHP) :
+ ### Exemple de hashage de la secret key (nodeJS) :
 ```javascript
 function hashSecretKey(secretKey, serviceId) {
     const timestamp = Math.floor(Date.now() / 1000);
