@@ -18,12 +18,12 @@ La version actuelle de l'API d'envoi de courrier permet de :
 - Envoyer des recommandés électroniques ;
 - Gérer les courriers envoyés ; 
 - Suivre les courriers envoyés ; 
-- générer et envoyer des publipostages ;
+- Générer et envoyer des publipostages ;
 - Ouvrir un ticket SAV au sujet d'un courrier envoyé ;
 - Envoyer des documents agrafés ou reliés ;
 - Anonymiser un courrier après son envoi ;
 
-Les courriers envoyés via l'API d'envoi de courriers sont imprimées et postées le jour même, comme n'importe quel courrier envoyé via Merci facteur. Ils sont facturés au même prix qu'un courrier envoyé depuis l'interface Merci facteur PRO.
+Les courriers envoyés via l'API d'envoi de courriers sont imprimés et postés le jour même, comme n'importe quel courrier envoyé via Merci facteur. Ils sont facturés au même prix qu'un courrier envoyé depuis l'interface Merci facteur PRO.
 
 Documentation : https://www.merci-facteur.com/api/1.2/doc.php
 
@@ -352,15 +352,15 @@ Exemple avec "distinctrectoverso" :
 Vous envoyez une lettre composée d'un fichier de 3 pages, suivi d'un autre fichier de 2 pages, en recto-verso.
 Pour éviter que la première page du second fichier ne soit imprimée au verso de la 3ème page du premier fichier, nous insérons une page blanche entre les deux fichiers.
 
-En imprimant recto-verso, vous réduisez le poid de votre lettre, et faites donc potentiellement une économie sur l'affranchissement.
+En imprimant recto-verso, vous réduisez le poids de votre lettre, et faites donc potentiellement une économie sur l'affranchissement.
 
 
 <a id="envoi_ere"></a>
 ## API d'envoi de recommandés électroniques
 
-Avec l'API de Merci facteur, vous pouvez également envoyer des recommandés électroniques qui répond aux exigences de l'article 43 du règlement (UE) eIDAS n°910/2014 du 23 juillet 2014 et de l'article 48 du décret n°2020-834 du 2 juillet 2020.
+Avec l'API de Merci facteur, vous pouvez également envoyer des recommandés électroniques qui répondent aux exigences de l'article 43 du règlement (UE) eIDAS n°910/2014 du 23 juillet 2014 et de l'article 48 du décret n°2020-834 du 2 juillet 2020.
 
-Comme pour tous les autres courriers, l'envoi se fait via /sendCourrier en sépcifiant le mode d'envoi "ERE_OTP_MAIL" ou "ERE_OTP_SMS".
+Comme pour tous les autres courriers, l'envoi se fait via /sendCourrier en spécifiant le mode d'envoi "ERE_OTP_MAIL" ou "ERE_OTP_SMS".
 
 A la création des destinataires (/setNewAdress), veillez à bien remplir l'email, et à mettre consent = 1
 Ce second paramètre sert à signifier que vous avez le consentement du destinataire (consentement non nécessaire dans le cas de destinataires professionnels).
