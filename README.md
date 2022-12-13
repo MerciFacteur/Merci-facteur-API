@@ -22,6 +22,7 @@ La version actuelle de l'API d'envoi de courrier permet de :
 - Ouvrir un ticket SAV au sujet d'un courrier envoyé ;
 - Envoyer des documents agrafés ou reliés ;
 - Anonymiser un courrier après son envoi ;
+- Envoyer des courriers dans des enveloppes personnalisées ;
 
 Les courriers envoyés via l'API d'envoi de courriers sont imprimés et postés le jour même, comme n'importe quel courrier envoyé via Merci facteur. Ils sont facturés au même prix qu'un courrier envoyé depuis l'interface Merci facteur PRO.
 
@@ -36,6 +37,7 @@ En savoir plus : https://www.merci-facteur.com
 - [Caractérisation d'un utilisateur](#caracterisation_utilisateur) 
 - [Caractérisation d'un envoi](#caracterisation_envoi) 
 - [Date d'envoi des courriers](#date_envoi) 
+- [Envoi dans des enveloppes personnalisées](#branding) 
 - [Les adresses de destinataires et d'expéditeur](#infos_adresses) 
 - [Le mode d'envoi](#mode_envoi) 
 - [Anonymisation de courrier](#anonymisation) 
@@ -100,6 +102,23 @@ Nous imprimerons et nous posterons vos courriers validés via l'API si vous les 
 Les courriers validés le samedi, le dimanche, ou les jours fériés, seront imprimés et postés le jour ouvrable suivant.
 
 Vous pouvez également programmer un envoi de courrier pour une date précise ultérieure. Pour cela, indiquez-la dans dans la clé "dateEnvoi", lorsque vous executez un /sendCourrier. Cette date doit être de la forme AAAA-MM-JJ et doit être une date non passée.
+
+<a id="branding"></a>
+## Envoi dans des enveloppes personnalisées
+
+Avec Merci Facteur Pro, vous pouvez envoyer vos courriers dans des enveloppes personnalisées :
+![Enveloppe personnalisée avec Merci Facteur Pro](https://www.merci-facteur.com/pro/img/enveloppe-personnalisee.png)
+
+Pour créer vos enveloppes personnalisées, rendez-vous dans "Votre branding" via le menu en haut à droite de votre compte Merci Facteur Pro.
+
+Vous retrouverez ensuite l'ID de chaque enveloppe personnalisée, dans la liste de vos enveloppes personnalisées.
+
+Pour utiliser une enveloppe personnalisée lors d'un envoi de courrier via l'API Merci Facteur Pro, ajoutez dans "sendCourrier" :
+```json
+{"enveloppe":{"type":"template","value":"123456"}}
+```
+(en remplaçant "123456" par l'ID de l'enveloppe personnalisée souhaitée.
+
 
 <a id="infos_adresses"></a>
 ## Les adresses de destinataires et d'expéditeur
