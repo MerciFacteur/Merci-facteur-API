@@ -23,6 +23,8 @@ La version actuelle de l'API d'envoi de courrier permet de :
 - Envoyer des documents agrafés ou reliés ;
 - Anonymiser un courrier après son envoi ;
 - Envoyer des courriers dans des enveloppes personnalisées ;
+- Confier la gestion des NPAI à Merci Facteur ;
+
 
 Les courriers envoyés via l'API d'envoi de courriers sont imprimés et postés le jour même, comme n'importe quel courrier envoyé via Merci facteur. Ils sont facturés au même prix qu'un courrier envoyé depuis l'interface Merci facteur PRO.
 
@@ -37,7 +39,8 @@ En savoir plus : https://www.merci-facteur.com
 - [Caractérisation d'un utilisateur](#caracterisation_utilisateur) 
 - [Caractérisation d'un envoi](#caracterisation_envoi) 
 - [Date d'envoi des courriers](#date_envoi) 
-- [Envoi dans des enveloppes personnalisées](#branding) 
+- [Gestion des NPAI (ou PND / plis non distribués)](#npai) 
+- [Branding et enveloppes personnalisées](#branding) 
 - [Les adresses de destinataires et d'expéditeur](#infos_adresses) 
 - [Le mode d'envoi](#mode_envoi) 
 - [Anonymisation de courrier](#anonymisation) 
@@ -103,8 +106,25 @@ Les courriers validés le samedi, le dimanche, ou les jours fériés, seront imp
 
 Vous pouvez également programmer un envoi de courrier pour une date précise ultérieure. Pour cela, indiquez-la dans dans la clé "dateEnvoi", lorsque vous executez un /sendCourrier. Cette date doit être de la forme AAAA-MM-JJ et doit être une date non passée.
 
+<a id="npai"></a>
+## Gestion des NPAI (ou PND / plis non distribués)
+
+Le NPAI (ou PND) est un courrier qui n'a pas été remis au destinataire et qui est retourné à l'expéditeur (adresse incorrecte, boite aux lettres cassée ou inaccessible, recommandé non réclamé ou refusé, etc.).
+
+Vous pouvez confier à Merci Facteur la gestion des NPAI quelque soit le mode d'envoi (recommandé, lettre verte, suivi). Les courriers NPAI reviennent alors chez Merci Facteur, nous les numérisons, et vous faisons remonter l'information via l'API via les [webhooks](webhooks). Les courriers en NPAI sont ensuite archivés durant 3 ans.
+
+### Gestion des NPAI pour les envois Suivis simple et Lettre Verte sans suivi :
+Ajoutez dans "sendCourrier" :
+```json
+{"gestionNpai":1}
+```
+
+### Gestion des NPAI pour les envois Recommandés :
+Utilisez directement le mode d'envoi "lrare". Qui permet la numérisation des AR et la gestion des NPAI pour les recommandés. [En savoir plus](#mode_envoi)
+
+
 <a id="branding"></a>
-## Envoi dans des enveloppes personnalisées
+## Branding et enveloppes personnalisées
 
 Avec Merci Facteur Pro, vous pouvez envoyer vos courriers dans des enveloppes personnalisées :
 ![Enveloppe personnalisée avec Merci Facteur Pro](https://www.merci-facteur.com/pro/img/enveloppe-personnalisee.png)
@@ -118,7 +138,6 @@ Pour utiliser une enveloppe personnalisée lors d'un envoi de courrier via l'API
 {"enveloppe":{"type":"template","value":"123456"}}
 ```
 (en remplaçant "123456" par l'ID de l'enveloppe personnalisée souhaitée.
-
 
 <a id="infos_adresses"></a>
 ## Les adresses de destinataires et d'expéditeur
@@ -286,13 +305,15 @@ Exemple :
 
 Lorsque vous réalisez un envoi, vous devez choisir le mode d'envoi du/des courrier(s) : 
 
-Courriers papier : 
+### Courriers papier : 
 - lrar : le courrier sera envoyé en recommandé avec avis de réception (valeur légale, l'expéditeur recevra l'avis de réception signé par le destinataire).
 - lrare : le courrier sera envoyé en recommandé avec avis de réception (valeur légale). L'avis de réception reviendra chez Merci facteur, nous le numériserons, et vous le mettrons à disposition en version numérique.
 - suivi : le courrier est envoyé avec un suivi simple (permet de connaître la date de réception, mais sans valeur légale).
 - normal : le courrier est envoyé sans aucun suivi (lettre verte).
 
-Courriers eléctroniques : 
+[En savoir plus sur les NPAI (ou PND, retour à l'expéditeur)](#npai)
+
+### Courriers eléctroniques : 
 - ere_otp_mail : le courrier électronique sera envoyé en Envoi Recommandé Electronique de niveau simple qui répond aux exigences de l'article 43 du règlement (UE) eIDAS n°910/2014 du 23 juillet 2014 et de l'article 48 du décret n°2020-834 du 2 juillet 2020 - Code de vérification envoyé au destinataire par email
 - ere_otp_sms : le courrier électronique sera envoyé en Envoi Recommandé Electronique de niveau simple qui répond aux exigences de l'article 43 du règlement (UE) eIDAS n°910/2014 du 23 juillet 2014 et de l'article 48 du décret n°2020-834 du 2 juillet 2020 - Code de vérification envoyé au destinataire par SMS
 
