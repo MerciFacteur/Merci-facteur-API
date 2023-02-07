@@ -111,7 +111,7 @@ Vous pouvez également programmer un envoi de courrier pour une date précise ul
 
 Le NPAI (ou PND) est un courrier qui n'a pas été remis au destinataire et qui est retourné à l'expéditeur (adresse incorrecte, boite aux lettres cassée ou inaccessible, recommandé non réclamé ou refusé, etc.).
 
-Vous pouvez confier à Merci Facteur la gestion des NPAI quelque soit le mode d'envoi (recommandé, lettre verte, suivi). Les courriers NPAI reviennent alors chez Merci Facteur, nous les numérisons, et vous faisons remonter l'information via l'API via les [webhooks](#webhooks). Les courriers en NPAI sont ensuite archivés durant 3 ans.
+Vous pouvez confier à Merci Facteur la gestion des NPAI quel que soit le mode d'envoi (recommandé, lettre verte, suivi). Les courriers NPAI reviennent alors chez Merci Facteur, nous les numérisons, et vous faisons remonter l'information par l'API via les [webhooks](#webhooks). Les courriers en NPAI sont ensuite archivés durant 3 ans.
 
 ### Gestion des NPAI pour les envois Suivi simple et Lettre Verte sans suivi :
 Ajoutez dans "sendCourrier" :
