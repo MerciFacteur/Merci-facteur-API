@@ -114,7 +114,7 @@ Le NPAI (ou PND) est un courrier qui n'a pas été remis au destinataire et qui 
 Vous pouvez confier à Merci Facteur la gestion des NPAI quel que soit le mode d'envoi (recommandé, lettre verte, suivi). Les courriers NPAI reviennent alors chez Merci Facteur, nous les numérisons, et vous faisons remonter l'information par l'API via les [webhooks](#webhooks). Les courriers en NPAI sont ensuite archivés durant 3 ans.
 
 ### Gestion des NPAI pour les envois Suivi simple et Lettre Verte sans suivi :
-Ajoutez dans "sendCourrier" :
+Ajoutez dans "sendCourrier" (ou dans le "sendPublipostage" pour les publipostages) :
 ```json
 {"gestionNpai":1}
 ```
