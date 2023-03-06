@@ -44,6 +44,7 @@ En savoir plus : https://www.merci-facteur.com
 - [Les adresses de destinataires et d'expéditeur](#infos_adresses) 
 - [Le mode d'envoi](#mode_envoi) 
 - [Anonymisation de courrier](#anonymisation) 
+- [Anti-doublon](#antidoublon) 
 - [Ajouter des références internes sur les courriers](#ref_interne) 
 - [Envoyer une lettre recto-verso](#rectoverso) 
 - [API envoi de recommandé électronique](#envoi_ere) 
@@ -352,6 +353,18 @@ s'ignifira par exemple "Anonymiser le contenu et le destinataire 10 jours après
 ```
 s'ignifira par exemple "Anonymiser le destinataire 1 jour après l'impression".
 
+<a id="antidoublon"></a>
+## Anti-doublon de courrier
+
+L'API Merci Facteur vous propose une fonctionnalité pour éviter le risque d'envoyer deux fois le même courrier sans le faire exprès.
+
+Pour cela, envoyez dans le "/sendCourrier" le paramètre suivant : 
+```json
+{"antidoublon":"votre référence unique"}
+```
+
+En indiquant une référence de votre choix (maximum 200 caractères) correspondant au courrier (exemple : référence client+référence facture+numéro de relance).
+Si vous essayez d'envoyer deux fois un courrier avec cette référence identique sur 30 jours glissant, l'API vous retournera une erreur.
 
 <a id="ref_interne"></a>
 ## Ajouter des références internes sur les courriers
