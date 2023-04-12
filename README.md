@@ -415,7 +415,7 @@ Avec l'API de Merci facteur, vous pouvez également envoyer des recommandés él
 
 Comme pour tous les autres courriers, l'envoi se fait via /sendCourrier en spécifiant le mode d'envoi "ERE_OTP_MAIL" ou "ERE_OTP_SMS".
 
-A la création des destinataires (/setNewAdress), veillez à bien remplir l'email, et à mettre consent = 1
+A la création des destinataires (/setNewAdress) ou dans le json envoyé pour l'adresse lors de l'envoi du courrier, veillez à bien remplir l'email, et à mettre consent = 1
 Ce second paramètre sert à signifier que vous avez le consentement du destinataire (consentement non nécessaire dans le cas de destinataires professionnels).
 
 Lors de l'execution du /sendCourrier pour envoyer le recommandé électronique, vous pouvez spécifier un nom de fichier qui sera visible par le destinataire, dans l'email qui lui sera envoyé. Pour cela, remplissez la clé "content.letter.final_filename".
