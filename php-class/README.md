@@ -239,6 +239,7 @@ else
 $idUser = 37;
 
 // Les adresses du courrier - expéditeur et destinataire(s)
+// Dans l'exemple ci-dessous, nous passons des ID d'adresses auparavant créées dans votre carnet d'adresses. Si vous ne souhaitez pas gérer un carnet d'adresse, vous pouvez ici envoyer directement des JSON avec les infos des adresses. Plus d'explications ici : https://github.com/MerciFacteur/Merci-facteur-API/blob/master/README.md#infos_adresses
 $adress = array('exp'=>85,'dest'=>array(83,84,86,87));
 
 
