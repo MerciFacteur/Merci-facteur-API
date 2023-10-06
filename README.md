@@ -40,7 +40,7 @@ En savoir plus : https://www.merci-facteur.com
 - [Caractérisation d'un envoi](#caracterisation_envoi) 
 - [Date d'envoi des courriers](#date_envoi) 
 - [Gestion des NPAI (ou PND / plis non distribués)](#npai) 
-- [Branding et enveloppes personnalisées](#branding) 
+- [Enveloppes et branding (personnalisation d'enveloppe](#branding) 
 - [Les adresses de destinataires et d'expéditeur](#infos_adresses) 
 - [Le mode d'envoi](#mode_envoi) 
 - [Anonymisation de courrier](#anonymisation) 
@@ -51,7 +51,6 @@ En savoir plus : https://www.merci-facteur.com
 - [API envoi de lettres](#envoi_lettre) 
 - [API envoi de cartes](#envoi_cartes) 
 - [API envoi de photos](#envoi_photo) 
-- [Les enveloppes](#enveloppes) 
 - [API de publipostage](#publipostage) 
 - [Webhooks](#webhooks) 
 
@@ -126,6 +125,14 @@ Utilisez directement le mode d'envoi "lrare". Qui permet la numérisation des AR
 
 <a id="branding"></a>
 ## Branding et enveloppes personnalisées
+
+Le choix de l'enveloppe se fait automatiquement, selon le contenu du courrier. Les enveloppes sont blanches.
+
+4 formats sont possibles :
+- C4 (lettres de plus de 10 pages, cartes géantes)
+- C4 renforcée avec soufflet (lettres de plus de 50 pages)
+- C5 (cartes classiques ou pliées, lettres de moins de 11 pages, plus de 10 photos)
+- C6 (cartes postales, moins de 11 photos)
 
 Avec Merci Facteur Pro, vous pouvez envoyer vos courriers dans des enveloppes personnalisées :
 ![Enveloppe personnalisée avec Merci Facteur Pro](https://www.merci-facteur.com/pro/img/enveloppe-personnalisee.png)
@@ -509,21 +516,6 @@ Le visuel doit être envoyé soit via son URL, soit en base64.
 
 ### Autres limitations :
 - Maximum 50 photos par courrier.
-
-
-<a id="enveloppes"></a>
-## Spécifications relatives aux enveloppes
-
-Le choix de l'enveloppe se fait automatiquement, selon le contenu du courrier. Les enveloppes sont blanches.
-
-Vous avez la possibilité de mettre un logo dans le coin en haut à gauche de l'enveloppe.
-
-4 formats sont possibles :
-- C4 (lettres de plus de 10 pages, cartes géantes)
-- C4 renforcée avec soufflet (lettres de plus de 50 pages)
-- C5 (cartes classiques ou pliées, lettres de moins de 11 pages, plus de 10 photos)
-- C6 (cartes postales, moins de 11 photos)
-
 
 <a id="publipostage"></a>
 ## API de publipostage
