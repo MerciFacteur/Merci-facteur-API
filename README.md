@@ -537,6 +537,7 @@ Vous devez dans un premier temps envoyer le template (format docx obligatoiremen
 Les variables doivent être de la forme ${ma_variable} . Elles ne peuvent contenir que les caractères a-z, A-Z, 0-9 et _.
 
 Certaines variables, celles qui composent l'adresse postale, sont standardisées : 
+```html
 ${civilite}
 ${nom}
 ${prenom} 
@@ -546,6 +547,7 @@ ${adresse3}
 ${cp}
 ${ville}
 ${pays}
+```
 
 Exemple de fichier conforme : https://www.merci-facteur.com/pro/exemples/fichier%20exemple.docx
 
