@@ -71,13 +71,16 @@ Dans la plupart des cas d'usages, il est recommandé d'envoyer tous vos courrier
 
 Un utilisateur se caractérise par un email, un nom et un prénom. Ces éléments vous permettrons d'identifier les utilisateurs (savoir qui est quel utilisateur. Nous vous conseillons d'enregistrer en local le user ID de chaque utilisateur.
 
-Généralement il s'agira d'un client pour vous. 
-
 Chaque utilisateur à un carnet d'adresses avec l'ensemble des adresses qui ont été créées pour ses envois (les adresses sont réutilisables pour les envois suivants), ainsi qu'un historique de ses envois.
 
 Vous n'êtes pas obligé de créer plusieurs utilisateurs. Suivant votre fonctionnement vous pouvez tout à fait n'avoir qu'un seul utilisateur.
 
 Exemple de cas où la création de plusieurs utilisateurs est utile : Cas d'un syndic qui pourra créer un utilisateur par copropriété, de manière à séparer les envois de chaque copropriété pour des raisons comptables et de gestion.
+
+Vous pouvez également définir un role pour chaque utilisateur créé, définissant des droits différents : 
+- admin : l'utilisateur aura à accès à l'interface Merci Facteur et aura accès à tous les courriers de tous les utilisateurs
+- user : l'utilisateur aura à accès à l'interface Merci Facteur mais n'aura accès qu'à ses propres courriers
+- api : l'utilisateur ne disposera pas d'un accès à l'interface Merci Facteur
 
 
 <a id="caracterisation_envoi"></a>
