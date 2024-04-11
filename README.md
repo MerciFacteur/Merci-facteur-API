@@ -850,8 +850,8 @@ Voici des exemples pour chaque événement :
 {
     "event": {
         "name_event": "new",
-        "id_user": "17460",
-        "date_event": "1581674000"
+        "id_user": 17460,
+        "date_event": 1581674000
     },
     "detail": [{
         "civilite": "M.",
@@ -912,8 +912,8 @@ Voici des exemples pour chaque événement :
 {
     "event": {
         "name_event": "printed",
-        "id_user": "17460",
-        "date_event": "1581674000"
+        "id_user": 17460,
+        "date_event": 1581674000
     },
     "detail": [{
         "civilite": "M.",
@@ -959,8 +959,8 @@ Voici des exemples pour chaque événement :
 {
     "event": {
         "name_event": "sended",
-        "id_user": "17460",
-        "date_event": "1581674000"
+        "id_user": 17460,
+        "date_event": 1581674000
     },
     "detail": [{
         "civilite": "M.",
@@ -1009,8 +1009,8 @@ Voici des exemples pour chaque événement :
 {
     "event": {
         "name_event": "new-state",
-        "id_user": "17460",
-        "date_event": "1581674000"
+        "id_user": 17460,
+        "date_event": 1581674000
     },
     "detail": [{
         "civilite": "M.",
@@ -1039,8 +1039,8 @@ Voici des exemples pour chaque événement :
 {
     "event": {
         "name_event": "delivered",
-        "id_user": "17460",
-        "date_event": "1581674000"
+        "id_user": 17460,
+        "date_event": 1581674000
     },
     "detail": [{
         "civilite": "M.",
@@ -1069,8 +1069,8 @@ Voici des exemples pour chaque événement :
 {
     "event": {
         "name_event": "error",
-        "id_user": "17460",
-        "date_event": "1581674000"
+        "id_user": 17460,
+        "date_event": 1581674000
     },
     "detail": [{
         "civilite": "M.",
@@ -1099,8 +1099,8 @@ Voici des exemples pour chaque événement :
 {
     "event": {
         "name_event": "pnd",
-        "id_user": "17460",
-        "date_event": "1581674000"
+        "id_user": 17460,
+        "date_event": 1581674000
     },
     "detail": [{
         "civilite": "M.",
@@ -1129,8 +1129,8 @@ Voici des exemples pour chaque événement :
 {
     "event": {
         "name_event": "are",
-        "id_user": "17460",
-        "date_event": "1581674000"
+        "id_user": 17460,
+        "date_event": 1581674000
     },
     "detail": [{
         "civilite": "M.",
@@ -1160,8 +1160,8 @@ Voici des exemples pour chaque événement :
 {
     "event": {
         "name_event": "pdd",
-        "id_user": "17460",
-        "date_event": "1581674000"
+        "id_user": 17460,
+        "date_event": 1581674000
     },
     "detail": [{
         "civilite": "M.",
