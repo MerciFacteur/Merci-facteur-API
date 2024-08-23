@@ -645,7 +645,8 @@ Voici les événements pour lesquels vous pouvez recevoir des webhooks :
         &bull; detail[].mode_envoi<br>
         &bull; detail[].id_envoi<br>
         &bull; detail[].statut_courrier<br>
-        &bull; detail[].statut_description</td>
+        &bull; detail[].statut_description<br>
+        &bull; detail[].ref_interne</td>
     </tr>
     <tr>
         <td>printed</td>
@@ -668,7 +669,8 @@ Voici les événements pour lesquels vous pouvez recevoir des webhooks :
         &bull; detail[].id_envoi<br>
         &bull; detail[].statut_courrier<br>
         &bull; detail[].statut_description<br>
-        &bull; detail[].tracking_number</td>
+        &bull; detail[].tracking_number<br>
+        &bull; detail[].ref_interne</td>
     </tr>
     <tr>
         <td>sended</td>
@@ -693,7 +695,8 @@ Voici les événements pour lesquels vous pouvez recevoir des webhooks :
         &bull; detail[].id_envoi<br>
         &bull; detail[].statut_courrier<br>
         &bull; detail[].statut_description<br>
-        &bull; detail[].tracking_number</td>
+        &bull; detail[].tracking_number<br>
+        &bull; detail[].ref_interne</td>
     </tr>
     <tr>
         <td>new-state</td>
@@ -716,7 +719,8 @@ Voici les événements pour lesquels vous pouvez recevoir des webhooks :
         &bull; detail[].id_envoi<br>
         &bull; detail[].statut_courrier<br>
         &bull; detail[].statut_description<br>
-        &bull; detail[].tracking_number</td>
+        &bull; detail[].tracking_number<br>
+        &bull; detail[].ref_interne</td>
     </tr>
     <tr>
         <td>delivered</td>
@@ -739,7 +743,8 @@ Voici les événements pour lesquels vous pouvez recevoir des webhooks :
         &bull; detail[].id_envoi<br>
         &bull; detail[].statut_courrier<br>
         &bull; detail[].statut_description<br>
-        &bull; detail[].tracking_number</td>
+        &bull; detail[].tracking_number<br>
+        &bull; detail[].ref_interne</td>
     </tr>
     <tr>
         <td>error</td>
@@ -762,7 +767,8 @@ Voici les événements pour lesquels vous pouvez recevoir des webhooks :
         &bull; detail[].id_envoi<br>
         &bull; detail[].statut_courrier<br>
         &bull; detail[].statut_description<br>
-        &bull; detail[].tracking_number</td>
+        &bull; detail[].tracking_number<br>
+        &bull; detail[].ref_interne</td>
     </tr>
     <tr>
         <td>pnd</td>
@@ -785,7 +791,8 @@ Voici les événements pour lesquels vous pouvez recevoir des webhooks :
         &bull; detail[].id_envoi<br>
         &bull; detail[].statut_courrier<br>
         &bull; detail[].statut_description<br>
-        &bull; detail[].tracking_number</td>
+        &bull; detail[].tracking_number<br>
+        &bull; detail[].ref_interne</td>
     </tr>
     <tr>
         <td>are</td>
@@ -809,7 +816,8 @@ Voici les événements pour lesquels vous pouvez recevoir des webhooks :
         &bull; detail[].statut_courrier<br>
         &bull; detail[].statut_description<br>
         &bull; detail[].tracking_number<br>
-        &bull; detail[].are_base64_jpeg</td>
+        &bull; detail[].are_base64_jpeg<br>
+        &bull; detail[].ref_interne</td>
     </tr>
     <tr>
         <td>pdd</td>
@@ -833,7 +841,8 @@ Voici les événements pour lesquels vous pouvez recevoir des webhooks :
         &bull; detail[].statut_courrier<br>
         &bull; detail[].statut_description<br>
         &bull; detail[].tracking_number<br>
-        &bull; detail[].pdd_base64_pdf</td>
+        &bull; detail[].pdd_base64_pdf<br>
+        &bull; detail[].ref_interne</td>
     </tr>
     
 </table>
@@ -868,7 +877,8 @@ Voici des exemples pour chaque événement :
         "mode_envoi": "lrar",
         "id_envoi": "123",
         "statut_courrier": "wait",
-        "statut_description": "14\/02\/2020 : Courrier en attente d'impression"
+        "statut_description": "14\/02\/2020 : Courrier en attente d'impression",
+        "ref_interne":"client_123"
     }, {
         "civilite": "",
         "nom": "",
@@ -884,7 +894,8 @@ Voici des exemples pour chaque événement :
         "mode_envoi": "normal",
         "id_envoi": "987",
         "statut_courrier": "wait",
-        "statut_description": "14\/02\/2020 : Courrier en attente d'impression"
+        "statut_description": "14\/02\/2020 : Courrier en attente d'impression",
+        "ref_interne":"client_123"
     }, {
         "civilite": "",
         "nom": "",
@@ -901,7 +912,8 @@ Voici des exemples pour chaque événement :
         "mode_envoi": "ere_otp_mail",
         "id_envoi": "1095",
         "statut_courrier": "wait",
-        "statut_description": "14\/02\/2020 : Courrier Electronique en attente d'envoi"
+        "statut_description": "14\/02\/2020 : Courrier Electronique en attente d'envoi",
+        "ref_interne":"client_123"
     }]
 }
 ```
@@ -931,7 +943,8 @@ Voici des exemples pour chaque événement :
         "tracking_number": "2C123456789",
         "id_envoi": "123",
         "statut_courrier": "imprime",
-        "statut_description": "14\/02\/2020 : Courrier imprim\u00e9 par Merci facteur"
+        "statut_description": "14\/02\/2020 : Courrier imprim\u00e9 par Merci facteur",
+        "ref_interne":"client_123"
     }, {
         "civilite": "",
         "nom": "",
@@ -948,7 +961,8 @@ Voici des exemples pour chaque événement :
         "tracking_number": null,
         "id_envoi": "987",
         "statut_courrier": "imprime",
-        "statut_description": "14\/02\/2020 : Courrier imprim\u00e9 par Merci facteur"
+        "statut_description": "14\/02\/2020 : Courrier imprim\u00e9 par Merci facteur",
+        "ref_interne":"client_123"
     }]
 }
 ```
@@ -979,7 +993,8 @@ Voici des exemples pour chaque événement :
         "tracking_number": "485TGDSU5",
         "id_envoi": "123",
         "statut_courrier": "envoye",
-        "statut_description": "14\/02\/2020 : Courrier \u00e9lectronique envoy\u00e9 par Merci facteur"
+        "statut_description": "14\/02\/2020 : Courrier \u00e9lectronique envoy\u00e9 par Merci facteur",
+        "ref_interne":"client_123"
     }, {
         "civilite": "",
         "nom": "",
@@ -998,7 +1013,8 @@ Voici des exemples pour chaque événement :
         "tracking_number": "4D49YHU",
         "id_envoi": "987",
         "statut_courrier": "envoye",
-        "statut_description": "14\/02\/2020 : Courrier \u00e9lectronique envoy\u00e9 par Merci facteur"
+        "statut_description": "14\/02\/2020 : Courrier \u00e9lectronique envoy\u00e9 par Merci facteur",
+        "ref_interne":"client_123"
     }]
 }
 ```
@@ -1028,7 +1044,8 @@ Voici des exemples pour chaque événement :
         "tracking_number": "2C123456789",
         "id_envoi": "123",
         "statut_courrier": "pris_en_charge",
-        "statut_description": "14\/02\/2020 : Courrier pris en charge par La Poste"
+        "statut_description": "14\/02\/2020 : Courrier pris en charge par La Poste",
+        "ref_interne":"client_123"
     }]
 }
 ```
@@ -1058,7 +1075,8 @@ Voici des exemples pour chaque événement :
         "tracking_number": "2C123456789",
         "id_envoi": "123",
         "statut_courrier": "distribue",
-        "statut_description": "14\/02\/2020 : Courrier distribu\u00e9 au destinataire"
+        "statut_description": "14\/02\/2020 : Courrier distribu\u00e9 au destinataire",
+        "ref_interne":"client_123"
     }]
 }
 ```
@@ -1088,7 +1106,8 @@ Voici des exemples pour chaque événement :
         "tracking_number": "2C123456789",
         "id_envoi": "123",
         "statut_courrier": "retour_expediteur",
-        "statut_description": "14\/02\/2020 : Courrier retourn\u00e9 \u00e0 l'exp\u00e9diteur (adresse incompl\u00e8te)"
+        "statut_description": "14\/02\/2020 : Courrier retourn\u00e9 \u00e0 l'exp\u00e9diteur (adresse incompl\u00e8te)",
+        "ref_interne":"client_123"
     }]
 }
 ```
@@ -1118,7 +1137,8 @@ Voici des exemples pour chaque événement :
         "tracking_number": "2C123456789",
         "id_envoi": "123",
         "statut_courrier": "distribue_expediteur",
-        "statut_description": "14\/02\/2020 : Distribu\u00e9 \u00e0 l'exp\u00e9diteur"
+        "statut_description": "14\/02\/2020 : Distribu\u00e9 \u00e0 l'exp\u00e9diteur",
+        "ref_interne":"client_123"
     }]
 }
 ```
@@ -1149,7 +1169,8 @@ Voici des exemples pour chaque événement :
         "id_envoi": "123",
         "are_base64_jpeg": "JVBERi0xLjQj4+ [...] g0Kc3RhcUlRU9GDQo=",
         "statut_courrier": "retour_are",
-        "statut_description": "14\/02\/2020 : Retour de l'accus\u00e9 de r\u00e9ception sign\u00e9"
+        "statut_description": "14\/02\/2020 : Retour de l'accus\u00e9 de r\u00e9ception sign\u00e9",
+        "ref_interne":"client_123"
     }]
 }
 ```
@@ -1180,7 +1201,8 @@ Voici des exemples pour chaque événement :
         "id_envoi": "123",
         "pdd_base64_pdf": "JVBERi0xLjQj4+ [...] g0Kc3RhcUlRU9GDQo=",
         "statut_courrier": "scan_pdd",
-        "statut_description": "14\/02\/2020 : Num\u00e9risation de la preuve de d\u00e9pot"
+        "statut_description": "14\/02\/2020 : Num\u00e9risation de la preuve de d\u00e9pot",
+        "ref_interne":"client_123"
     }]
 }
 ```
