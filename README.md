@@ -36,7 +36,8 @@ En savoir plus : https://www.merci-facteur.com
 
 - [Processus de base d'un envoi](#processus_base)
 - [Caractérisation d'un utilisateur](#caracterisation_utilisateur) 
-- [Caractérisation d'un envoi](#caracterisation_envoi) 
+- [Caractérisation d'un envoi](#caracterisation_envoi)  
+- [Création du token](#creation_token) 
 - [Date d'envoi des courriers](#date_envoi) 
 - [Gestion des NPAI (ou PND / plis non distribués)](#npai) 
 - [Enveloppes et branding (personnalisation d'enveloppe](#branding) 
@@ -98,6 +99,30 @@ Envoi 3 ->  destinataire 1, destinataire 3
 Envoi 4 -> publipostage de 350 destinataires
 
 L'envoi 1 est composé de 3 courriers, l'envoi 2 est composé de 1 courrier, l'envoi 3 est composé de 2 courriers, l'envoi 4 est composé de 350 courriers.
+
+<a id="creation_token"></a>
+## Création du token
+
+Vous devez envoyer un token dans chaque requète à l'API Merci Facteur. Ce token est généré via getToken (https://www.merci-facteur.com/api/1.2/doc.php#/getToken/getToken) à partir notamment de votre secret Key que vous devrez hasher (en savoir plus sur la hashage de la secret key : https://github.com/MerciFacteur/Merci-facteur-API/tree/master/hash-secret-key).
+
+Par défaut, vous devez autoriser des IP qui pourront utiliser le token, si votre infrastructure n'a pas d'IP fixe, vous pouvez soliciter auprès du service technique de Merci Facteur une levée de la restriction d'IP (https://www.merci-facteur.com/pro/contact.php).
+
+Chaque token généré est valable 24h par défaut, il est recommandé de stocker la date d'expiration du token et de rappeler getToken lorsque votre token est expiré.
+
+### Paramètres facultatifs à passer en POST dans getToken : 
+
+Il existe 2 paramètres facultatifs, dont vous pourriez avoir besoin dans certains cas d'usages "exotiques".
+
+- timeLimit = 1 à 365
+- force = "extend" ou "renewal"
+
+"timeLimit" correspond à la durée d'expiration souhaitée, par période de 24h (1 = 24h, 10 = 240h, etc.). Doit être compris entre 1 et 365.
+
+Si "force" == "extend" : cela prolonge la durée du token (s'il existe) de la valeur de "timeLimit" (si "timeLimit" n'est pas défini, cela prolonge de 24h), à compter de l'heure de la requête. Si aucun token n'existe, cela en créera un nouveau avec comme durée de vie la valeur de "timeLimit" (s'il existe un token expiré, cela le réactivera en prolongeant sa durée sans en créer un nouveau).
+
+Si "force" == "renewal" : cela supprime le token existant et force la création d'un nouveau token (avec la durée d'expiration de "timeLimit" si le paramètre est envoyé).
+
+"timeLimit" peut être utilisé indépendamment de "force" (alors le comportement reste identique à celui par défaut : si un token existe, getToken vous le retourne, et si aucun token valide n'existe, alors getToken va créer un nouveau token avec "timeLimit" comme durée d'expiration).
 
 <a id="date_envoi"></a>
 ## Date d'envoi des courriers
