@@ -11,9 +11,9 @@ Vous disposez, dans votre interface Merci facteur PRO d'un bouton pour générer
 
 ## Explication textuelle de la fonction de hashage à utiliser :
 
-La valeur en sortie sera une chaîne de caractères hexadécimaux en minuscule.
-
 Vous devez générer une valeur de clé de hachage en utilisant la méthode HMAC et l'algorithme sha256.
+
+La valeur en sortie sera une chaîne de caractères hexadécimaux en minuscule.
 
 La donnée à hasher est la concaténation de votre Service ID, et du timestamp courant.
 
