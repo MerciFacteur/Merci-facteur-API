@@ -1293,5 +1293,7 @@ Si votre endpoint ne retourne pas un statut 200, deux tentatives supplémentaire
 #### Contrôle de l'origine du webhook
 
 Nos webhooks sont suceptibles d'être postés depuis différentes IP, vous ne pouvez donc pas vérifier l'IP du referer pour contrôler que le webhook envoyé sur votre endpoint vient bien de Merci Facteur. Pour faire ce contrôle, vérifiez que l'entête du POST contient votre webhook-secret-key, dans "x-mf-webhook-secret-key" : 
+
 -H "x-mf-webhook-secret-key: secret-webhook-123456789azerty"
+
 Vous retrouverez votre webhook-secret-key dans l'onglet "API" via votre compte Merci Facteur.
