@@ -578,8 +578,9 @@ ${pays}
 ```
 
 Exemple de fichier conforme : https://www.merci-facteur.com/pro/exemples/fichier%20exemple.docx
+(Le fichier .docx est le format Word 2007, et les images doivent être encodées en .jpeg).
 
-Vous avez la possibilité d'envoyer le template via une URL distante, ou en base64.
+Vous avez la possibilité d'envoyer le template via une URL distante, ou en base64 (sans retours chariot, ni EOF).
 
 En sortie, vous disposerez d'un json "templateValidation" contenant les informations à contrôler par vos soins (nombre de pages détectées, variables détectées, etc), ainsi qu'une clé de validation. Ce json devra ensuite être envoyé en même temps que la source.
 
