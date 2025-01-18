@@ -1299,3 +1299,5 @@ Nos webhooks sont susceptibles d'être postés depuis différentes IP, vous ne p
 -H "X-Mf-Webhook-Secret-Key: secret-webhook-123456789azerty"
 
 Vous retrouverez votre webhook-secret-key dans l'onglet "API" via votre compte Merci Facteur.
+
+Si vous avez besoin que la clé soit différente de "X-Mf-Webhook-Secret-Key", contactez-nous !
