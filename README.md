@@ -69,13 +69,15 @@ Une fois qu'un utilisateur est créé, il n'est pas nécessaire de le re-créer 
 
 Dans la plupart des cas d'usages, il est recommandé d'envoyer tous vos courriers et de créer toutes vos adresses dans le même utilisateur (par exemple l'utilisateur admin créé par défaut dans votre compte Merci Facteur Pro).
 
-Un utilisateur se caractérise par un email, un nom et un prénom. Ces éléments vous permettrons d'identifier les utilisateurs (savoir qui est quel utilisateur. Nous vous conseillons d'enregistrer en local le user ID de chaque utilisateur.
+Un utilisateur se caractérise par un email, un nom et un prénom. Ces éléments vous permettrons d'identifier les utilisateurs (savoir qui est quel utilisateur). Nous vous conseillons d'enregistrer en local le user ID de chaque utilisateur.
 
-Chaque utilisateur à un carnet d'adresses avec l'ensemble des adresses qui ont été créées pour ses envois (les adresses sont réutilisables pour les envois suivants), ainsi qu'un historique de ses envois.
+Chaque utilisateur aura son propre historique de ses envois.
 
 Vous n'êtes pas obligé de créer plusieurs utilisateurs. Suivant votre fonctionnement vous pouvez tout à fait n'avoir qu'un seul utilisateur.
 
 Exemple de cas où la création de plusieurs utilisateurs est utile : Cas d'un syndic qui pourra créer un utilisateur par copropriété, de manière à séparer les envois de chaque copropriété pour des raisons comptables et de gestion.
+
+Vous pouvez créer des utilisateurs via l'API ou via l'interface (menu "Utilisateurs").
 
 Vous pouvez également définir un role pour chaque utilisateur créé, définissant des droits différents : 
 - admin : l'utilisateur aura à accès à l'interface Merci Facteur et aura accès à tous les courriers de tous les utilisateurs
