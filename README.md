@@ -469,7 +469,7 @@ Les lettres sont imprimées sur papier premium blanc de 80Gr/m², certifié pour
 
 Vous pouvez envoyer jusqu'à 10 fichiers pour une même lettre (des PDF via leur URL et/ou des PDF en base64).
 
-Seul le format PDF est accepté. Et le poids maximum par fichier est de 4 Mo. Le fichier peut-être en couleur ou en noir et blanc.
+Seul le format PDF est accepté. Et le poids maximum par fichier est de 50 Mo. Le fichier peut-être en couleur ou en noir et blanc.
 
 Vous pouvez demander à ce que votre lettre soit imprimée en recto, ou en recto-verso (afin de diminuer le poid, et donc le montant de l'affranchissement).
 
