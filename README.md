@@ -507,7 +507,7 @@ Les cartes sont imprimées sur papier épais haute qualité de 350Gr/m², certif
 - Carte postale avec enveloppe : 11 x 16 cm (vertical ou horizontal)
 - Carte pliée : 15 x 21 cm fermée et 30 x 21 ouverte (vertical ou horizontal)
 - Carte non pliée : 15 x 21 cm (vertical ou horizontal)
-- Carte géante pliée : 19 x 27 cm fermée et 38 x 21 ouverte (vertical ou horizontal)
+- Carte géante pliée : 19 x 21 cm fermée et 38 x 21 ouverte (vertical ou horizontal)
 - Carte géante A4 : 21 x 29,7 cm (vertical ou horizontal)
 
 ### Dimension (pixels) des fichiers acceptés :
