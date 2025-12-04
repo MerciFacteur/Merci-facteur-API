@@ -547,6 +547,11 @@ Le visuel doit être envoyé soit via son URL, soit en base64.
 ### Autres limitations :
 - Maximum 50 photos par courrier.
 
+### Envoi de photos d'identité :
+Si vous souhaitez envoyer des planches de photos d'identité (imprimées sur un papier homologué et conforme aux normes et règlementations spécifiques de ce format), envoyez le paramètre suivant : 
+content.photo.hd:1
+Pour ce type d'envoi, nous vous recommandons de prendre contact avec notre service client afin que nous vous donnions toutes les spécifications.
+
 <a id="publipostage"></a>
 ## API de publipostage
 
