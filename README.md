@@ -552,6 +552,10 @@ Si vous souhaitez envoyer des planches de photos d'identité (imprimées sur un 
 "content.photo.hd":true
 Pour ce type d'envoi, nous vous recommandons de prendre contact avec notre service client afin que nous vous donnions toutes les spécifications.
 
+Vous pouvez vous baser sur ces gabarits pour les dimensions de vos planches de photos d'identité : 
+- Planche verticale : https://dk2wbmtb9x9n8.cloudfront.net/assets/v2017/img/calibration_photo_hd_v.jpg
+- Planche horizontale : https://dk2wbmtb9x9n8.cloudfront.net/assets/v2017/img/calibration_photo_hd_h.jpg
+
 <a id="publipostage"></a>
 ## API de publipostage
 
