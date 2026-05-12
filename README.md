@@ -83,6 +83,7 @@ Vous pouvez également définir un role pour chaque utilisateur créé, définis
 - admin : l'utilisateur aura à accès à l'interface Merci Facteur et aura accès à tous les courriers de tous les utilisateurs
 - user : l'utilisateur aura à accès à l'interface Merci Facteur mais n'aura accès qu'à ses propres courriers
 - api : l'utilisateur ne disposera pas d'un accès à l'interface Merci Facteur et ne recevra aucune notification par email
+
 (envoyez par exemple "role":"user" dans le /setUser)
 
 
