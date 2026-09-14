@@ -14,19 +14,19 @@ Si tu préfères partir de la spec brute : `https://www.merci-facteur.com/api/1.
 
 | Fichier | Pour |
 |---|---|
-| [`envoi-lettres.md`](besoin/envoi-lettres.md) | Envoyer une lettre à partir d'un ou plusieurs PDF — courrier simple, suivi ou recommandé avec avis de réception |
-| [`recommande-electronique.md`](besoin/recommande-electronique.md) | Envoyer un recommandé électronique eIDAS, avec code de vérification par email ou par SMS |
-| [`webhooks.md`](besoin/webhooks.md) | Recevoir les notifications de suivi : imprimé, distribué, retourné, accusé de réception signé |
+| [`besoin/envoi-lettres.md`](besoin/envoi-lettres.md) | Envoyer une lettre à partir d'un ou plusieurs PDF — courrier simple, suivi ou recommandé avec avis de réception |
+| [`besoin/recommande-electronique.md`](besoin/recommande-electronique.md) | Envoyer un recommandé électronique eIDAS, avec code de vérification par email ou par SMS |
+| [`besoin/webhooks.md`](besoin/webhooks.md) | Recevoir les notifications de suivi : imprimé, distribué, retourné, accusé de réception signé |
 
 D'autres guides suivront, par capacité : envoi de cartes illustrées, envoi de photos, publipostage. En attendant, ces capacités sont documentées dans le [README principal](../README.md) et dans la spec OpenAPI.
 
 ### Plateformes
 
-Le dossier [`plateformes/`](plateformes/) contient des variantes adaptées à un environnement précis, quand celui-ci impose sa propre façon de tenir un secret côté serveur.
+Le dossier [`besoin/plateformes/`](besoin/plateformes/) contient des variantes adaptées à un environnement précis, quand celui-ci impose sa propre façon de tenir un secret côté serveur.
 
 | Fichier | Pour |
 |---|---|
-| [`plateformes/lovable.md`](besoin/plateformes/lovable.md) | Envoyer une lettre depuis une application Lovable (Edge Function Lovable Cloud) |
+| [`besoin/plateformes/lovable.md`](besoin/plateformes/lovable.md) | Envoyer une lettre depuis une application Lovable (Edge Function Lovable Cloud) |
 
 ## Ce que tous les guides ont en commun
 
