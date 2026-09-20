@@ -155,7 +155,7 @@ Limites : société 90 caractères, nom et prénom 70, lignes d'adresse 90, code
 
 Plusieurs destinataires dans un même `dest` produisent **le même courrier** envoyé à chacun : un envoi, plusieurs courriers, un seul `envoi_id`.
 
-Un recommandé électronique (`ere_otp_mail`, `ere_otp_sms`) exige en plus, sur le destinataire, `email` ou `phone` selon le canal, et `consent: 1` pour les destinataires non professionnels.
+Un recommandé électronique (`ere_otp_mail`, `ere_otp_sms`) exige en plus `email` ou `phone` selon le canal **sur l'expéditeur comme sur chaque destinataire**, et `consent: 1` sur chaque destinataire. Le code de ce guide ne couvre pas ces champs : pour un envoi électronique, utilise `recommande-electronique.md`.
 
 ---
 
@@ -520,10 +520,10 @@ def send_courrier(
 
 ### PHP
 
-Merci Facteur publie une classe PHP prête à l'emploi :
-`https://github.com/MerciFacteur/Merci-facteur-API` (`php-class/apiMf.class.php`).
+Merci Facteur publie un client PHP officiel : `https://github.com/MerciFacteur/Merci-facteur-API`.
 
-Elle ne couvre ni `print_sides`, ni `dateEnvoi`, ni `designation`, ni `antidoublon` : ajoute-les au tableau passé à `CURLOPT_POSTFIELDS` en suivant la section 3.
+- **PHP 8.1+ : `php-class/v2/`** — namespace `MerciFacteur\Api`, Composer, exceptions typées, cache de token, validation des adresses avant l'appel. Le contrat de ce guide y est déjà appliqué.
+- **PHP plus ancien : `php-class/apiMf.class.php`** — la classe historique. `sendCourrier()` accepte un 8ᵉ paramètre `$options` pour `print_sides`, `final_filename`, `dateEnvoi`, `designation`, `antidoublon`, `gestionNpai`, `anonymize` et `enveloppe`.
 
 ### Autres langages, outils no-code
 

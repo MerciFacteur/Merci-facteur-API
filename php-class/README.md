@@ -1,5 +1,8 @@
 # Merci facteur API - Exemples de class PHP
 
+> **Nouveau projet ?** Utilisez plutôt le [client PHP 8.1+](v2/) : namespace, Composer, exceptions typées, cache de token, validation des adresses avant l'appel, et les 27 endpoints de l'API.
+> Cette classe-ci reste maintenue pour les intégrations existantes : aucune de ses signatures n'a changé.
+
 Exemples d'utilisations de l'API Merci facteur en PHP :
 
 ### APPEL DE LA LIBRAIRIE
@@ -275,7 +278,106 @@ else
 }
 ```
 
+#### Les options facultatives de sendCourrier
 
+Un 8ème paramètre facultatif permet de passer les options de l'envoi. Les appels existants à 7 paramètres restent valides.
+
+```php
+$options = array(
+    'print_sides' => 'rectoverso',          // recto|rectoverso|distinctrectoverso
+    'final_filename' => 'contrat-2026',     // 50 caractères max, sans extension
+    'dateEnvoi' => '2026-10-15',            // date complète et non passée, ou clé absente
+    'designation' => 'Contrat client 4417', // 50 car. ; visible par le destinataire sur un ERE
+    'antidoublon' => 'facture-4417-relance-1',
+    'gestionNpai' => 1,                     // modes normal et suivi uniquement
+    'anonymize' => array('delay'=>15, 'target'=>array('content','exp','dest')),
+    'enveloppe' => array('type'=>'template', 'value'=>'123456'),
+);
+
+$sendCourrier = $apiMF->sendCourrier($accessToken, $idUser, $adress, $infosLetter, $infosCard, $infosPhoto, $modeEnvoi, $options);
+```
+
+**`antidoublon` est l'option qui décide de votre stratégie de reprise.** Elle doit identifier le courrier, pas la tentative : la même valeur d'un essai à l'autre. Si un `sendCourrier` échoue par timeout, l'issue est indéterminée — le courrier a pu être créé côté Merci Facteur et la réponse se perdre au retour. Avec un `antidoublon` stable, vous pouvez rejouer l'appel à l'identique : le second sera refusé si le premier était passé. Sans lui, ne réessayez jamais automatiquement.
+
+### Annuler un envoi
+
+```php
+$delete = $apiMF->deleteEnvoi($accessToken, $envoi_id);
+```
+
+Opération irrémédiable, et un `success` ne garantit pas que le courrier ne partira pas : selon l'avancement, l'annulation peut être rejetée, différée, ou partielle sur un envoi multi-destinataires. Contrôlez l'état réel avec `getSuiviEnvoi()` et les webhooks.
+
+### Récupérer une preuve (preuve de dépôt, avis de réception, preuve de téléchargement)
+
+```php
+// $trackingNumber est le numéro de suivi La Poste (ex. 2C123456789), transmis par les
+// webhooks à partir de l'événement "printed". Ce n'est ni l'envoi_id, ni la ref_courrier.
+$proof = $apiMF->getProof($accessToken, $trackingNumber, 'reception'); // depot|reception|telechargement
+
+if($proof['success'])
+{
+    // Le format n'est pas toujours PDF : un AR numérisé revient en JPEG.
+    $extension = $proof['format_return'];
+    file_put_contents('preuve-'.$trackingNumber.'.'.$extension, base64_decode($proof['document']));
+}
+```
+
+Les webhooks `pdd` et `are` transportent déjà ces documents en base64 : `getProof()` sert surtout à la preuve de téléchargement d'un recommandé électronique, au rattrapage d'un webhook manqué et à l'historique.
+
+### Vérifier l'origine d'un webhook
+
+```php
+if(!$apiMF->checkWebhookSecretKey(getenv('MF_WEBHOOK_SECRET'), $_SERVER['HTTP_X_MF_WEBHOOK_SECRET_KEY']))
+{
+    http_response_code(403); exit;
+}
+```
+
+Le filtrage par IP ne fonctionne pas : les webhooks partent de plusieurs adresses.
+
+### Publipostage
+
+```php
+// Phase 1 : le template docx
+$template = $apiMF->templatePublipostage($accessToken, 'https://your-website.com/modele.docx', 'file');
+
+// À contrôler avant d'aller plus loin : nombre de pages et champs de fusion détectés
+$nbPages = $template['templateValidation']['nbPage'];
+$champs  = $template['templateValidation']['inputs'];
+
+// Phase 2 : la source de données (file, base64 ou json)
+$source = $apiMF->sourcePublipostage($accessToken, $idUser, $template['templateValidation'], 'json', array(
+    array('civilite'=>'M.','nom'=>'Dupont','prenom'=>'Michel','societe'=>'','adresse1'=>'3 rue des fleurs','adresse2'=>'','adresse3'=>'','cp'=>'75015','ville'=>'Paris','pays'=>'FRANCE'),
+));
+
+// Phase 3 : validation — à partir d'ici, les courriers sont produits et facturés
+$envoi = $apiMF->sendPublipostage($accessToken, $source['idEnvoi'], 85, 'suivi');
+```
+
+Cette phase 3 peut aussi être déclenchée à la main depuis l'interface Merci facteur Pro, ce qui permet de vérifier visuellement un échantillon de lettres fusionnées.
+
+### Les autres méthodes disponibles
+
+```php
+$apiMF->deleteAdress($accessToken, $idAdress);
+$apiMF->getAdressInfos($accessToken, array(123, 456));            // 50 adresses max par appel
+$apiMF->getPostagePrice($accessToken, 'suivi', array('paysDestinataire'=>array('FRANCE'), 'letterPageNumber'=>2));
+$apiMF->getLetterFinalFile($accessToken, '1234-5678');            // URL signée, valable 5 minutes
+$apiMF->openSavTicket($accessToken, array('yourServiceName'=>'Monsite.com', 'email'=>'client@exemple.fr', 'sujet'=>'...', 'messageTexte'=>'...', 'referenceCourrier'=>'1234-5678'));
+$apiMF->getQuotaCompte($accessToken);
+$apiMF->setWebhookEndpoint($accessToken, 'https://votre-site.fr/webhook-mf');
+$apiMF->getWebhookEndpoint($accessToken);
+$apiMF->listErrors($accessToken);                                 // catalogue des codes d'erreur
+```
+
+### Timeouts
+
+Les appels sont bornés par défaut à 10 secondes de connexion et 120 secondes au total. Ajustez si nécessaire :
+
+```php
+$apiMF->connectTimeout = 5;
+$apiMF->timeout = 60;
+```
 
 ### Valider l'envoi d'un courrier composé d'une carte illustrée (format carte postale, sans enveloppe)
 
