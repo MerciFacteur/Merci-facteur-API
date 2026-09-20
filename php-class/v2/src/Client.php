@@ -134,11 +134,10 @@ final class Client
             }
         }
 
-        $reponse = $this->transport
-            ->request($methode, $this->baseUrl . '/getToken', $headers, $form, 'getToken')
-            ->json('getToken', false);
+        $http = $this->transport->request($methode, $this->baseUrl . '/getToken', $headers, $form, 'getToken');
+        $reponse = $http->json('getToken', false);
 
-        $this->verifieSucces($reponse, 'getToken', 200);
+        $this->verifieSucces($reponse, 'getToken', $http->status);
 
         $token = isset($reponse['token']) ? (string) $reponse['token'] : '';
         if ($token === '') {
