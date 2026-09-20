@@ -15,10 +15,12 @@ Si tu préfères partir de la spec brute : `https://www.merci-facteur.com/api/1.
 | Fichier | Pour |
 |---|---|
 | [`besoin/envoi-lettres.md`](besoin/envoi-lettres.md) | Envoyer une lettre à partir d'un ou plusieurs PDF — courrier simple, suivi ou recommandé avec avis de réception |
+| [`besoin/envoi-cartes.md`](besoin/envoi-cartes.md) | Envoyer une carte illustrée — carte postale, carte pliée, carte carrée, carte géante — visuel et message fournis en image |
+| [`besoin/envoi-photos.md`](besoin/envoi-photos.md) | Envoyer des tirages photo sur papier brillant, et les planches de photos d'identité |
 | [`besoin/recommande-electronique.md`](besoin/recommande-electronique.md) | Envoyer un recommandé électronique eIDAS, avec code de vérification par email ou par SMS |
 | [`besoin/webhooks.md`](besoin/webhooks.md) | Recevoir les notifications de suivi : imprimé, distribué, retourné, accusé de réception signé |
 
-D'autres guides suivront, par capacité : envoi de cartes illustrées, envoi de photos, publipostage. En attendant, ces capacités sont documentées dans le [README principal](../README.md) et dans la spec OpenAPI.
+Un guide de publipostage suivra. En attendant, cette capacité est documentée dans le [README principal](../README.md) et dans la spec OpenAPI.
 
 ### Plateformes
 

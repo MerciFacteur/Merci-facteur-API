@@ -1,6 +1,6 @@
 ---
 name: mf-envoi-courrier
-description: Envoyer un vrai courrier papier — lettre PDF, suivi, recommandé avec accusé de réception, recommandé électronique eIDAS — depuis une application, via l'API Merci Facteur. Utiliser dès qu'il s'agit d'envoyer, poster, imprimer ou expédier du courrier physique depuis du code, d'envoyer une carte depuis une application, de brancher un envoi postal sur un événement, un formulaire, un cron ou un webhook, ou de déboguer un appel sendCourrier. Couvre le contrat exact, les pièges de nommage qui font échouer l'appel, l'idempotence et le comportement en cas d'échec.
+description: Envoyer un vrai courrier papier — lettre PDF, carte illustrée (carte postale, carte pliée, carte carrée, carte géante), suivi, recommandé avec accusé de réception, recommandé électronique eIDAS — depuis une application, via l'API Merci Facteur. Utiliser dès qu'il s'agit d'envoyer, poster, imprimer ou expédier du courrier physique depuis du code, d'envoyer une carte depuis une application, de brancher un envoi postal sur un événement, un formulaire, un cron ou un webhook, ou de déboguer un appel sendCourrier. Couvre le contrat exact, les pièges de nommage qui font échouer l'appel, l'idempotence et le comportement en cas d'échec.
 ---
 
 # Envoyer un courrier papier — API Merci Facteur
@@ -116,6 +116,40 @@ Récupère le PDF depuis ton propre serveur, encode-le, envoie-le dans `base64fi
 Le base64 gonfle le volume d'environ 33 % et transite dans le corps de la requête : au-delà de quelques mégaoctets, bascule sur `files` avec une URL **publique et non signée**.
 
 Attention à l'encodage lui-même : sur la plupart des runtimes, convertir un tampon d'octets en base64 en une seule passe fait déborder la pile d'appels dès quelques centaines de kilo-octets. Encode par tranches, ou utilise la fonction native du langage qui gère les gros volumes.
+
+### Envoyer une carte illustrée
+
+`content.card` remplace `content.letter` quand le courrier est une carte — papier épais 350 g, de la carte postale à la carte géante A4.
+
+```json
+{
+  "letter": "",
+  "photo": "",
+  "card": {
+    "format": "postcard",
+    "visuel": { "type": "base64", "value": "<jpeg en base64>" },
+    "text":   { "type": "base64", "value": "<jpeg en base64>" },
+    "coin": "carre",
+    "papier": "classic"
+  }
+}
+```
+
+`visuel` est la face illustrée, `text` la face imprimée du message. Les deux sont des **images** : `base64` (fiable) ou `customimg` (URL publique). JPEG uniquement, 4 Mo maximum, jamais de PDF ni de PNG.
+
+**Le dos ne s'envoie pas en HTML.** L'API accepte `text.type: "html"` ; ne l'utilise pas et ne le propose pas. Le rendu échappe à l'application — texte qui déborde, police substituée, césure imprévue — et rien ne le signale : la carte part à l'impression et elle est facturée telle quelle. Compose le dos côté application, rends-le en image, envoie l'image. C'est aussi ce qui permet de montrer à l'utilisateur ce qu'il va poster.
+
+Corollaire : **les classes PHP publiées par Merci Facteur ne conviennent pas pour les cartes**, v1 comme v2 forcent `text.type = 'html'`. Écris l'appel directement.
+
+Trois pièges de nommage qui font échouer l'appel :
+
+| Piège | Règle |
+|---|---|
+| `visuel` | En français. Ce n'est pas `visual`. `coin` et `papier` aussi, à côté de `format` et `text` en anglais. |
+| `format` | `postcard`, `classic`, `folded`, `square`, `large`, `large-a4`. **`square` (carte carrée, 14 × 14 cm) manque à la spec OpenAPI publiée** : l'API l'accepte, mais un client généré depuis la spec le rejette. L'enum contient aussi `naked-postcard` (sans enveloppe) : ne la propose pas, la carte voyage à nu et arrive abîmée. |
+| `coin`, `papier` | `carre`/`arrondi`, `classic`/`nacre`/`creation`. Ni traduits, ni inventés — et ils changent le prix, donc ils se demandent à l'utilisateur. |
+
+Dimensions finies, enveloppe par format, contraintes d'image et recadrage : `references/cartes.md`. À lire avant la première série, en particulier pour `square`, dont le ratio 1 contredit la proportion 0,71 exigée des fichiers, et pour les formats pliés, dont la zone utile n'est pas publiée.
 
 ### Les adresses
 
@@ -279,7 +313,7 @@ Deux conséquences sur la conception de l'endpoint :
 ## 7. Fichiers de référence
 
 - `references/implementations.md` — implémentations complètes et testables en JavaScript/TypeScript, PHP, Python, et les notes pour les outils no-code (n8n, Make, Zapier).
-- `references/cartes.md` — le contrat exact de `content.card` : six formats et leurs dimensions, papiers, coins, contraintes d'image et recadrage.
+- `references/cartes.md` — le contrat exact de `content.card` : les formats et leurs dimensions, papiers, coins, contraintes d'image et recadrage.
 - `references/options-envoi.md` — le contrat exact de `gestionNpai`, `anonymize`, `enveloppe` et `designation`.
 - `references/pays.md` — copie de la liste des valeurs acceptées par `pays`. En cas de doute, `GET /getCountry` fait autorité et ne périme pas.
 

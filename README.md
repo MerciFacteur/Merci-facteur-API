@@ -618,11 +618,12 @@ Ce nom de fichier sera affiché dans votre interface Merci facteur Pro, et sera 
 
 Les cartes sont imprimées sur papier épais haute qualité de 350Gr/m², certifié pour la lutte contre la déforestation.
 
-### 6 formats sont disponibles :
+### 7 formats sont disponibles :
 - Carte postale sans enveloppe (envoyez "naked-postcard" dans l'API)
 - Carte postale avec enveloppe (envoyez "postcard" dans l'API)
 - Carte pliée (envoyez "folded" dans l'API)
 - Carte non pliée (envoyez "classic" dans l'API)
+- Carte carrée (envoyez "square" dans l'API)
 - Carte géante pliée (envoyez "large" dans l'API)
 - Carte géante A4 (envoyez "large-a4" dans l'API)
 
@@ -636,11 +637,11 @@ Les cartes sont imprimées sur papier épais haute qualité de 350Gr/m², certif
 - Coins arrondis (envoyez "arrondi" dans l'API)
 
 ### Dimensions (cm) des cartes après impression et coupe :
-- Carte postale sans enveloppe : 11 x 16 cm (vertical ou horizontal)
-- Carte postale avec enveloppe : 11 x 16 cm (vertical ou horizontal)
-- Carte pliée : 15 x 21 cm fermée et 30 x 21 ouverte (vertical ou horizontal)
-- Carte non pliée : 15 x 21 cm (vertical ou horizontal)
-- Carte géante pliée : 19 x 21 cm fermée et 38 x 21 ouverte (vertical ou horizontal)
+- Carte postale, avec ou sans enveloppe : 10,5 x 15 cm (vertical ou horizontal)
+- Carte pliée : 14 x 19,5 cm fermée et 28 x 19,5 ouverte (vertical ou horizontal)
+- Carte non pliée : 14 x 19,5 cm (vertical ou horizontal)
+- Carte carrée : 14 x 14 cm
+- Carte géante pliée : 18,5 x 26 cm fermée et 37 x 26 ouverte (vertical ou horizontal)
 - Carte géante A4 : 21 x 29,7 cm (vertical ou horizontal)
 
 ### Dimension (pixels) des fichiers acceptés :

@@ -13,7 +13,7 @@ Le CLI copie les skills dans le répertoire de ton agent (`.claude/skills/`, `.a
 | Skill | Couvre |
 |---|---|
 | `mf-api-authentification` | signature HMAC-SHA256, `getToken`, durée de vie du token jusqu'à 365 jours, restriction d'IP |
-| `mf-envoi-courrier` | `sendCourrier` : lettre PDF, modes d'envoi, adresses, webhooks, idempotence, reprise sur échec |
+| `mf-envoi-courrier` | `sendCourrier` : lettre PDF, cartes illustrées (formats, papiers, coins), modes d'envoi, adresses, webhooks, idempotence, reprise sur échec |
 | `mf-preuves-courrier` | preuves poussées par webhook, `getProof`, statuts de courrier |
 | `mf-annuler-envoi` | `deleteEnvoi` : annulation d'un envoi, issues possibles, délai réel |
 
