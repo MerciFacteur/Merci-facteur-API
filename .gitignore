@@ -1,0 +1,17 @@
+# macOS
+.DS_Store
+._*
+
+# PHP
+/php-class/v2/vendor/
+composer.lock
+
+# Éditeurs
+.idea/
+.vscode/
+*.swp
+
+# Secrets et fichiers locaux
+.env
+.env.*
+mf-token.json

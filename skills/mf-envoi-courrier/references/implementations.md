@@ -2,6 +2,8 @@
 
 Code complet et testable. Le contrat qu'il applique est dans le SKILL.md, sections 2 et 3.
 
+Les deux implémentations couvrent aussi le recommandé électronique : `email` (ou `phone` en OTP SMS) est exigé **sur l'expéditeur et sur chaque destinataire**, et `consent: 1` sur chaque destinataire. Les fonctions de normalisation d'adresse le vérifient avant l'appel plutôt que de laisser l'API répondre `INFO_ADDRESS_MISSING`.
+
 ### JavaScript / TypeScript
 
 Compatible Node 18+, Deno, Bun, Cloudflare Workers, Vercel, Netlify — tout runtime disposant de `fetch` et de la Web Crypto API. Sur Node 16 ou antérieur, remplace le bloc `crypto.subtle` par `crypto.createHmac("sha256", secretKey).update(serviceId + ts).digest("hex")`.
@@ -14,11 +16,17 @@ const SECRET_KEY = process.env.MF_SECRET_KEY;
 const USER_ID = process.env.MF_USER_ID;
 const AUTHORIZED_IP = process.env.MF_AUTHORIZED_IP || "111.111.111";
 
+// Les 11 cles communes a tout envoi, plus email et phone : un recommande
+// electronique les exige sur l'expediteur ET sur chaque destinataire, et une
+// adresse partielle est rejetee avec INFO_ADDRESS_MISSING.
 const ADDRESS_KEYS = [
   "civilite", "nom", "prenom", "societe",
   "adresse1", "adresse2", "adresse3",
   "cp", "ville", "pays", "reference",
+  "email", "phone",
 ];
+
+const ERE_MODES = ["ere_otp_mail", "ere_otp_sms"];
 
 let cachedToken = null; // { token, expire }
 
@@ -62,14 +70,39 @@ async function getToken() {
   return data.token;
 }
 
-// Les 11 cles doivent etre presentes, les inutilisees a "".
-function normalizeAddress(input = {}) {
+// Toutes les cles doivent etre presentes, les inutilisees a "".
+// mode et isDest servent uniquement aux controles supplementaires d'un ERE.
+function normalizeAddress(input = {}, { mode = "normal", isDest = false } = {}) {
   const out = {};
   for (const k of ADDRESS_KEYS) out[k] = String(input[k] ?? "").trim();
   if (!out.nom && !out.societe) throw new Error("Adresse : nom ou societe requis");
   for (const k of ["cp", "ville", "pays"]) {
     if (!out[k]) throw new Error(`Adresse : ${k} requis`);
   }
+
+  if (ERE_MODES.includes(mode)) {
+    // Le canal de l'OTP doit etre renseigne des deux cotes.
+    const canal = mode === "ere_otp_sms" ? "phone" : "email";
+    if (!out[canal]) {
+      throw new Error(
+        `Recommande electronique (${mode}) : ${canal} requis sur ` +
+          (isDest ? "chaque destinataire" : "l'expediteur"),
+      );
+    }
+    if (isDest) {
+      // consent = 1 declare que le consentement du destinataire a ete recueilli.
+      // Entier, pas booleen, pas la chaine "true".
+      out.consent = input.consent === 1 || input.consent === true ? 1 : 0;
+      if (out.consent !== 1) {
+        throw new Error(
+          "Recommande electronique : consent = 1 requis sur le destinataire " +
+            "(consentement non necessaire pour un destinataire professionnel, " +
+            "mais le champ reste attendu)",
+        );
+      }
+    }
+  }
+
   return out;
 }
 
@@ -119,16 +152,17 @@ async function sendCourrier(o) {
   const letter = { files: "", base64files, print_sides: o.printSides ?? "recto" };
   if (o.finalFilename) letter.final_filename = o.finalFilename;
 
+  const mode = o.modeEnvoi ?? "normal";
   const token = await getToken();
 
   const body = new URLSearchParams();
   body.set("idUser", String(USER_ID));
   body.set("adress", JSON.stringify({
-    exp: normalizeAddress(o.expediteur),
-    dest: o.destinataires.map((d) => normalizeAddress(d)),
+    exp: normalizeAddress(o.expediteur, { mode, isDest: false }),
+    dest: o.destinataires.map((d) => normalizeAddress(d, { mode, isDest: true })),
   }));
   body.set("content", JSON.stringify({ letter, photo: "", card: "" }));
-  body.set("modeEnvoi", o.modeEnvoi ?? "normal");
+  body.set("modeEnvoi", mode);
   // Date complete, ou champ absent : une valeur tronquee donne INVALID_DATE_ENVOI.
   if (typeof o.dateEnvoi === "string" && /^\d{4}-\d{2}-\d{2}$/.test(o.dateEnvoi)) {
     body.set("dateEnvoi", o.dateEnvoi);
@@ -170,11 +204,17 @@ SECRET_KEY = os.environ["MF_SECRET_KEY"]
 USER_ID = os.environ["MF_USER_ID"]
 AUTHORIZED_IP = os.environ.get("MF_AUTHORIZED_IP", "111.111.111")
 
+# Les 11 cles communes a tout envoi, plus email et phone : un recommande
+# electronique les exige sur l'expediteur ET sur chaque destinataire, et une
+# adresse partielle est rejetee avec INFO_ADDRESS_MISSING.
 ADDRESS_KEYS = [
     "civilite", "nom", "prenom", "societe",
     "adresse1", "adresse2", "adresse3",
     "cp", "ville", "pays", "reference",
+    "email", "phone",
 ]
+
+ERE_MODES = ("ere_otp_mail", "ere_otp_sms")
 
 _token_cache = None  # {"token": str, "expire": int}
 
@@ -215,14 +255,34 @@ def get_token() -> str:
     return data["token"]
 
 
-def normalize_address(a: dict) -> dict:
-    """Les 11 cles doivent etre presentes, les inutilisees a ""."""
+def normalize_address(a: dict, mode: str = "normal", is_dest: bool = False) -> dict:
+    """Toutes les cles doivent etre presentes, les inutilisees a "".
+
+    mode et is_dest ne servent qu'aux controles supplementaires d'un ERE.
+    """
     out = {k: str(a.get(k) or "").strip() for k in ADDRESS_KEYS}
     if not out["nom"] and not out["societe"]:
         raise ValueError("Adresse : nom ou societe requis")
     for k in ("cp", "ville", "pays"):
         if not out[k]:
             raise ValueError(f"Adresse : {k} requis")
+
+    if mode in ERE_MODES:
+        # Le canal de l'OTP doit etre renseigne des deux cotes.
+        canal = "phone" if mode == "ere_otp_sms" else "email"
+        if not out[canal]:
+            cible = "chaque destinataire" if is_dest else "l'expediteur"
+            raise ValueError(
+                f"Recommande electronique ({mode}) : {canal} requis sur {cible}"
+            )
+        if is_dest:
+            # Entier 1, pas booleen. Declare que le consentement a ete recueilli.
+            out["consent"] = 1 if a.get("consent") in (1, True) else 0
+            if out["consent"] != 1:
+                raise ValueError(
+                    "Recommande electronique : consent = 1 requis sur le destinataire"
+                )
+
     return out
 
 
@@ -265,8 +325,10 @@ def send_courrier(
     payload = {
         "idUser": USER_ID,
         "adress": json.dumps({
-            "exp": normalize_address(expediteur),
-            "dest": [normalize_address(d) for d in destinataires],
+            "exp": normalize_address(expediteur, mode_envoi, is_dest=False),
+            "dest": [
+                normalize_address(d, mode_envoi, is_dest=True) for d in destinataires
+            ],
         }),
         "content": json.dumps({"letter": letter, "photo": "", "card": ""}),
         "modeEnvoi": mode_envoi,
@@ -295,10 +357,12 @@ def send_courrier(
 
 ### PHP
 
-Merci Facteur publie une classe PHP prête à l'emploi :
-`https://github.com/MerciFacteur/Merci-facteur-API` (`php-class/apiMf.class.php`).
+Merci Facteur publie un client PHP officiel : `https://github.com/MerciFacteur/Merci-facteur-API`.
 
-Elle ne couvre ni `print_sides`, ni `dateEnvoi`, ni `designation`, ni `antidoublon` : ajoute-les au tableau passé à `CURLOPT_POSTFIELDS` en suivant la section 3.
+- **PHP 8.1+ : `php-class/v2/`** — namespace `MerciFacteur\Api`, Composer, exceptions typées, cache de token, et validation des adresses avant l'appel réseau. C'est ce qu'il faut proposer par défaut. Le contrat des sections 2 et 3 y est déjà appliqué : `Address`, `Content` et `Client::sendCourrier()` construisent la requête, il n'y a pas de champ à orthographier à la main.
+- **PHP plus ancien : `php-class/apiMf.class.php`** — la classe historique, sans namespace. `sendCourrier()` accepte un 8ᵉ paramètre `$options` pour `print_sides`, `final_filename`, `dateEnvoi`, `designation`, `antidoublon`, `gestionNpai`, `anonymize` et `enveloppe`.
+
+N'écris pas un client PHP depuis zéro sans avoir regardé ces deux-là.
 
 ### Autres langages, outils no-code
 

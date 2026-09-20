@@ -1,6 +1,6 @@
 ---
 name: mf-envoi-courrier
-description: Envoyer un vrai courrier papier — lettre PDF, suivi, recommandé avec accusé de réception, recommandé électronique eIDAS — depuis une application, via l'API Merci Facteur. Utiliser dès qu'il s'agit d'envoyer, poster, imprimer ou expédier du courrier physique depuis du code, de brancher un envoi postal sur un événement, un formulaire, un cron ou un webhook, ou de déboguer un appel sendCourrier. Couvre le contrat exact, les pièges de nommage qui font échouer l'appel, l'idempotence et le comportement en cas d'échec.
+description: Envoyer un vrai courrier papier — lettre PDF, suivi, recommandé avec accusé de réception, recommandé électronique eIDAS — depuis une application, via l'API Merci Facteur. Utiliser dès qu'il s'agit d'envoyer, poster, imprimer ou expédier du courrier physique depuis du code, d'envoyer une carte depuis une application, de brancher un envoi postal sur un événement, un formulaire, un cron ou un webhook, ou de déboguer un appel sendCourrier. Couvre le contrat exact, les pièges de nommage qui font échouer l'appel, l'idempotence et le comportement en cas d'échec.
 ---
 
 # Envoyer un courrier papier — API Merci Facteur
@@ -169,7 +169,10 @@ Limites de caractères : civilité 12, société 90, nom 70, prénom 70, lignes 
 
 Plusieurs destinataires dans un même `dest` produisent **le même courrier** envoyé à chacun : un envoi, plusieurs courriers, un seul `envoi_id`.
 
-Un recommandé électronique (`ere_otp_mail`, `ere_otp_sms`) exige en plus, sur le destinataire, `email` ou `phone` selon le canal, et `consent: 1` pour les destinataires non professionnels.
+Un recommandé électronique (`ere_otp_mail`, `ere_otp_sms`) exige en plus :
+
+- `email` (canal `ere_otp_mail`) ou `phone` (canal `ere_otp_sms`) **sur l'expéditeur comme sur chaque destinataire** — c'est l'oubli le plus fréquent, parce qu'une adresse d'expéditeur reprise d'un envoi papier n'en contient jamais ;
+- `consent: 1` sur chaque destinataire, en entier et non en booléen. Le consentement n'est pas requis pour un destinataire professionnel, mais le champ reste attendu.
 
 **Remplis `reference` sur chaque destinataire.** C'est ta propre référence interne, et elle revient dans tous les webhooks sous le nom `ref_interne`, dans les exports CSV, et sur un recommandé avec AR elle est **imprimée sur l'accusé de réception** retourné.
 
@@ -276,6 +279,7 @@ Deux conséquences sur la conception de l'endpoint :
 ## 7. Fichiers de référence
 
 - `references/implementations.md` — implémentations complètes et testables en JavaScript/TypeScript, PHP, Python, et les notes pour les outils no-code (n8n, Make, Zapier).
+- `references/cartes.md` — le contrat exact de `content.card` : six formats et leurs dimensions, papiers, coins, contraintes d'image et recadrage.
 - `references/options-envoi.md` — le contrat exact de `gestionNpai`, `anonymize`, `enveloppe` et `designation`.
 - `references/pays.md` — copie de la liste des valeurs acceptées par `pays`. En cas de doute, `GET /getCountry` fait autorité et ne périme pas.
 

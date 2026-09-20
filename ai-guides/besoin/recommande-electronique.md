@@ -612,10 +612,10 @@ def send_recommande_electronique(
 
 ### PHP
 
-Merci Facteur publie une classe PHP prête à l'emploi :
-`https://github.com/MerciFacteur/Merci-facteur-API` (`php-class/apiMf.class.php`).
+Merci Facteur publie un client PHP officiel : `https://github.com/MerciFacteur/Merci-facteur-API`.
 
-Elle ne couvre ni `designation`, ni `dateEnvoi`, ni `antidoublon` : ajoute-les au tableau passé à `CURLOPT_POSTFIELDS` en suivant la section 3. Les champs `email`, `phone` et `consent` se placent simplement dans les objets d'adresse.
+- **PHP 8.1+ : `php-class/v2/`** — `ModeEnvoi::ERE_OTP_MAIL` / `ERE_OTP_SMS`, et `Address` refuse avant l'appel réseau une adresse d'expéditeur ou de destinataire sans `email`/`phone`, ou un destinataire sans `consent`. C'est le piège principal de l'ERE, traité à la source.
+- **PHP plus ancien : `php-class/apiMf.class.php`** — `sendCourrier()` accepte un 8ᵉ paramètre `$options` pour `designation`, `dateEnvoi` et `antidoublon`. Les champs `email`, `phone` et `consent` se placent dans les objets d'adresse.
 
 ### Autres langages, outils no-code
 

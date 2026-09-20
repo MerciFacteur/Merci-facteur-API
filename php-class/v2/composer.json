@@ -1,0 +1,22 @@
+{
+    "name": "merci-facteur/api-client",
+    "description": "Client PHP officiel de l'API Merci Facteur 1.2 — envoi de courrier papier, recommandé, recommandé électronique, publipostage.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["merci-facteur", "courrier", "la-poste", "lettre", "recommande", "publipostage", "api"],
+    "homepage": "https://github.com/MerciFacteur/Merci-facteur-API",
+    "require": {
+        "php": ">=8.1",
+        "ext-curl": "*",
+        "ext-json": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "MerciFacteur\\Api\\": "src/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable"
+}

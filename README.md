@@ -38,6 +38,7 @@ En savoir plus : https://www.merci-facteur.com
 - [Caractérisation d'un utilisateur](#caracterisation_utilisateur) 
 - [Caractérisation d'un envoi](#caracterisation_envoi)  
 - [Création du token](#creation_token) 
+- [Appeler l'API : URL, en-têtes, formats et réponses](#appels_api) 
 - [Date d'envoi des courriers](#date_envoi) 
 - [Gestion des NPAI (ou PND / plis non distribués)](#npai) 
 - [Enveloppes et branding (personnalisation d'enveloppe](#branding) 
@@ -107,9 +108,9 @@ L'envoi 1 est composé de 3 courriers, l'envoi 2 est composé de 1 courrier, l'e
 <a id="creation_token"></a>
 ## Création du token
 
-Vous devez envoyer un token dans chaque requète à l'API Merci Facteur. Ce token est généré via getToken (https://www.merci-facteur.com/api/1.2/doc.php#/getToken/getToken) à partir notamment de votre secret Key que vous devrez hasher (en savoir plus sur la hashage de la secret key : https://github.com/MerciFacteur/Merci-facteur-API/tree/master/hash-secret-key).
+Vous devez envoyer un token dans chaque requête à l'API Merci Facteur. Ce token est généré via getToken (https://www.merci-facteur.com/api/1.2/doc.php#/getToken/getToken) à partir notamment de votre secret Key que vous devrez hasher (en savoir plus sur la hashage de la secret key : https://github.com/MerciFacteur/Merci-facteur-API/tree/master/hash-secret-key).
 
-Par défaut, vous devez autoriser des IP qui pourront utiliser le token, si votre infrastructure n'a pas d'IP fixe, vous pouvez soliciter auprès du service technique de Merci Facteur une levée de la restriction d'IP (https://www.merci-facteur.com/pro/contact.php).
+Par défaut, vous devez autoriser des IP qui pourront utiliser le token, si votre infrastructure n'a pas d'IP fixe, vous pouvez solliciter auprès du service technique de Merci Facteur une levée de la restriction d'IP (https://www.merci-facteur.com/pro/contact.php).
 
 Chaque token généré est valable 24h par défaut, il est recommandé de stocker la date d'expiration du token et de rappeler getToken lorsque votre token est expiré.
 
@@ -127,6 +128,129 @@ Si "force" == "extend" : cela prolonge la durée du token (s'il existe) de la va
 Si "force" == "renewal" : cela supprime le token existant et force la création d'un nouveau token (avec la durée d'expiration de "timeLimit" si le paramètre est envoyé).
 
 "timeLimit" peut être utilisé indépendamment de "force" (alors le comportement reste identique à celui par défaut : si un token existe, getToken vous le retourne, et si aucun token valide n'existe, alors getToken va créer un nouveau token avec "timeLimit" comme durée d'expiration).
+
+<a id="appels_api"></a>
+## Appeler l'API : URL, en-têtes, formats et réponses
+
+### URL de base
+
+```
+https://www.merci-facteur.com/api/1.2/prod/service
+```
+
+Chaque endpoint s'ajoute à cette base : `https://www.merci-facteur.com/api/1.2/prod/service/sendCourrier`.
+
+### Les en-têtes de /getToken
+
+`/getToken` est le seul endpoint qui n'attend pas de token, et le seul à attendre ces quatre en-têtes. Ils sont tous obligatoires :
+
+<table>
+<tr><th>En-tête</th><th>Contenu</th></tr>
+<tr><td>ww-service-id</td><td>Votre Service ID (onglet "API" de votre compte Merci Facteur Pro)</td></tr>
+<tr><td>ww-service-signature</td><td>Le hash HMAC-SHA256 de votre secret key, en hexadécimal minuscule (<a href="https://github.com/MerciFacteur/Merci-facteur-API/tree/master/hash-secret-key">algorithme de hashage</a>)</td></tr>
+<tr><td>ww-timestamp</td><td>Le timestamp Unix <b>en secondes</b> utilisé pour calculer la signature. Ce doit être exactement la même valeur, sinon la signature est invalide.</td></tr>
+<tr><td>ww-authorized-ip</td><td>Les IP autorisées à utiliser ce token, séparées par des point-virgules : "12.34.56.78;90.12.34.56". Si la restriction d'IP a été levée sur votre compte par notre service technique, envoyez "111.111.111".</td></tr>
+</table>
+
+La signature n'est valable que **5 minutes** : calculez-la juste avant l'appel, ne la mettez pas en cache.
+
+Réponse :
+```json
+{"success":true,"error":"","token":"votre-access-token","expire":1758326400}
+```
+
+`expire` est le timestamp d'expiration du token. Stockez le token et cette date, et ne rappelez `/getToken` que lorsque le token est expiré.
+
+### Les en-têtes de tous les autres endpoints
+
+Les 26 autres endpoints attendent exactement deux en-têtes, tous deux obligatoires :
+
+<table>
+<tr><th>En-tête</th><th>Contenu</th></tr>
+<tr><td>ww-service-id</td><td>Votre Service ID</td></tr>
+<tr><td>ww-access-token</td><td>Le token retourné par /getToken</td></tr>
+</table>
+
+Oublier `ww-service-id` à côté de `ww-access-token` produit une erreur 401, au même titre qu'un token expiré.
+
+### Format des requêtes
+
+Tous les corps de requête sont en **application/x-www-form-urlencoded**. L'API n'accepte pas de corps JSON.
+
+Les champs structurés (`adress`, `content`, `anonymize`, `templateValidation`, `source`, `jsonExp`...) se transmettent donc en **chaînes JSON** dans un champ de formulaire :
+
+```
+adress=%7B%22exp%22%3A123456%2C%22dest%22%3A%5B789012%5D%7D
+```
+
+Certains paramètres sont attendus en **query string**, y compris sur des requêtes POST ou DELETE (par exemple `idUser` et `type` sur `/setNewAdress`, `idEnvoi` sur `/deleteEnvoi`). Reportez-vous à la [documentation interactive](https://www.merci-facteur.com/api/1.2/doc.php) endpoint par endpoint.
+
+### Format des réponses
+
+Toutes les réponses ont la même forme. En succès :
+
+```json
+{"success":true,"error":"","...":"les clés propres à l'endpoint"}
+```
+
+En erreur (HTTP 400, ou 401 pour un problème d'authentification) :
+
+```json
+{"success":false,"error":{"code":"CODE_ERREUR","text":"Message d'erreur"}}
+```
+
+**Testez toujours `success`, jamais uniquement le code HTTP.** Le code d'erreur (`error.code`) ne changera jamais, contrairement au message (`error.text`) : c'est sur le code que doit reposer votre logique. La liste complète des codes est disponible via l'endpoint `/listErrors`.
+
+### Exemple complet en curl
+
+```bash
+# 1. Obtenir un token (signature calculée au préalable, cf. hash-secret-key/)
+curl -X GET "https://www.merci-facteur.com/api/1.2/prod/service/getToken" \
+  -H "ww-service-id: public-yourServiceID" \
+  -H "ww-service-signature: 9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08" \
+  -H "ww-timestamp: 1758326400" \
+  -H "ww-authorized-ip: 111.111.111"
+
+# 2. Utiliser le token sur n'importe quel autre endpoint
+curl -X GET "https://www.merci-facteur.com/api/1.2/prod/service/getCountry?zone%5B%5D=fr" \
+  -H "ww-service-id: public-yourServiceID" \
+  -H "ww-access-token: ValidAccessToken"
+```
+
+### Les endpoints
+
+<table>
+<tr><th>Endpoint</th><th>Méthode</th><th>Rôle</th></tr>
+<tr><td>/getToken</td><td>GET (POST avec timeLimit / force)</td><td>Obtenir l'access token</td></tr>
+<tr><td>/setUser</td><td>POST</td><td>Créer un utilisateur (role : admin, user ou api)</td></tr>
+<tr><td>/updateUser</td><td>POST</td><td>Modifier un utilisateur</td></tr>
+<tr><td>/getUserId</td><td>GET</td><td>Retrouver un user ID depuis son email</td></tr>
+<tr><td>/deleteUser</td><td>DELETE</td><td>Supprimer un utilisateur</td></tr>
+<tr><td>/getCountry</td><td>GET</td><td>Lister les pays acceptés par zone (fr, z1, z2, om1, om2)</td></tr>
+<tr><td>/setNewAdress</td><td>POST</td><td>Créer une adresse dans le carnet d'adresses</td></tr>
+<tr><td>/updateAdress</td><td>POST</td><td>Modifier une adresse</td></tr>
+<tr><td>/deleteAdress</td><td>DELETE</td><td>Supprimer une adresse</td></tr>
+<tr><td>/listAdress</td><td>GET</td><td>Lister les adresses d'un utilisateur</td></tr>
+<tr><td>/getAdressInfos</td><td>GET</td><td>Récupérer le détail d'adresses par leurs ID</td></tr>
+<tr><td>/sendCourrier</td><td>POST</td><td>Envoyer un courrier (lettre, carte, photo, recommandé, ERE)</td></tr>
+<tr><td>/getPostagePrice</td><td>GET</td><td>Calculer le prix d'un envoi avant de l'envoyer</td></tr>
+<tr><td>/deleteEnvoi</td><td>DELETE</td><td>Annuler un envoi</td></tr>
+<tr><td>/listEnvois</td><td>GET</td><td>Lister les 50 derniers envois d'un utilisateur</td></tr>
+<tr><td>/getEnvoi</td><td>GET</td><td>Détail d'un envoi</td></tr>
+<tr><td>/getSuiviEnvoi</td><td>GET</td><td>Suivi des courriers d'un envoi</td></tr>
+<tr><td>/getProof</td><td>GET</td><td>Preuve de dépôt, avis de réception, preuve de téléchargement</td></tr>
+<tr><td>/getLetterFinalFile</td><td>GET</td><td>URL signée du fichier final d'un courrier</td></tr>
+<tr><td>/templatePublipostage</td><td>POST</td><td>Publipostage : envoi du template docx</td></tr>
+<tr><td>/sourcePublipostage</td><td>POST</td><td>Publipostage : envoi de la source de données</td></tr>
+<tr><td>/sendPublipostage</td><td>POST</td><td>Publipostage : validation et envoi</td></tr>
+<tr><td>/openSavTicket</td><td>POST</td><td>Ouvrir un ticket SAV sur un courrier</td></tr>
+<tr><td>/getQuotaCompte</td><td>GET</td><td>Plan, crédit et quota de pages du compte</td></tr>
+<tr><td>/setWebhookEndpoint</td><td>POST</td><td>Définir l'URL de réception des webhooks</td></tr>
+<tr><td>/getWebhookEndpoint</td><td>GET</td><td>Lire l'URL de webhook configurée</td></tr>
+<tr><td>/listErrors</td><td>GET</td><td>Lister les codes d'erreur et leur signification</td></tr>
+</table>
+
+Le contrat détaillé de chaque endpoint (paramètres, types, valeurs autorisées) est dans la documentation interactive : https://www.merci-facteur.com/api/1.2/doc.php — et dans la spec OpenAPI : https://www.merci-facteur.com/api/1.2/openapi.json
 
 <a id="date_envoi"></a>
 ## Date d'envoi des courriers
@@ -183,7 +307,7 @@ Pour utiliser une enveloppe personnalisée lors d'un envoi de courrier via l'API
 
 Un envoi est composé d'un expéditeur et d'un ou plusieurs destinataire(s). 
 
-Vous pouvez soit intérer les adresses dans un carnet d'adresses (adresses étant créées au préalable avec /setNewAdress), afin de réutiliser ces adresses ensuite. 
+Vous pouvez soit intégrer les adresses dans un carnet d'adresses (adresses étant créées au préalable avec /setNewAdress), afin de réutiliser ces adresses ensuite. 
 Ou vous pouvez envoyer des courriers sans créer auparavant les adresses si vous ne souhaitez pas gérer un carnet d'adresses.
 
 Dans une adresse les informations obligatoires sont : 
@@ -193,9 +317,11 @@ Dans une adresse les informations obligatoires sont :
 - pays
 
 Si vous envoyez un recommandé électronique, les informations suivantes sont également obligatoires :
-- "phone" (dans le cas d'un recommandé électronique OTP SMS)
-- "email" (dans le cas d'un recommandé électronique OTP EMAIL)
-- "consent" (doit être =1 pour signifier que vous avez le consentement du destinataire - obligatoire pour les destinataire non professionnels)
+- "phone" (dans le cas d'un recommandé électronique OTP SMS) : **sur l'expéditeur comme sur chaque destinataire**
+- "email" (dans le cas d'un recommandé électronique OTP EMAIL) : **sur l'expéditeur comme sur chaque destinataire**
+- "consent" (sur chaque destinataire uniquement, doit être =1 pour signifier que vous avez le consentement du destinataire - obligatoire pour les destinataire non professionnels)
+
+Attention : une adresse d'expéditeur réutilisée d'un envoi papier ne contient ni email ni téléphone. C'est la cause la plus fréquente d'un `INFO_ADDRESS_MISSING` sur un recommandé électronique.
 
 Les informations possibles mais facultatives sont :
 - logo (pour l'expéditeur, imprimé en haut à gauche de l'enveloppe, l'image doit au maximum avoir une dimension de L400px * H250px)
@@ -213,7 +339,7 @@ Lorsque vous envoyez un courrier via /sendCourrier, vous pouvez intégrer les ad
 
 **Expéditeur : depuis une adresse préalablement créée avec /setNewAdress**
 
-Si vous gérer un carnet d'adresses, intégrez dans adress.exp uniquement l'id de l'adresse.
+Si vous gérez un carnet d'adresses, intégrez dans adress.exp uniquement l'id de l'adresse.
 Exemple : 
 ```json
 {"exp" : 123456}
@@ -241,7 +367,7 @@ Exemple :
 
 **Destinataire : depuis une adresse préalablement créée avec /setNewAdress**
 
-Si vous gérer un carnet d'adresses, intégrez dans adress.dest un tableau contenant les ID des adresses de destinataire.
+Si vous gérez un carnet d'adresses, intégrez dans adress.dest un tableau contenant les ID des adresses de destinataire.
 Exemple : 
 ```json
 {"dest" : [1595,456,951,2368]}
@@ -250,7 +376,7 @@ Exemple :
 **Destinataire : depuis une adresse préalablement créée avec /setNewAdress, et avec une référence**
 
 Vous pouvez lier à chaque courrier une référence.
-Si vous gérer un carnet d'adresses, intégrez dans adress.dest un tableau contenant un/des tableaux avec l'ID et la référence.
+Si vous gérez un carnet d'adresses, intégrez dans adress.dest un tableau contenant un/des tableaux avec l'ID et la référence.
 Exemple : 
 ```json
 {"dest" : [[1231,"ref-client-1"],[4567,"ref-client-2"]]}
@@ -352,7 +478,7 @@ Lorsque vous réalisez un envoi, vous devez choisir le mode d'envoi du/des courr
 
 [En savoir plus sur les NPAI (ou PND, retour à l'expéditeur)](#npai)
 
-### Courriers eléctroniques : 
+### Courriers électroniques : 
 - ere_otp_mail : le courrier électronique sera envoyé en Envoi Recommandé Electronique de niveau simple qui répond aux exigences de l'article 43 du règlement (UE) eIDAS n°910/2014 du 23 juillet 2014 et de l'article 48 du décret n°2020-834 du 2 juillet 2020 - Code de vérification envoyé au destinataire par email
 - ere_otp_sms : le courrier électronique sera envoyé en Envoi Recommandé Electronique de niveau simple qui répond aux exigences de l'article 43 du règlement (UE) eIDAS n°910/2014 du 23 juillet 2014 et de l'article 48 du décret n°2020-834 du 2 juillet 2020 - Code de vérification envoyé au destinataire par SMS
 
@@ -375,21 +501,21 @@ Pour cela, lors de l'envoi du courrier (/sendCourrier ou /sendPublipostage), env
 
 Où :
 
-"delay":15 s'ignifie "anonymiser 15 jours après l'impression du courrier" (minimum 1 et maximum 40).
+"delay":15 signifie "anonymiser 15 jours après l'impression du courrier" (minimum 1 et maximum 40).
 
-"target":["content","exp","dest"] s'ignifie "anonymiser le contenu, l'expéditeur et le destinataire".
+"target":["content","exp","dest"] signifie "anonymiser le contenu, l'expéditeur et le destinataire".
 
 Ainsi :
 
 ```json
 {"delay":10,"target":["content","dest"]}
 ```
-s'ignifira par exemple "Anonymiser le contenu et le destinataire 10 jours après l'impression".
+signifiera par exemple "Anonymiser le contenu et le destinataire 10 jours après l'impression".
 
 ```json
 {"delay":1,"target":["dest"]}
 ```
-s'ignifira par exemple "Anonymiser le destinataire 1 jour après l'impression".
+signifiera par exemple "Anonymiser le destinataire 1 jour après l'impression".
 
 <a id="antidoublon"></a>
 ## Anti-doublon de courrier
@@ -454,10 +580,15 @@ Avec l'API de Merci facteur, vous pouvez également envoyer des recommandés él
 
 Comme pour tous les autres courriers, l'envoi se fait via /sendCourrier en spécifiant le mode d'envoi "ERE_OTP_MAIL" ou "ERE_OTP_SMS".
 
-A la création des destinataires (/setNewAdress) ou dans le json envoyé pour l'adresse lors de l'envoi du courrier, veillez à bien remplir l'email, et à mettre consent = 1
-Ce second paramètre sert à signifier que vous avez le consentement du destinataire (consentement non nécessaire dans le cas de destinataires professionnels).
+A la création des adresses (/setNewAdress) ou dans le json envoyé pour l'adresse lors de l'envoi du courrier, veillez à bien remplir :
+- "email" (mode ERE_OTP_MAIL) ou "phone" (mode ERE_OTP_SMS) **sur l'adresse d'expéditeur comme sur chaque adresse de destinataire** ;
+- "consent" = 1 **sur chaque destinataire**.
 
-Lors de l'execution du /sendCourrier pour envoyer le recommandé électronique, vous pouvez spécifier un nom de fichier qui sera visible par le destinataire, dans l'email qui lui sera envoyé. Pour cela, remplissez la clé "content.letter.final_filename".
+"consent" sert à signifier que vous avez le consentement du destinataire (consentement non nécessaire dans le cas de destinataires professionnels).
+
+Une adresse d'expéditeur créée pour des envois papier ne contient ni email ni téléphone : pensez à la compléter avant votre premier recommandé électronique, sinon l'envoi sera rejeté.
+
+Lors de l'exécution du /sendCourrier pour envoyer le recommandé électronique, vous pouvez spécifier un nom de fichier qui sera visible par le destinataire, dans l'email qui lui sera envoyé. Pour cela, remplissez la clé "content.letter.final_filename".
 
 Vous pouvez également ajouter une désignation au courrier, également visible par le destinataire dans l'email qui lui sera envoyé, en remplissant la clé "designation".
 
@@ -473,7 +604,7 @@ Vous pouvez envoyer jusqu'à 10 fichiers pour une même lettre (des PDF via leur
 
 Seul le format PDF est accepté. Et le poids maximum par fichier est de 50 Mo. Le fichier peut-être en couleur ou en noir et blanc.
 
-Vous pouvez demander à ce que votre lettre soit imprimée en recto, ou en recto-verso (afin de diminuer le poid, et donc le montant de l'affranchissement).
+Vous pouvez demander à ce que votre lettre soit imprimée en recto, ou en recto-verso (afin de diminuer le poids, et donc le montant de l'affranchissement).
 
 Vous pouvez envoyer une lettre imprimée en recto, ou en recto-verso. Une option est également disponible pour imprimer en recto-verso tout en gardant des fichiers distincts.
 
@@ -617,7 +748,7 @@ Vous pouvez envoyer la source de données sous 3 formats différents :
 - base64 d'un fichier CSV ou TXT (type="base64" et value="fichier en base64")
 - json de données, avec pour chaque adresse la variable en clé (type="json" et value=[{"civilite":"","societe":"","nom":"","prenom":"","adresse1":"","adresse2":"","adresse3":"","cp":"","ville":"","pays":""},{"civilite":"","societe":"","nom":"","prenom":"","adresse1":"","adresse2":"","adresse3":"","cp":"","ville":"","pays":""},{etc.}])
 
-Dans le cas de l'envoi d'un fichier CSV ou TXT, les données doivent être séparées par des points-viurgules (;) et les adresses par des sauts de lignes. La première ligne (titres de colonnes) doit correspondre exactement aux variables, sans le $ et les {}.
+Dans le cas de l'envoi d'un fichier CSV ou TXT, les données doivent être séparées par des points-virgules (;) et les adresses par des sauts de lignes. La première ligne (titres de colonnes) doit correspondre exactement aux variables, sans le $ et les {}.
 
 Exemple de fichier conforme : https://www.merci-facteur.com/pro/exemples/fichier%20exemple.csv
 
