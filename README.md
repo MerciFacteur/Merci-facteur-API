@@ -554,7 +554,7 @@ Exemple de bloc adresse avec des références internes (dans cet exemple, les de
     ]
   }
 
-La référence courrier ne peut être composée que de chiffres, lettres, espaces, et caractères -_ , et doit faire maximum 30 caractères.
+La référence courrier ne peut être composée que de chiffres, lettres, espaces, et caractères -_ , et doit faire maximum 50 caractères.
 
 
 
