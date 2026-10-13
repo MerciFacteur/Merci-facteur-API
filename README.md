@@ -110,7 +110,7 @@ L'envoi 1 est composé de 3 courriers, l'envoi 2 est composé de 1 courrier, l'e
 
 Vous devez envoyer un token dans chaque requête à l'API Merci Facteur. Ce token est généré via getToken (https://www.merci-facteur.com/api/1.2/doc.php#/getToken/getToken) à partir notamment de votre secret Key que vous devrez hasher (en savoir plus sur la hashage de la secret key : https://github.com/MerciFacteur/Merci-facteur-API/tree/master/hash-secret-key).
 
-Par défaut, vous devez autoriser des IP qui pourront utiliser le token, si votre infrastructure n'a pas d'IP fixe, vous pouvez solliciter auprès du service technique de Merci Facteur une levée de la restriction d'IP (https://www.merci-facteur.com/pro/contact.php).
+Par défaut, vous devez autoriser des IP qui pourront utiliser le token, si votre infrastructure n'a pas d'IP fixe, vous pouvez lever cette restriction d'ip en vous rendant dans le menu "API" de votre compte Merci Facteur. (N'hésitez pas à nous contacter en cas de problème : https://www.merci-facteur.com/pro/contact.php).
 
 Chaque token généré est valable 24h par défaut, il est recommandé de stocker la date d'expiration du token et de rappeler getToken lorsque votre token est expiré.
 
