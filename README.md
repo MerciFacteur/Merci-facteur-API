@@ -234,7 +234,7 @@ curl -X GET "https://www.merci-facteur.com/api/1.2/prod/service/getCountry?zone%
 <tr><td>/getAdressInfos</td><td>GET</td><td>Récupérer le détail d'adresses par leurs ID</td></tr>
 <tr><td>/sendCourrier</td><td>POST</td><td>Envoyer un courrier (lettre, carte, photo, recommandé, ERE)</td></tr>
 <tr><td>/getPostagePrice</td><td>GET</td><td>Calculer le prix d'un envoi avant de l'envoyer</td></tr>
-<tr><td>/deleteEnvoi</td><td>DELETE</td><td>Annuler un envoi</td></tr>
+<tr><td>/deleteEnvoi</td><td>DELETE</td><td>Annuler un envoi (issue notifiée par le webhook <a href="#annulation">cancel-courrier</a>)</td></tr>
 <tr><td>/listEnvois</td><td>GET</td><td>Lister les 50 derniers envois d'un utilisateur</td></tr>
 <tr><td>/getEnvoi</td><td>GET</td><td>Détail d'un envoi</td></tr>
 <tr><td>/getSuiviEnvoi</td><td>GET</td><td>Suivi des courriers d'un envoi</td></tr>
@@ -1016,6 +1016,32 @@ Voici les événements pour lesquels vous pouvez recevoir des webhooks :
         &bull; detail[].pdd_base64_pdf<br>
         &bull; detail[].ref_interne</td>
     </tr>
+    <tr>
+        <td>cancel-courrier</td>
+        <td>Issue d'une demande d'annulation de courrier(s) : annulé, détruit ou annulation refusée (voir <a href="#annulation">Annulation de courriers</a>)</td>
+        <td>&bull; event.name_event<br>
+            &bull; event.id_user<br>
+            &bull; event.date_event<br>
+        &bull; detail[].civilite<br>
+        &bull; detail[].nom<br>
+        &bull; detail[].prenom<br>
+        &bull; detail[].societe<br>
+        &bull; detail[].adresse1<br>
+        &bull; detail[].adresse2<br>
+        &bull; detail[].adresse3<br>
+        &bull; detail[].cp<br>
+        &bull; detail[].ville<br>
+        &bull; detail[].pays<br>
+        &bull; detail[].email<br>
+        &bull; detail[].telephone<br>
+        &bull; detail[].ref_courrier<br>
+        &bull; detail[].mode_envoi<br>
+        &bull; detail[].id_envoi<br>
+        &bull; detail[].statut_courrier<br>
+        &bull; detail[].statut_description<br>
+        &bull; detail[].tracking_number<br>
+        &bull; detail[].ref_interne</td>
+    </tr>
     
 </table>
 
@@ -1379,6 +1405,59 @@ Voici des exemples pour chaque événement :
 }
 ```
  
+#### Evénement cancel-courrier (Issue d'une demande d'annulation)
+
+```json
+{
+    "event": {
+        "name_event": "cancel-courrier",
+        "id_user": 17460,
+        "date_event": 1581674000
+    },
+    "detail": [{
+        "civilite": "M.",
+        "nom": "Dupont",
+        "prenom": "Michel",
+        "societe": "Green Flower Corp",
+        "adresse1": "3 rue des fleurs",
+        "adresse2": "",
+        "adresse3": "",
+        "cp": "75015",
+        "ville": "Paris",
+        "pays": "FRANCE",
+        "email": "",
+        "telephone": "",
+        "ref_courrier": "123456-789123456",
+        "mode_envoi": "lrar",
+        "tracking_number": "2C123456789",
+        "id_envoi": "123",
+        "statut_courrier": "detruit",
+        "statut_description": "14\/02\/2020 : Courrier pr\u00e9lev\u00e9 et d\u00e9truit, remboursement de l'affranchissement",
+        "ref_interne":"client_123"
+    }, {
+        "civilite": "",
+        "nom": "",
+        "prenom": "",
+        "societe": "Blue Water Inc",
+        "adresse1": "9 allee de la poiscaille",
+        "adresse2": "",
+        "adresse3": "",
+        "cp": "13012",
+        "ville": "Marseille",
+        "pays": "FRANCE",
+        "email": "",
+        "telephone": "",
+        "ref_courrier": "987456-456123789",
+        "mode_envoi": "lrar",
+        "tracking_number": "2C987654321",
+        "id_envoi": "123",
+        "statut_courrier": "detruit",
+        "statut_description": "14\/02\/2020 : Courrier pr\u00e9lev\u00e9 et d\u00e9truit, remboursement de l'affranchissement",
+        "ref_interne":""
+    }]
+}
+```
+
 #### Les différents statuts de courrier (courriers papier)
 
 Voici les différents statuts qu'un courrier "papier" va pouvoir prendre, dans l'ordre chronologique.
@@ -1409,6 +1488,24 @@ Vous retrouverez le code en question dans detail[].statut_courrier. Vous dispose
 <tr><td>pnd</td><td>archivage_pnd</td><td>Si vous avez envoyé un recommandé en LRARE, les PND reviennent chez Merci facteur, et sont archivés pendant 3 ans à compter de cet évènement.</td></tr>
 <tr><td>are</td><td>retour_are</td><td>Si vous avez l'envoi en LRARE, l'accusé de réception numérisé est disponible.</td></tr>
 <tr><td>pdd</td><td>scan_pdd</td><td>Pour les courriers suivis et recommandés, la preuve de dépôt format PDF est disponible.</td></tr></table> 
+
+<a id="annulation"></a>
+#### Annulation de courriers (événement cancel-courrier)
+
+Une demande d'annulation (`/deleteEnvoi` ou bouton "Annuler cet envoi" de l'interface Merci facteur Pro) est **traitée de façon asynchrone**. Une réponse `success` de `/deleteEnvoi` signifie que la demande est enregistrée, **pas que les courriers sont annulés**. L'issue finale de chaque courrier est notifiée par l'événement `cancel-courrier`.
+
+<table>
+<tr><th>événement</th><th>code statut</th><th>Explication</th><th>Remboursement</th></tr>
+<tr><td>cancel-courrier</td><td>annule</td><td>Courrier annulé avant impression. Il ne sera pas envoyé.</td><td>Intégral</td></tr>
+<tr><td>cancel-courrier</td><td>detruit</td><td>Courrier déjà imprimé, prélevé dans la production et détruit. Il ne sera pas envoyé.</td><td>Affranchissement uniquement</td></tr>
+<tr><td>cancel-courrier</td><td>annulation_refusee</td><td>L'annulation n'a pas pu être faite (courrier déjà remis à La Poste ou impossible à retirer de la production). <b>Le courrier sera acheminé normalement</b> et vous continuerez à recevoir ses événements de suivi.</td><td>Aucun</td></tr>
+</table> 
+
+À savoir :
+- Le statut est donné **courrier par courrier** : un même envoi peut avoir des courriers `annule`, `detruit` et `annulation_refusee`. Utilisez `ref_courrier` (ou `ref_interne`) pour rapprocher chaque courrier.
+- Les courriers d'une même demande peuvent être notifiés **en plusieurs fois** : les courriers annulés avant impression sont notifiés rapidement, ceux déjà imprimés le sont après intervention de nos opérateurs.
+- Un webhook `cancel-courrier` regroupe au maximum 50 courriers ayant le même statut, pour un même utilisateur (`event.id_user`).
+- Un courrier annulé avant d'avoir été mis en production (`annule`) peut avoir `ref_courrier` et `tracking_number` à `null`.
 
 
 #### Les différents statuts de courrier (courriers électroniques)
