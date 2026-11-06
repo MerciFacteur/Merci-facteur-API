@@ -1018,7 +1018,7 @@ Voici les événements pour lesquels vous pouvez recevoir des webhooks :
     </tr>
     <tr>
         <td>cancel-courrier</td>
-        <td>Issue d'une demande d'annulation de courrier(s) : annulé, détruit ou annulation refusée (voir <a href="#annulation">Annulation de courriers</a>)</td>
+        <td>Issue d'une demande d'annulation de courrier(s)</td>
         <td>&bull; event.name_event<br>
             &bull; event.id_user<br>
             &bull; event.date_event<br>
